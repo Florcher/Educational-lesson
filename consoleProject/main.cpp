@@ -7,7 +7,6 @@
 #include "objectFactory.h"
 #include "input.h"
 #include "Header.h"
-#define PROJECT_EXPORT
 
 
 
