@@ -19,7 +19,7 @@ public:
 		int countOfObject_;
 		input >> countOfObject_;
 
-		objectFactory factory;
+		objectFactory<object> factory;
 		std::string name;
 		int id;
 
@@ -74,7 +74,7 @@ struct PROJECT_EXPORT inputOfBinaryFile : public input {
 
 	void inputObject(std::vector<object*>& myObject) override {
 
-		objectFactory binarryFactory;
+		objectFactory<object> binarryFactory;
 
 		int countOfObject;
 		std::ifstream fin("file2.txt", std::ios_base::binary);

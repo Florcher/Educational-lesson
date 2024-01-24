@@ -8,24 +8,24 @@
 #include <map>
 #include "Header.h"
 
-
+template<class myType>
 class PROJECT_EXPORT objectFactory {
 public:
 
 	objectFactory() {
-		addType(1, new lineCreator);
-		addType(2, new rectangCreator);
-		addType(3, new circleCreator);
-		addType(4, new polylineCreator);
+		addType(1, new objectCreator<myType, Line>);
+		addType(2, new objectCreator<myType, Rectangle>);
+		addType(3, new objectCreator<myType, Circle>);
+		addType(4, new objectCreator<myType, Polyline>);
 	}
 
-	object* createObject(int id) {
+	myType* createObject(int id) {
 
 		auto it = mTypes.at(id);
 		return it->create();
 	}
 
-	void addType(int id, Creator* object) {
+	void addType(int id, Creator<myType>* object) {
 		mTypes.emplace(id, object);
 	}
 
@@ -33,7 +33,7 @@ public:
 		mTypes.erase(id);
 	}
 
-	std::map<int, Creator*> mTypes;
+	std::map<int, Creator<myType>*> mTypes;
 };
 
 #endif __OBJECTFACTORY_H_

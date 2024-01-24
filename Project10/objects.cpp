@@ -35,6 +35,16 @@ object::object(const std::string& name, const int id) : mName(name), mId(id) {
 
 }
 
+void object::binaryOutput(std::ostream& output)
+{
+	
+	for (int i = 0; i <= mName.size(); i++) {
+		output.write((char*)&mName[i], 1);
+	}
+
+	output.write((char*)&mId, 4);
+}
+
 void object::print() {
 
 	std::cout << mName << std::endl << mId << std::endl;
@@ -134,6 +144,15 @@ void Line::input(std::istream& input) {
 	input >> mEnd;
 }
 
+void Line::binaryOutput(std::ostream& output){
+
+	object::binaryOutput(output);
+	output.write((char*)&mStart.x, 8);
+	output.write((char*)&mStart.y, 8);
+	output.write((char*)&mEnd.x, 8);
+	output.write((char*)&mEnd.y, 8);
+}
+
 void Line::print() {
 
 	object::print();
@@ -202,6 +221,15 @@ void Rectangle::input(std::istream& input) {
 	input >> mLeftDownPoint;
 	input >> mLenth;
 	input >> mWidth;
+}
+
+void Rectangle::binaryOutput(std::ostream& output){
+
+	object::binaryOutput(output);
+	output.write((char*)&mLeftDownPoint.x, 8);
+	output.write((char*)&mLeftDownPoint.y, 8);
+	output.write((char*)&mLenth, 8);
+	output.write((char*)&mWidth, 8);
 }
 
 void Rectangle::print() {
@@ -304,6 +332,14 @@ std::vector<Line> Circle::createLines() {
 	return lines;
 }
 
+void Circle::binaryOutput(std::ostream& output) {
+
+	object::binaryOutput(output);
+	output.write((char*)&mCenter.x, 8);
+	output.write((char*)&mCenter.y, 8);
+	output.write((char*)&mRadius, 8);
+}
+
 void Circle::print() {
 
 	object::print();
@@ -360,6 +396,20 @@ void Polyline::createLines(std::vector<Line>& lines)
 		Line line("vector", i, mPoints[i], mPoints[i + 1]);
 		lines.push_back(line);
 	}
+}
+
+void Polyline::binaryOutput(std::ostream& output) {
+
+	object::binaryOutput(output);
+
+	int countOfpoints = mPoints.size();
+
+	output.write((char*)&countOfpoints, 4);
+	for (int i = 0; i < mPoints.size(); i++) {
+		output.write((char*)&mPoints[i].x, 8);
+		output.write((char*)&mPoints[i].x, 8);
+	}
+
 }
 
 void Polyline::print() {

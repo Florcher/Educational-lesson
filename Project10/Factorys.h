@@ -8,46 +8,47 @@
 #include <vector>
 #include "Header.h"
 
+template <class Type1>
 struct PROJECT_EXPORT Creator {
-	virtual object* create() = 0;
 
+	virtual Type1* create() = 0;
 };
 
-struct PROJECT_EXPORT lineCreator : public Creator {
+template <class Type1, class Type2>
+struct PROJECT_EXPORT objectCreator : public Creator<Type1> {
 
-	object* create() override
+	Type1* create() override
 	{
-		return new Line;
-	}
-
-};
-
-
-struct PROJECT_EXPORT rectangCreator : public Creator {
-
-	object* create() override
-	{
-		return new Rectangle;
+		return new Type2;
 	}
 };
 
 
-struct PROJECT_EXPORT circleCreator : public Creator {
-
-	object* create() override
-	{
-		return new Circle;
-	}
-};
-
-
-struct PROJECT_EXPORT polylineCreator : public Creator {
-
-	object* create() override
-	{
-		return new Polyline;
-	}
-};
-
+//struct PROJECT_EXPORT rectangCreator : public Creator {
+//
+//	object* create() override
+//	{
+//		return new Rectangle;
+//	}
+//};
+//
+//
+//struct PROJECT_EXPORT circleCreator : public Creator {
+//
+//	object* create() override
+//	{
+//		return new Circle;
+//	}
+//};
+//
+//
+//struct PROJECT_EXPORT polylineCreator : public Creator {
+//
+//	object* create() override
+//	{
+//		return new Polyline;
+//	}
+//};
+//
 
 #endif __FACTORYS_H_

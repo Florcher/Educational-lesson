@@ -28,6 +28,8 @@ public:
 
 	virtual void binaryInput(std::istream& input);
 	virtual void input(std::istream& input);
+
+	virtual void binaryOutput(std::ostream& output);
 	virtual void print();
 
 	void setName(const std::string& name);
@@ -55,11 +57,12 @@ public:
 
 	vector2D getStart() const;
 	vector2D getEnd() const;
-
 	double getLenth();
 
 	void binaryInput(std::istream& input) override;
 	void input(std::istream& input) override;
+
+	void binaryOutput(std::ostream& output) override;
 	void print() override;
 
 private:
@@ -76,7 +79,6 @@ public:
 	Rectangle(const std::string& name, const int id, const vector2D& leftDownPoint, const double lenth, const double width);
 	~Rectangle() {};
 
-
 	void setLeftDownPoint(const vector2D& vector2D);
 	void setLenth(const int& lenth_);
 	void setWidth(const int& width_);
@@ -90,6 +92,8 @@ public:
 
 	void binaryInput(std::istream& input) override;
 	void input(std::istream& input) override;
+
+	void binaryOutput(std::ostream& output) override;
 	void print() override;
 
 private:
@@ -116,6 +120,8 @@ public:
 
 	void binaryInput(std::istream& input) override;
 	void input(std::istream& input) override;
+
+	void binaryOutput(std::ostream& output) override;
 	void print() override;
 
 private:
@@ -133,6 +139,8 @@ public:
 
 	void binaryInput(std::istream& input) override;
 	void input(std::istream& input) override;
+
+	void binaryOutput(std::ostream& output) override;
 	void print() override;
 
 private:
