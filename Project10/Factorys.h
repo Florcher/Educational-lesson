@@ -8,18 +8,18 @@
 #include <vector>
 #include "Header.h"
 
-template <class Type1>
+template <typename typeBaseClass>
 struct PROJECT_EXPORT Creator {
 
-	virtual Type1* create() = 0;
+	virtual typeBaseClass* create() = 0;
 };
 
-template <class Type1, class Type2>
-struct PROJECT_EXPORT objectCreator : public Creator<Type1> {
+template <typename typeBaseClass, typename typeDerivedClass>
+struct PROJECT_EXPORT objectCreator : public Creator<typeBaseClass> {
 
-	Type1* create() override
+	typeBaseClass* create() override
 	{
-		return new Type2;
+		return new typeDerivedClass;
 	}
 };
 

@@ -15,6 +15,7 @@ int main() {
 
 	setlocale(LC_ALL, "ru");
 
+
 	std::vector<object*> objects;
 
 	input* in = new inputOfFile;
