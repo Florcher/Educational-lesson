@@ -7,7 +7,7 @@
 #include "objectFactory.h"
 #include "input.h"
 #include "Header.h"
-
+#include "output.h"
 
 
 
@@ -15,32 +15,21 @@ int main() {
 
 	setlocale(LC_ALL, "ru");
 
-	std::ofstream fout("file2.txt", std::ios_base::binary);
-	
-
-	input* in = new inputOfFile;
 	std::vector<object*> objects;
 
+	input* in = new inputOfFile;
 	in->inputObject(objects);
 
-
-	int countOfobjects = objects.size();
-	fout.write((char*)&countOfobjects, 4);
-
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->binaryOutput(fout);
-	}
+	output* out = new binaryOutput;
+	out->outputObject(objects);
 
 	objects.clear();
-	fout.close();
 
 	input* inBinary = new inputOfBinaryFile;
-
 	inBinary->inputObject(objects);
 
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->print();
-	}
+	output* outConsole = new outputOfConsole;
+	outConsole->outputObject(objects);
 
 	return 0;
 }

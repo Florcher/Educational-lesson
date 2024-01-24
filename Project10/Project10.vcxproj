@@ -136,6 +136,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="objectFactory.h" />
     <ClInclude Include="objects.h" />
+    <ClInclude Include="output.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="objects.cpp" />

@@ -407,7 +407,7 @@ void Polyline::binaryOutput(std::ostream& output) {
 	output.write((char*)&countOfpoints, 4);
 	for (int i = 0; i < mPoints.size(); i++) {
 		output.write((char*)&mPoints[i].x, 8);
-		output.write((char*)&mPoints[i].x, 8);
+		output.write((char*)&mPoints[i].y, 8);
 	}
 
 }
