@@ -23,32 +23,4 @@ struct PROJECT_EXPORT objectCreator : public Creator<typeBaseClass> {
 	}
 };
 
-
-//struct PROJECT_EXPORT rectangCreator : public Creator {
-//
-//	object* create() override
-//	{
-//		return new Rectangle;
-//	}
-//};
-//
-//
-//struct PROJECT_EXPORT circleCreator : public Creator {
-//
-//	object* create() override
-//	{
-//		return new Circle;
-//	}
-//};
-//
-//
-//struct PROJECT_EXPORT polylineCreator : public Creator {
-//
-//	object* create() override
-//	{
-//		return new Polyline;
-//	}
-//};
-//
-
 #endif __FACTORYS_H_

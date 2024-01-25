@@ -18,7 +18,7 @@ int main() {
 
 	std::vector<object*> objects;
 
-	input* in = new inputOfFile;
+	input* in = new fileInput;
 	in->inputObject(objects);
 
 	output* out = new binaryOutput;
@@ -26,10 +26,10 @@ int main() {
 
 	objects.clear();
 
-	input* inBinary = new inputOfBinaryFile;
+	input* inBinary = new binaryFileInput;
 	inBinary->inputObject(objects);
 
-	output* outConsole = new outputOfConsole;
+	output* outConsole = new consoleOutput;
 	outConsole->outputObject(objects);
 
 	return 0;

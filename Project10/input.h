@@ -40,7 +40,7 @@ public:
 };
 
 
-struct PROJECT_EXPORT inputOfFile : public input {
+struct PROJECT_EXPORT fileInput : public input {
 public:
 
 	void inputObject(std::vector<object*>& myObject) override {
@@ -57,7 +57,7 @@ public:
 
 };
 
-struct PROJECT_EXPORT inputOfConsole : public input {
+struct PROJECT_EXPORT consoleInput : public input {
 public:
 
 	void inputObject(std::vector<object*>& myObject) override {
@@ -69,7 +69,7 @@ public:
 };
 
 
-struct PROJECT_EXPORT inputOfBinaryFile : public input {
+struct PROJECT_EXPORT binaryFileInput : public input {
 
 
 	void inputObject(std::vector<object*>& myObject) override {

@@ -20,7 +20,7 @@ public:
 };
 
 
-struct PROJECT_EXPORT outputOfConsole : public output {
+struct PROJECT_EXPORT consoleOutput : public output {
 public:
 
 	void outputObject(const std::vector<object*>& myObject) override {
