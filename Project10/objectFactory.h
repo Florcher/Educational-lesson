@@ -1,31 +1,28 @@
 #ifndef __OBJECTFACTORY_H_
 #define __OBJECTFACTORY_H_
-#define PROJECT_EXPORT
-#include <iostream>
-#include <vector>
-#include "objects.h"
+#include "Objects.h"
 #include "Factorys.h"
 #include <map>
 #include "Header.h"
 
-template<typename typeBaseClass>
+template<typename TBase>
 class PROJECT_EXPORT objectFactory {
 public:
 
 	objectFactory() {
-		addType(1, new objectCreator<typeBaseClass, Line>);
-		addType(2, new objectCreator<typeBaseClass, Rectangle>);
-		addType(3, new objectCreator<typeBaseClass, Circle>);
-		addType(4, new objectCreator<typeBaseClass, Polyline>);
+		addType(1, new ObjectCreator<TBase, Line>);
+		addType(2, new ObjectCreator<TBase, Rectangle>);
+		addType(3, new ObjectCreator<TBase, Circle>);
+		addType(4, new ObjectCreator<TBase, Polyline>);
 	}
 
-	typeBaseClass* createObject(int id) {
+	TBase* createObject(int id) {
 
 		auto it = mTypes.at(id);
 		return it->create();
 	}
 
-	void addType(int id, Creator<typeBaseClass>* object) {
+	void addType(int id, Creator<TBase>* object) {
 		mTypes.emplace(id, object);
 	}
 
@@ -33,7 +30,7 @@ public:
 		mTypes.erase(id);
 	}
 
-	std::map<int, Creator<typeBaseClass>*> mTypes;
+	std::map<int, Creator<TBase>*> mTypes;
 };
 
 #endif __OBJECTFACTORY_H_

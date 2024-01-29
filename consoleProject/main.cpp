@@ -1,5 +1,5 @@
 #include <iostream>
-#include "objects.h"
+#include "Objects.h"
 #include <fstream>
 #include <string>
 #include <math.h>
@@ -16,9 +16,9 @@ int main() {
 	setlocale(LC_ALL, "ru");
 
 
-	std::vector<object*> objects;
+	/*std::vector<object*> objects;
 
-	input* in = new fileInput;
+	Input* in = new FileInput;
 	in->inputObject(objects);
 
 	output* out = new binaryOutput;
@@ -26,11 +26,11 @@ int main() {
 
 	objects.clear();
 
-	input* inBinary = new binaryFileInput;
+	Input* inBinary = new BinaryFileInput;
 	inBinary->inputObject(objects);
 
 	output* outConsole = new consoleOutput;
-	outConsole->outputObject(objects);
+	outConsole->outputObject(objects);*/
 
 	return 0;
 }

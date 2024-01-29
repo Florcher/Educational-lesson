@@ -1,10 +1,10 @@
 #ifndef __OBJECTS_H_
 #define __OBJECTS_H_
-#define PROJECT_EXP
 #include <iostream>
 #include <string>
 #include <vector>
 #include "Header.h"
+#include "Filer.h"
 
 struct PROJECT_EXPORT vector2D {
 
@@ -26,8 +26,7 @@ public:
 	object(const std::string& name, const int id);
 	virtual ~object() {};
 
-	virtual void binaryInput(std::istream& input);
-	virtual void input(std::istream& input);
+	virtual void input(Filer& file);
 
 	virtual void binaryOutput(std::ostream& output);
 	virtual void print();
@@ -59,8 +58,7 @@ public:
 	vector2D getEnd() const;
 	double getLenth();
 
-	void binaryInput(std::istream& input) override;
-	void input(std::istream& input) override;
+	virtual void input(Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;
@@ -90,8 +88,7 @@ public:
 	double getArea() const;
 	double getPerimetr() const;
 
-	void binaryInput(std::istream& input) override;
-	void input(std::istream& input) override;
+	virtual void input(Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;
@@ -118,8 +115,7 @@ public:
 
 	double getArea() const;
 
-	void binaryInput(std::istream& input) override;
-	void input(std::istream& input) override;
+	virtual void input(Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;
@@ -137,8 +133,7 @@ public:
 	Polyline() = default;
 	Polyline(const std::string& name, const int id, const std::vector<vector2D>& points);
 
-	void binaryInput(std::istream& input) override;
-	void input(std::istream& input) override;
+	virtual void input(Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;

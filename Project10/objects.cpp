@@ -1,9 +1,9 @@
-#include "objects.h"
+#include "Objects.h"
 #include <iostream>
 #include <math.h>
 #include <string>
 #include <vector>
-#define PROJECT_EXP
+#include "Filer.h"
 
 std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
 
@@ -70,31 +70,10 @@ int object::getindex() const {
 	return mId;
 }
 
-void object::binaryInput(std::istream& input) {
+void object::input(Filer& file) {
 
-	std::vector<char> sym;
-	sym.push_back('A');
-	int iterator = 0;
-	while (sym[iterator] != '\0') {
-		char tmpSym;
-		iterator++;
-		input.read((char*)&tmpSym, 1);
-		sym.push_back(tmpSym);
-	}
-
-	mName = "";
-	for (int i = 1; i < iterator; i++) {
-		mName.push_back(sym[i]);
-	};
-
-	input.read((char*)&mId, 4);
-}
-
-void object::input(std::istream& input) {
-
-	input >> mName;
-	input >> mId;
-
+	mName = file.readString();
+	mId = file.readInt();
 }
 
 Line::Line(const std::string& name_, const int id_, const vector2D& start_, const vector2D& end_)
@@ -130,18 +109,10 @@ vector2D Line::getEnd() const {
 	return mEnd;
 };
 
-void Line::binaryInput(std::istream& input) {
+void Line::input(Filer& file) {
 
-	input.read((char*)&mStart.x, 8);
-	input.read((char*)&mStart.y, 8);
-	input.read((char*)&mEnd.x, 8);
-	input.read((char*)&mEnd.y, 8);
-}
-
-void Line::input(std::istream& input) {
-
-	input >> mStart;
-	input >> mEnd;
+	mStart = file.readVector2D();
+	mEnd = file.readVector2D();
 }
 
 void Line::binaryOutput(std::ostream& output){
@@ -207,20 +178,11 @@ double Rectangle::getPerimetr() const {
 	return 2 * mLenth + 2 * mWidth;
 };
 
-void Rectangle::binaryInput(std::istream& input) {
+void Rectangle::input(Filer& file) {
 
-	input.read((char*)&mLeftDownPoint.x, 8);
-	input.read((char*)&mLeftDownPoint.y, 8);
-	input.read((char*)&mLenth, 8);
-	input.read((char*)&mWidth, 8);
-}
-
-
-void Rectangle::input(std::istream& input) {
-
-	input >> mLeftDownPoint;
-	input >> mLenth;
-	input >> mWidth;
+	mLeftDownPoint = file.readVector2D();
+	mLenth = file.readDouble();
+	mWidth = file.readDouble();
 }
 
 void Rectangle::binaryOutput(std::ostream& output){
@@ -295,17 +257,10 @@ double Circle::getArea() const {
 	return Pi * mRadius * mRadius;
 };
 
-void Circle::binaryInput(std::istream& input) {
+void Circle::input(Filer& file) {
 
-	input.read((char*)&mCenter.x, 8);
-	input.read((char*)&mCenter.y, 8);
-	input.read((char*)&mRadius, 8);
-}
-
-void Circle::input(std::istream& input) {
-
-	input >> mCenter;
-	input >> mRadius;
+	mCenter = file.readVector2D();
+	mRadius = file.readDouble();
 }
 
 std::vector<Line> Circle::createLines() {
@@ -361,30 +316,12 @@ Polyline::Polyline(const std::string& name, const int id, const std::vector<vect
 
 }
 
-void Polyline::binaryInput(std::istream& input) {
-	int countOfPoints;
-	input.read((char*)&countOfPoints, 4);
+void Polyline::input(Filer& file) {
+
+	int countOfPoints = file.readInt();
 
 	for (int i = 0; i < countOfPoints; i++) {
-
-		vector2D point;
-		input.read((char*)&point.x, 8);
-		input.read((char*)&point.y, 8);
-		mPoints.push_back(point);
-	}
-}
-
-void Polyline::input(std::istream& input) {
-
-	int countOfPoints;
-	input >> countOfPoints;
-
-	for (int i = 0; i < countOfPoints; i++) {
-
-		vector2D point;
-
-		input >> point;
-		mPoints.push_back(point);
+		mPoints.push_back(file.readVector2D());
 	}
 }
 

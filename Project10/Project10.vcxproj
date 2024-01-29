@@ -104,7 +104,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;PROJECT_EXPORT;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;PROJECT_EXP;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -132,14 +132,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Factorys.h" />
+    <ClInclude Include="Filer.h" />
     <ClInclude Include="Header.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="objectFactory.h" />
-    <ClInclude Include="objects.h" />
-    <ClInclude Include="output.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="Objects.h" />
+    <ClInclude Include="Output.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="objects.cpp" />
+    <ClCompile Include="Filer.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Objects.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

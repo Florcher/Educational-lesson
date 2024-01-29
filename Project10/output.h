@@ -1,8 +1,7 @@
 #ifndef __OUTPUT_H_
 #define __OUTPUT_H_
-#define PROJECT_EXP
 #include <iostream>
-#include "objects.h"
+#include "Objects.h"
 #include <fstream>
 #include <string>
 #include <math.h>
