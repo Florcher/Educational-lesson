@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "Header.h"
-#include "Filer.h"
 
 struct PROJECT_EXPORT vector2D {
 
@@ -26,7 +25,7 @@ public:
 	object(const std::string& name, const int id);
 	virtual ~object() {};
 
-	virtual void input(Filer& file);
+	virtual void input(class Filer& file);
 
 	virtual void binaryOutput(std::ostream& output);
 	virtual void print();
@@ -58,7 +57,7 @@ public:
 	vector2D getEnd() const;
 	double getLenth();
 
-	virtual void input(Filer& file) override;
+	virtual void input(class Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;
@@ -88,7 +87,7 @@ public:
 	double getArea() const;
 	double getPerimetr() const;
 
-	virtual void input(Filer& file) override;
+	virtual void input(class Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;
@@ -115,7 +114,7 @@ public:
 
 	double getArea() const;
 
-	virtual void input(Filer& file) override;
+	virtual void input(class Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;
@@ -133,7 +132,7 @@ public:
 	Polyline() = default;
 	Polyline(const std::string& name, const int id, const std::vector<vector2D>& points);
 
-	virtual void input(Filer& file) override;
+	virtual void input(class Filer& file) override;
 
 	void binaryOutput(std::ostream& output) override;
 	void print() override;

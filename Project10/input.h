@@ -10,12 +10,15 @@
 #include <stdio.h>
 #include "Header.h"
 
-//class PROJECT_EXPORT Input {
-//public:
-//	void inputOf(std::istream& input, std::vector<object*>& objects);
-//	virtual void inputObject(std::vector<object*>& myObject);
-//};
-//
+
+
+
+class PROJECT_EXPORT Input {
+public:
+	void input(const std::string& path);
+};
+
+
 //struct PROJECT_EXPORT FileInput : public Input {
 //public:
 //

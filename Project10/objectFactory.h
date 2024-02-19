@@ -3,6 +3,7 @@
 #include "Objects.h"
 #include "Factorys.h"
 #include <map>
+#include <unordered_map>
 #include "Header.h"
 
 template<typename TBase>
@@ -10,27 +11,65 @@ class PROJECT_EXPORT objectFactory {
 public:
 
 	objectFactory() {
-		addType(1, new ObjectCreator<TBase, Line>);
-		addType(2, new ObjectCreator<TBase, Rectangle>);
-		addType(3, new ObjectCreator<TBase, Circle>);
-		addType(4, new ObjectCreator<TBase, Polyline>);
+		addType(1, std::make_shared<ObjectCreator<TBase, Line>>);
+		addType(2, std::make_shared<ObjectCreator<TBase, Rectangle>>);
+		addType(3, std::make_shared<ObjectCreator<TBase, Circle>>);
+		addType(4, std::make_shared<ObjectCreator<TBase, Polyline>>);
 	}
 
-	TBase* createObject(int id) {
+	objectFactory(const objectFactory& factory) : mObjects(factory.mObjects), mTypes(factory.mTypes)
+	{
 
-		auto it = mTypes.at(id);
+	}
+
+	objectFactory& operator=(const objectFactory& factory) {
+
+		mObjects.clear();
+		mTypes.clear();
+		mObjects(factory.mObjects);
+		mTypes(factory.mTypes);
+		return *this;
+	}
+
+	~objectFactory() {
+		mObjects.clear();
+		mTypes.clear();
+	}
+
+	void addObject(const int typeId, const int objectId) {
+	    if(!mObjects.contains(objectId))
+		mObjects.emplace(objectId, createType(typeId));
+	}
+
+	void addType(const int typeId, std::shared_ptr<Creator<TBase>> object) {
+		if (!mTypes.contains(typeId))
+		mTypes.emplace(typeId, object);
+	}
+
+	void removeType(const int typeId) {
+		if (mTypes.contains(typeId))
+		mTypes.erase(typeId);
+	}
+
+	void removeObject(const int objectId) {
+		if (mObjects.contains(objectId))
+		mObjects.erase(objectId);
+	}
+
+	std::map<int, std::shared_ptr<Creator<TBase>>> getObjects() {
+		return mObjects;
+	}
+
+private:
+	
+	std::map<int, std::shared_ptr<Creator<TBase>>> mObjects;
+	std::map<int, std::shared_ptr<Creator<TBase>>> mTypes;
+
+	std::shared_ptr<TBase> createType(int typeId) {
+
+		auto it = mTypes.at(typeId);
 		return it->create();
 	}
-
-	void addType(int id, Creator<TBase>* object) {
-		mTypes.emplace(id, object);
-	}
-
-	void removeType(const int id) {
-		mTypes.erase(id);
-	}
-
-	std::map<int, Creator<TBase>*> mTypes;
 };
 
 #endif __OBJECTFACTORY_H_

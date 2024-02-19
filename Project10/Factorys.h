@@ -5,16 +5,17 @@
 template <typename TBase>
 struct PROJECT_EXPORT Creator {
 
-	virtual TBase* create() = 0;
+	virtual std::shared_ptr<TBase> create() = 0;
 };
 
 template <typename TBase, typename TDerived>
 struct PROJECT_EXPORT ObjectCreator : public Creator<TBase> {
 
-	TBase* create() override
+	std::shared_ptr<TBase> create() override
 	{
-		return new TDerived;
+		return std::make_shared<TDerived>;
 	}
+	
 };
 
 #endif __FACTORYS_H_

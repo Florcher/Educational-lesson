@@ -8,15 +8,15 @@
 
 class Filer {
 public:
-	virtual int readInt() = 0;
-	virtual double readDouble() = 0;
-	virtual std::string readString() = 0;
-	virtual vector2D readVector2D() = 0;
+	virtual int readInt();
+	virtual double readDouble();
+	virtual std::string readString();
+	virtual vector2D readVector2D();
 };
 
 class TextFiler : public Filer {
 public:
-	TextFiler(std::string& fileName);
+	TextFiler(const std::string& fileName);
 	~TextFiler();
 
 	int readInt() override;
@@ -28,11 +28,33 @@ private:
 	std::ifstream mInput;
 };
 
+class ConsoleFiler : public Filer {
+public:
+	ConsoleFiler();
+	~ConsoleFiler();
 
+	int readInt() override;
+	double readDouble() override;
+	std::string readString() override;
+	vector2D readVector2D() override;
 
+private:
 
+};
 
+class BinaryFiler : public Filer {
+public:
+	BinaryFiler(const std::string& fileName);
+	~BinaryFiler();
 
+	int readInt() override;
+	double readDouble() override;
+	std::string readString() override;
+	vector2D readVector2D() override;
+
+private:
+	std::ifstream mInput;
+};
 
 
 #endif __FILER_H_
