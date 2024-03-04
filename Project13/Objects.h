@@ -4,18 +4,10 @@
 #include <string>
 #include <vector>
 #include "Header.h"
+#include "Vector2D.h"
 
-struct PROJECT_EXPORT vector2D {
-
-	friend std::ostream& operator<< (std::ostream&, const vector2D&);
-	friend std::istream& operator>> (std::istream&, vector2D&);
-
-	vector2D operator+(const vector2D&);
-	vector2D operator-(const vector2D&);
-
-	double x = 0;
-	double y = 0;
-};
+class InputFiler;
+class OutputFiler;
 
 
 class PROJECT_EXPORT object {
@@ -25,16 +17,14 @@ public:
 	object(const std::string& name, const int id);
 	virtual ~object() {};
 
-	virtual void input(class Filer& file);
-
-	virtual void binaryOutput(std::ostream& output);
-	virtual void print();
+	virtual void input(std::shared_ptr<InputFiler> file);
+	virtual void output(std::shared_ptr<OutputFiler> file);
 
 	void setName(const std::string& name);
 	void setId(const int id);
 
 	std::string getName() const;
-	int getindex() const;
+	int getId() const;
 
 private:
 
@@ -57,10 +47,8 @@ public:
 	vector2D getEnd() const;
 	double getLenth();
 
-	virtual void input(class Filer& file) override;
-
-	void binaryOutput(std::ostream& output) override;
-	void print() override;
+	void input(std::shared_ptr<InputFiler> file) override;
+	void output(std::shared_ptr<OutputFiler> file) override;
 
 private:
 
@@ -87,11 +75,9 @@ public:
 	double getArea() const;
 	double getPerimetr() const;
 
-	virtual void input(class Filer& file) override;
-
-	void binaryOutput(std::ostream& output) override;
-	void print() override;
-
+	void input(std::shared_ptr<InputFiler> file) override;
+	void output(std::shared_ptr<OutputFiler> file) override;
+	
 private:
 
 	vector2D mLeftDownPoint;
@@ -114,11 +100,9 @@ public:
 
 	double getArea() const;
 
-	virtual void input(class Filer& file) override;
-
-	void binaryOutput(std::ostream& output) override;
-	void print() override;
-
+	void input(std::shared_ptr<InputFiler> file) override;
+	void output(std::shared_ptr<OutputFiler> file) override;
+	
 private:
 
 	vector2D mCenter;
@@ -132,11 +116,9 @@ public:
 	Polyline() = default;
 	Polyline(const std::string& name, const int id, const std::vector<vector2D>& points);
 
-	virtual void input(class Filer& file) override;
-
-	void binaryOutput(std::ostream& output) override;
-	void print() override;
-
+	void input(std::shared_ptr<InputFiler> file) override;
+	void output(std::shared_ptr<OutputFiler> file) override;
+	
 private:
 
 	std::vector<vector2D> mPoints;

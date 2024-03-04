@@ -13,9 +13,10 @@ struct PROJECT_EXPORT ObjectCreator : public Creator<TBase> {
 
 	std::shared_ptr<TBase> create() override
 	{
-		return std::make_shared<TDerived>;
+		return std::make_shared<TDerived>();
 	}
-	
-};
 
+};
+ 
 #endif __FACTORYS_H_
+

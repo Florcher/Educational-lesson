@@ -3,53 +3,18 @@
 #include <math.h>
 #include <string>
 #include <vector>
-#include "Filer.h"
-
-std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
-
-	output << "(" << vector2D.x << ", " << vector2D.y << ")";
-
-	return output;
-}
-
-std::istream& operator>> (std::istream& input, vector2D& vector2D) {
-
-	input >> vector2D.x;
-	input >> vector2D.y;
-
-	return input;
-}
-
-vector2D vector2D::operator+(const vector2D& rhs) {
-
-	return { x + rhs.x, y + rhs.y };
-}
-
-vector2D vector2D::operator-(const vector2D& rhs) {
-
-	return { x - rhs.x, y - rhs.y };
-}
-
+#include "InputFiler.h"
+#include "Vector2D.h"
+#include "OutputFiler.h"
 
 object::object(const std::string& name, const int id) : mName(name), mId(id) {
 
 }
 
-void object::binaryOutput(std::ostream& output)
-{
-	
-	for (int i = 0; i <= mName.size(); i++) {
-		output.write((char*)&mName[i], 1);
-	}
-
-	output.write((char*)&mId, 4);
+void object::output(std::shared_ptr<OutputFiler> file) {
+	file->outputString(mName);
+	file->outputInt(mId);
 }
-
-void object::print() {
-
-	std::cout << mName << std::endl << mId << std::endl;
-}
-
 
 void object::setName(const std::string& name) {
 
@@ -65,15 +30,15 @@ std::string object::getName() const {
 	return mName;
 }
 
-int object::getindex() const {
+int object::getId() const {
 
 	return mId;
 }
 
-void object::input(Filer& file) {
+void object::input(std::shared_ptr<InputFiler> file) {
 
-	mName = file.readString();
-	mId = file.readInt();
+	mName = file->readString();
+	mId = file->readInt();
 }
 
 Line::Line(const std::string& name_, const int id_, const vector2D& start_, const vector2D& end_)
@@ -109,28 +74,18 @@ vector2D Line::getEnd() const {
 	return mEnd;
 };
 
-void Line::input(Filer& file) {
-
-	mStart = file.readVector2D();
-	mEnd = file.readVector2D();
+void Line::input(std::shared_ptr<InputFiler> file) {
+	
+	mStart = file->readVector2D();
+	mEnd = file->readVector2D();
 }
 
-void Line::binaryOutput(std::ostream& output){
+void Line::output(std::shared_ptr<OutputFiler> file) {
 
-	object::binaryOutput(output);
-	output.write((char*)&mStart.x, 8);
-	output.write((char*)&mStart.y, 8);
-	output.write((char*)&mEnd.x, 8);
-	output.write((char*)&mEnd.y, 8);
+	object::output(file);
+	file->outputVector2D(mStart);
+	file->outputVector2D(mEnd);
 }
-
-void Line::print() {
-
-	object::print();
-
-	std::cout << mEnd << " " << mStart << std::endl;
-}
-
 
 Rectangle::Rectangle(const std::string& name_, const int id_, const vector2D& vector2D, const double lenth_, const double width_)
 	: object(name_, id_), mLeftDownPoint(vector2D), mLenth(lenth_), mWidth(width_)
@@ -178,30 +133,19 @@ double Rectangle::getPerimetr() const {
 	return 2 * mLenth + 2 * mWidth;
 };
 
-void Rectangle::input(Filer& file) {
+void Rectangle::input(std::shared_ptr<InputFiler> file) {
 
-	mLeftDownPoint = file.readVector2D();
-	mLenth = file.readDouble();
-	mWidth = file.readDouble();
+	mLeftDownPoint = file->readVector2D();
+	mLenth = file->readDouble();
+	mWidth = file->readDouble();
 }
 
-void Rectangle::binaryOutput(std::ostream& output){
+void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 
-	object::binaryOutput(output);
-	output.write((char*)&mLeftDownPoint.x, 8);
-	output.write((char*)&mLeftDownPoint.y, 8);
-	output.write((char*)&mLenth, 8);
-	output.write((char*)&mWidth, 8);
-}
-
-void Rectangle::print() {
-
-	object::print();
-
-	std::cout << "left down point: " << mLeftDownPoint << std::endl;
-	std::cout << "lenth = " << mLenth << std::endl;
-	std::cout << "width = " << mWidth << std::endl;
-
+	object::output(file);
+	file->outputVector2D(mLeftDownPoint);
+	file->outputDouble(mLenth);
+	file->outputDouble(mWidth);
 
 	vector2D leftUpPoint = { mLeftDownPoint.x, mLeftDownPoint.y + mWidth };
 	Line ab{ "vector AB", 1, mLeftDownPoint, leftUpPoint };
@@ -214,17 +158,17 @@ void Rectangle::print() {
 
 	Line da{ "vector DA", 4, rightDownPoint, mLeftDownPoint };
 
-	ab.print();
-	bc.print();
-	cd.print();
-	da.print();
+	ab.output(file);
+	bc.output(file);
+	cd.output(file);
+	da.output(file);
 
-	std::cout << "perimetr = " << getPerimetr() << std::endl;
-	std::cout << "area = " << getArea() << std::endl;
-
+	file->outputString("perimetr");
+	file->outputDouble(getPerimetr());
+	file->outputString("area");
+	file->outputDouble(getArea());
 
 }
-
 
 Circle::Circle(const std::string& name, const int id, const vector2D& center, const double radius)
 	: object(name, id), mCenter(center), mRadius(radius) {
@@ -257,10 +201,10 @@ double Circle::getArea() const {
 	return Pi * mRadius * mRadius;
 };
 
-void Circle::input(Filer& file) {
+void Circle::input(std::shared_ptr<InputFiler> file) {
 
-	mCenter = file.readVector2D();
-	mRadius = file.readDouble();
+	mCenter = file->readVector2D();
+	mRadius = file->readDouble();
 }
 
 std::vector<Line> Circle::createLines() {
@@ -287,28 +231,19 @@ std::vector<Line> Circle::createLines() {
 	return lines;
 }
 
-void Circle::binaryOutput(std::ostream& output) {
+void Circle::output(std::shared_ptr<OutputFiler> file) {
 
-	object::binaryOutput(output);
-	output.write((char*)&mCenter.x, 8);
-	output.write((char*)&mCenter.y, 8);
-	output.write((char*)&mRadius, 8);
-}
-
-void Circle::print() {
-
-	object::print();
-	std::cout << "Center = " << mCenter << std::endl;
-	std::cout << "radius = " << mRadius << std::endl;
-	std::cout << "area = " << getArea() << std::endl;
+	object::output(file);
+	file->outputString("center");
+	file->outputVector2D(mCenter);
+	file->outputString("radius");
+	file->outputDouble(mRadius);
 
 	std::vector<Line> lines = createLines();
 	for (int i = 0; i < lines.size() - 1; i++) {
-		lines[i].print();
+		lines[i].output(file);
 	}
-
 }
-
 
 Polyline::Polyline(const std::string& name, const int id, const std::vector<vector2D>& points)
 	: object(name, id), mPoints(points)
@@ -316,12 +251,13 @@ Polyline::Polyline(const std::string& name, const int id, const std::vector<vect
 
 }
 
-void Polyline::input(Filer& file) {
+void Polyline::input(std::shared_ptr<InputFiler> file) {
 
-	int countOfPoints = file.readInt();
+
+	int countOfPoints = file->readInt();
 
 	for (int i = 0; i < countOfPoints; i++) {
-		mPoints.push_back(file.readVector2D());
+		mPoints.push_back(file->readVector2D());
 	}
 }
 
@@ -335,30 +271,16 @@ void Polyline::createLines(std::vector<Line>& lines)
 	}
 }
 
-void Polyline::binaryOutput(std::ostream& output) {
+void Polyline::output(std::shared_ptr<OutputFiler> file) {
 
-	object::binaryOutput(output);
-
-	int countOfpoints = mPoints.size();
-
-	output.write((char*)&countOfpoints, 4);
-	for (int i = 0; i < mPoints.size(); i++) {
-		output.write((char*)&mPoints[i].x, 8);
-		output.write((char*)&mPoints[i].y, 8);
-	}
-
-}
-
-void Polyline::print() {
-
-	object::print();
+	object::output(file);
 
 	std::vector<Line> lines;
 	createLines(lines);
-
-	std::cout << "count of points " << mPoints.size() << std::endl;
+	file->outputString("count of points");
+	file->outputInt(mPoints.size());
 
 	for (int i = 0; i < lines.size(); i++) {
-		lines[i].print();
+		lines[i].output(file);
 	}
 }

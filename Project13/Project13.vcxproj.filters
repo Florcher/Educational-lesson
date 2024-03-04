@@ -15,39 +15,63 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Objects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectFactory.h">
+    <ClInclude Include="DataBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Factorys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FileType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetFileType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputFiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Filer.h">
+    <ClInclude Include="OutputFiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Objects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Filer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InputFiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputFiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
