@@ -15,7 +15,7 @@ OutTextFiler::~OutTextFiler() {
 
 void OutTextFiler::outputInt(const int value) {
 
-	if ((value >= 2147483647) or (value <= -2147483647))
+	if ((value >= 1569325055) or (value <= -1569325055))
 		throw std::exception();
 
 	mOutput << value << std::endl;

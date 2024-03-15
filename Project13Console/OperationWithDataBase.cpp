@@ -19,7 +19,8 @@ void OperationWithDataBase::saveDb(std::shared_ptr<DataBase> db, const std::stri
 }
 
 void OperationWithDataBase::removeEntity(std::shared_ptr<DataBase> db, const int typeId, const int objectId) {
-	db->removeObject(typeId, objectId);
+	db->objects.at(typeId).erase(objectId);
+	db->objects.erase(typeId);
 }
 
 void OperationWithDataBase::editEntity(std::shared_ptr<DataBase> db) {
@@ -100,7 +101,7 @@ void OperationWithDataBase::listEntities(std::shared_ptr<DataBase> db) {
 
 		for (int j = 0; j != db->objects.at(typeId).size(); ++j) {
 
-			int objectId = db->typeAndObjectIds.at(typeId)[j];
+			int objectId = db->objectIds[j];
 			auto obj = db->objects.at(typeId).at(objectId);
 			std::string name = obj->getName();
 			std::cout << typeId << " " << objectId << " " << name << std::endl;

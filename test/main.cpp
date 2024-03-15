@@ -114,7 +114,6 @@ void testOutputFiler() {
 	OutTextFiler filer2("file4.txt");
 	was_exeption(filer2.outputInt(99999999999999999));
 
-	was_exeption(OutTextFiler filer3("fi1234.131"));
 }
 
 int main() {

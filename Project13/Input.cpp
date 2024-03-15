@@ -47,8 +47,11 @@ std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
 		obj->setId(objectId);
 		obj->setName(name);
 		obj->input(filer);
-		db->addType(typeId);
-		db->addObject(typeId, objectId, obj);
+		std::map<int, std::shared_ptr<object>> pair;
+		pair.emplace(objectId, obj);
+		db->typeIds.push_back(typeId);
+		db->objectIds.push_back(objectId);
+		db->objects.emplace(typeId, pair);
 	}
 
 	return db;
