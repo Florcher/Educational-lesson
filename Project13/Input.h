@@ -7,7 +7,7 @@
 
 class PROJECT_EXPORT Input {
 public:
-	std::shared_ptr<DataBase> input(const std::string& path);
+	std::shared_ptr<DataBase> input(const std::string& filename);
 };
 
 

@@ -9,33 +9,33 @@
 
 
 std::shared_ptr<InputFiler> createFiler(const FileType& filetype, const std::string& fileName) {
-	if (filetype.filetype == ".txt") {
+
+	if (filetype == FileType::txt) 
 		return std::make_shared<InTextFiler>(fileName);
-	}
-	else {
-		if (filetype.filetype == ".bidb") {
-			return std::make_shared<InBinaryFiler>(fileName);;
-		}
-		else {
-			return std::make_shared<InConsoleFiler>();
-		}
-	}
+
+	if (filetype == FileType::binary)
+        return std::make_shared<InBinaryFiler>(fileName);;
+	
+	if(filetype == FileType::console)
+		return std::make_shared<InConsoleFiler>();
+
+	throw std::exception();
 }
 
 
 std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
 
-	GetFileType gft;
-	auto f = gft.getFileType(fileName);
-
-	if (f.filetype == "uknown")
-		return nullptr;
+	auto f = getFileType(fileName);
 
 	auto filer = createFiler(f, fileName);
 
 	auto objFactory = std::make_shared<ObjectFactory>();
 
 	int count = filer->readInt();
+
+	if ((count > 2147483647) or (count < 0))
+		throw std::exception();
+
 	auto db = std::make_shared<DataBase>();
 
 	for (int i = 0; i < count; ++i) {
@@ -43,7 +43,6 @@ std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
 		int objectId = filer->readInt();
 		auto name = filer->readString();
 		int typeId = filer->readInt();
-		/*objFactory->addObject(typeId, objectId);*/
 		auto obj = objFactory->getObject(typeId);
 		obj->setId(objectId);
 		obj->setName(name);

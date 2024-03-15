@@ -9,29 +9,30 @@
 #include "GetFileType.h"
 
 std::shared_ptr<OutputFiler> createFiler(const FileType& filetype, const std::string& fileName) {
-	if (filetype.filetype == ".txt") {
+
+	if (filetype == FileType::txt)
 		return std::make_shared<OutTextFiler>(fileName);
-	}
-	else {
-		if (filetype.filetype == ".bidb") {
-			return std::make_shared<OutBinaryFiler>(fileName);;
-		}
-		else {
-			return std::make_shared<OutConsoleFiler>();
-		}
-	}
+
+	if (filetype == FileType::binary)
+		return std::make_shared<OutBinaryFiler>(fileName);;
+
+	if (filetype == FileType::console)
+		return std::make_shared<OutConsoleFiler>();
+
+	throw std::exception();
 }
 
 void Output::output(std::shared_ptr<DataBase> db, const std::string fileName) {
 
-	GetFileType gft;
-	auto f = gft.getFileType(fileName);
+	auto f = getFileType(fileName);
+
+	if (f == FileType::unknown)
+		throw std::exception();
 
 	auto filer = createFiler(f, fileName);
 
-
 	int countTypesId = db->objects.size();
-	filer->outputInt(db->countOfObjects);
+	filer->outputInt(db->objectsCount);
 	for (int i = 0; i < countTypesId; ++i) {
 		int typeId = db->typeIds[i];
 

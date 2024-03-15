@@ -4,45 +4,48 @@
 #include <vector>
 #include "Header.h"
 
-struct PROJECT_EXPORT FileType {
-
-	FileType(const std::string& type) : filetype(type)
-	{
-	}
-	std::string filetype;
+enum class PROJECT_EXPORT FileType {
+	binary,
+	txt,
+	console,
+	unknown
 };
 
-struct PROJECT_EXPORT TextFile : public FileType {
+PROJECT_EXPORT inline FileType getFileType(const std::string& filename) 
+{
+	int mark = 0;
 
-	TextFile(const std::string& type = ".txt") : FileType(type)
-	{
+	if (filename.rfind(".txt") != std::string::npos)
+		mark = 1;
 
+	if (filename.rfind(".bindb") != std::string::npos)
+		mark = 2;
+
+	if (filename.rfind(".console") != std::string::npos)
+		mark = 3;
+
+
+	switch (mark) {
+	case 0:
+		return FileType::unknown;
+		break;
+
+	case 1:
+		return FileType::txt;
+		break;
+
+	case 2:
+		return FileType::binary;
+		break;
+
+	case 3:
+		return FileType::console;
+		break;
+
+	default:
+		break;
 	}
-};
-
-struct PROJECT_EXPORT BinaryFile : public FileType {
-
-	BinaryFile(const std::string& type = ".bindb") : FileType(type)
-	{
-
-	}
-};
-
-struct PROJECT_EXPORT ConsoleFile : public FileType {
-
-	ConsoleFile(const std::string& type = ".console") : FileType(type)
-	{
-
-	}
-};
-
-struct PROJECT_EXPORT UnknownFile : public FileType {
-
-	UnknownFile(const std::string& type = ".unknown") : FileType(type)
-	{
-
-	}
-};
+}
 
 #endif __FILETYPE_H
 

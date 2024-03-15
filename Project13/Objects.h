@@ -6,9 +6,10 @@
 #include "Header.h"
 #include "Vector2D.h"
 
+
 class InputFiler;
 class OutputFiler;
-
+class Drawer;
 
 class PROJECT_EXPORT object {
 public:
@@ -19,6 +20,7 @@ public:
 
 	virtual void input(std::shared_ptr<InputFiler> file);
 	virtual void output(std::shared_ptr<OutputFiler> file);
+	virtual void draw(std::shared_ptr<Drawer> drawer);
 
 	void setName(const std::string& name);
 	void setId(const int id);
@@ -49,6 +51,7 @@ public:
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
+	void draw(std::shared_ptr<Drawer> drawer) override;
 
 private:
 
@@ -65,8 +68,8 @@ public:
 	~Rectangle() {};
 
 	void setLeftDownPoint(const vector2D& vector2D);
-	void setLenth(const int& lenth_);
-	void setWidth(const int& width_);
+	void setLenth(const double lenth_);
+	void setWidth(const double width_);
 
 	vector2D getLeftDownPoint();
 	double getLenth();
@@ -77,7 +80,8 @@ public:
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
-	
+	void draw(std::shared_ptr<Drawer> drawer) override;
+
 private:
 
 	vector2D mLeftDownPoint;
@@ -102,7 +106,8 @@ public:
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
-	
+	void draw(std::shared_ptr<Drawer> drawer) override;
+
 private:
 
 	vector2D mCenter;
@@ -116,9 +121,12 @@ public:
 	Polyline() = default;
 	Polyline(const std::string& name, const int id, const std::vector<vector2D>& points);
 
+	void editPoint(const int index, const vector2D& point);
+
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
-	
+	void draw(std::shared_ptr<Drawer> drawer) override;
+
 private:
 
 	std::vector<vector2D> mPoints;

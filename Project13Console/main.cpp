@@ -23,7 +23,6 @@
 //}
 
 
-
 void operationWithDataBase(std::shared_ptr<DataBase> db) {
 
 	OperationWithDataBase operDb;
@@ -31,6 +30,7 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 	int mark = 0;
 	std::string infilename;
 	std::string outfilename;
+	std::string drawfilename;
 
 	while (mark != 6) {
 
@@ -40,7 +40,8 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 		std::cout << "3 - editEntity" << std::endl;
 		std::cout << "4 - removeEntity" << std::endl;
 		std::cout << "5 - listEntity" << std::endl;
-		std::cout << "6 - exit" << std::endl;
+		std::cout << "6 - draw objects" << std::endl;
+		std::cout << "7 - exit" << std::endl;
 
 		std::cin >> mark;
 
@@ -77,6 +78,12 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 			operDb.listEntities(db);
 			break;
 
+		case 6:
+			std::cout << "Enter file name" << std::endl;
+			std::cin >> drawfilename;
+			operDb.drawObject(db, drawfilename);
+			break;
+
 		default:
 			break;
 
@@ -90,8 +97,6 @@ int main() {
 
 	operationWithDataBase(db);
 
-	
-	
 	return 0;
 }
 

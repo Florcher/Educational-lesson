@@ -2,13 +2,13 @@
 #include <iostream>
 #include "Header.h"
 #include "Vector2D.h"
-#include "InputFiler.h"
+#include "ContextIO.h"
 
 BaseOperationWithObject::BaseOperationWithObject(std::shared_ptr<object> obj) {
 	mObj = obj;
 }
 
-void BaseOperationWithObject::operation() {
+void BaseOperationWithObject::operation(std::shared_ptr<ContextIO> context) {
 	std::cout << "Press 1 to edit id." << std::endl;
 	std::cout << "Press 2 to edit name." << std::endl;
 }
@@ -29,44 +29,42 @@ OperationWithLine::OperationWithLine(std::shared_ptr<object> obj) : BaseOperatio
 	mLine = std::dynamic_pointer_cast<Line>(obj);
 };
 
-void OperationWithLine::operation() {
+void OperationWithLine::operation(std::shared_ptr<ContextIO> context) {
 
 	int mark = 0;
 
 	while (mark != -1) {
 
-		BaseOperationWithObject::operation();
+		BaseOperationWithObject::operation(context);
 
 		std::cout << "Press 3 to edit startpoint." << std::endl;
 		std::cout << "Press 4 to edit endpoint." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 		std::cin >> mark;
-
 		
 		std::string name;
 		vector2D startPoint, endPoint;
 		int id;
-		InConsoleFiler filer;
-
+	
 		switch (mark) {
 
 		case 1:
-			id = filer.readInt();
+			id = context->getInt();
 			editId(id);
 			break;
 
 		case 2:
-			name = filer.readString();
+			name = context->getString();
 			editName(name);
 			break;
 
 		case 3:
-			startPoint = filer.readVector2D();
+			startPoint = context->getPoint();
 			editStartPoint(startPoint);
 			break;
 
 		case 4:
-			endPoint = filer.readVector2D();
+			endPoint = context->getPoint();
 			editEndPoint(endPoint);
 			break;
 		}
@@ -84,13 +82,13 @@ OpertationWithRectangle::OpertationWithRectangle(std::shared_ptr<object> obj) : 
 	mRec = std::dynamic_pointer_cast<Rectangle>(obj);
 }
 
-void OpertationWithRectangle::operation() {
+void OpertationWithRectangle::operation(std::shared_ptr<ContextIO> context) {
 
 	int mark = 0;
 
 	while (mark != -1) {
 
-		BaseOperationWithObject::operation();
+		BaseOperationWithObject::operation(context);
 
 		std::cout << "Press 3 to edit leftDownPoint." << std::endl;
 		std::cout << "Press 4 to edit lenth." << std::endl;
@@ -106,27 +104,27 @@ void OpertationWithRectangle::operation() {
 		switch (mark) {
 
 		case 1:
-			id = filer.readInt();
+			id = context->getInt();
 			editId(id);
 			break;
 
 		case 2:
-			name = filer.readString();
+			name = context->getString();
 			editName(name);
 			break;
 
 		case 3:
-			leftDownPoint = filer.readVector2D() ;
+			leftDownPoint = context->getPoint();
 			editLeftDownPoint(leftDownPoint);
 			break;
 
 		case 4:
-			lenth = filer.readDouble();
+			lenth = context->getDouble();
 			editLenth(lenth);
 			break;
 
 		case 5:
-			width = filer.readDouble();
+			width = context->getDouble();
 			editWidth(width);
 			break;
 		}
@@ -149,15 +147,15 @@ OpertationWithCircle::OpertationWithCircle(std::shared_ptr<object> obj) : BaseOp
 	mCircle = std::dynamic_pointer_cast<Circle>(obj);
 }
 
-void OpertationWithCircle::operation() {
+void OpertationWithCircle::operation(std::shared_ptr<ContextIO> context) {
 
 	int mark = 0;
 
 	while (mark != -1) {
 
-		BaseOperationWithObject::operation();
+		BaseOperationWithObject::operation(context);
 
-		std::cout << "Press 3 to edit cente." << std::endl;
+		std::cout << "Press 3 to edit center." << std::endl;
 		std::cout << "Press 4 to edit radius." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 		std::cin >> mark;
@@ -170,32 +168,84 @@ void OpertationWithCircle::operation() {
 		switch (mark) {
 
 		case 1:
-			id = filer.readInt();
+			id = context->getInt();
 			editId(id);
 			break;
 
 		case 2:
-			name = filer.readString();
+			name = context->getString();
 			editName(name);
 			break;
 
 		case 3:
-			center = filer.readVector2D();
+			center = context->getPoint();
 			editCenter(center);
 			break;
 
 		case 4:
-			radius = filer.readDouble();
+			radius = context->getDouble();
 			editRadius(radius);
 			break;
 		}
 	}
 }
 
-void OpertationWithCircle::editCenter(const vector2D center) {
+void OpertationWithCircle::editCenter(const vector2D& center) {
 	mCircle->setCenter(center);
 }
 
 void OpertationWithCircle::editRadius(const double radius) {
 	mCircle->setRadius(radius);
+}
+
+OperationWithPolyline::OperationWithPolyline(std::shared_ptr<object> obj) : BaseOperationWithObject(obj) {
+	mPolyline = std::dynamic_pointer_cast<Polyline>(obj);
+}
+
+void OperationWithPolyline::operation(std::shared_ptr<ContextIO> context) {
+
+	int mark = 0;
+
+	while (mark != -1) {
+
+		BaseOperationWithObject::operation(context);
+
+		std::cout << "Press 3 to edit point." << std::endl;
+		std::cout << "Press -1 to exit." << std::endl;
+
+		std::string name;
+		int id;
+
+
+		switch (mark) {
+
+		case 1:
+			name = context->getString();
+			editName(name);
+			break;
+
+		case 2:
+			id = context->getInt();
+			editId(id);
+			break;
+
+		case 3:
+			std::cout << "Enter index to edit point: " << std::endl;
+
+			int index;
+			index = context->getInt();
+
+			std::cout << "Enter point: " << std::endl;
+
+			vector2D point;
+			point = context->getPoint();
+
+			editPoint(index, point);
+			break;
+		}
+	}
+}
+
+void OperationWithPolyline::editPoint(const int index, const vector2D& point) {
+	mPolyline->editPoint(index, point);
 }

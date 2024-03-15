@@ -7,6 +7,8 @@
 
 InTextFiler::InTextFiler(const std::string& fileName) {
 	mInput.open(fileName);
+	if (!mInput.is_open())
+		throw std::exception();
 }
 
 InTextFiler::~InTextFiler() {
@@ -17,6 +19,9 @@ int InTextFiler::readInt() {
 
 	int count;
 	mInput >> count;
+	if ((count >= 2147483647) or (count <= -2147483647))
+		throw std::exception();
+
 	return count;
 }
 
@@ -53,6 +58,9 @@ int InConsoleFiler::readInt() {
 
 	int count;
 	std::cin >> count;
+	if ((count >= 2147483647) or (count <= -2147483647))
+		throw std::exception();
+
 	return count;
 }
 
@@ -78,7 +86,8 @@ vector2D InConsoleFiler::readVector2D() {
 }
 
 InBinaryFiler::InBinaryFiler(const std::string& fileName) : mInput(fileName, std::ios_base::binary) {
-
+	if (!mInput.is_open())
+		throw std::exception();
 }
 
 InBinaryFiler::~InBinaryFiler() {
@@ -89,6 +98,9 @@ int InBinaryFiler::readInt() {
 
 	int count;
 	mInput.read((char*)&count, 4);
+	if ((count >= 2147483647) or (count <= -2147483647))
+		throw std::exception();
+
 	return count;
 }
 
@@ -101,22 +113,13 @@ double InBinaryFiler::readDouble() {
 
 std::string InBinaryFiler::readString() {
 
-	std::string str;
-	std::vector<char> symbols;
-	symbols.push_back('A');
-	int iterator = 0;
-	while (symbols[iterator] != '\0') {
-		char tmpSym;
-		iterator++;
-		mInput.read((char*)&tmpSym, 1);
-		symbols.push_back(tmpSym);
-	}
+	int size = readInt();
+	if ((size >= 2147483647) or (size <= 0))
+		throw std::exception();
 
-	for (int i = 1; i < iterator; i++) {
-		str.push_back(symbols[i]);
-	};
-
-	return str;
+	std::string res(size + 1,'\0');
+	mInput.read(res.data(), size);
+	return res;
 }
 
 vector2D InBinaryFiler::readVector2D() {

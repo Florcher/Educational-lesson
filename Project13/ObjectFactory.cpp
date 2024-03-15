@@ -15,20 +15,6 @@ ObjectFactory::ObjectFactory() {
 	addType(4, std::make_shared<ObjectCreator<object, Polyline>>());
 }
 
-ObjectFactory::ObjectFactory(const ObjectFactory& factory)
-	: mTypes(factory.mTypes)
-{
-
-}
-
-ObjectFactory& ObjectFactory::operator=(const ObjectFactory& factory) {
-	
-	mTypes.clear();
-	mTypes = factory.mTypes;
-
-	return *this;
-}
-
 ObjectFactory::~ObjectFactory() {
 
 	mTypes.clear();
@@ -36,17 +22,26 @@ ObjectFactory::~ObjectFactory() {
 
 void ObjectFactory::addType(const int typeId, std::shared_ptr<Creator<object>> object) {
 
+	if ((typeId > 2147483647) or (typeId < -2147483647))
+		throw std::exception();
+
 	if (!mTypes.contains(typeId))
 		mTypes.emplace(typeId, object);
 }
 
 void ObjectFactory::removeType(const int typeId) {
 
+	if ((typeId > 2147483647) or (typeId < -2147483647))
+		throw std::exception();
+
 	if (mTypes.contains(typeId))
 		mTypes.erase(typeId);
 }
 
 std::shared_ptr<object> ObjectFactory::getObject(const int typeId) {
+
+	if ((typeId > 2147483647) or (typeId < -2147483647))
+		throw std::exception();
 
 	return mTypes.at(typeId)->create();
 }

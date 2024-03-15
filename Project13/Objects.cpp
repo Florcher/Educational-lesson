@@ -5,7 +5,7 @@
 #include <vector>
 #include "InputFiler.h"
 #include "Vector2D.h"
-#include "OutputFiler.h"
+#include "Drawer.h"
 
 object::object(const std::string& name, const int id) : mName(name), mId(id) {
 
@@ -16,11 +16,17 @@ void object::output(std::shared_ptr<OutputFiler> file) {
 	file->outputInt(mId);
 }
 
+void object::draw(std::shared_ptr<Drawer> drawer) {
+
+}
+
 void object::setName(const std::string& name) {
 
 	mName = name;
 }
 void object::setId(const int id) {
+	if ((id >= 276447231) or (id <= -276447231))
+		throw std::exception();
 
 	mId = id;
 }
@@ -87,6 +93,10 @@ void Line::output(std::shared_ptr<OutputFiler> file) {
 	file->outputVector2D(mEnd);
 }
 
+void Line::draw(std::shared_ptr<Drawer> drawer) {
+	drawer->drawLine(mStart, mEnd);
+}
+
 Rectangle::Rectangle(const std::string& name_, const int id_, const vector2D& vector2D, const double lenth_, const double width_)
 	: object(name_, id_), mLeftDownPoint(vector2D), mLenth(lenth_), mWidth(width_)
 {
@@ -98,12 +108,16 @@ void Rectangle::setLeftDownPoint(const vector2D& vector2D) {
 	mLeftDownPoint = vector2D;
 };
 
-void Rectangle::setLenth(const int& lenth) {
+void Rectangle::setLenth(const double lenth) {
+	if ((lenth > 2147483647) or (lenth < -2147483647))
+		throw std::exception();
 
 	mLenth = lenth;
 };
 
-void Rectangle::setWidth(const int& width) {
+void Rectangle::setWidth(const double width) {
+	if ((width > 2147483647) or (width < -2147483647))
+		throw std::exception();
 
 	mWidth = width;
 };
@@ -147,6 +161,14 @@ void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 	file->outputDouble(mLenth);
 	file->outputDouble(mWidth);
 
+	file->outputString("perimetr");
+	file->outputDouble(getPerimetr());
+	file->outputString("area");
+	file->outputDouble(getArea());
+}
+
+void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
+
 	vector2D leftUpPoint = { mLeftDownPoint.x, mLeftDownPoint.y + mWidth };
 	Line ab{ "vector AB", 1, mLeftDownPoint, leftUpPoint };
 
@@ -158,16 +180,10 @@ void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 
 	Line da{ "vector DA", 4, rightDownPoint, mLeftDownPoint };
 
-	ab.output(file);
-	bc.output(file);
-	cd.output(file);
-	da.output(file);
-
-	file->outputString("perimetr");
-	file->outputDouble(getPerimetr());
-	file->outputString("area");
-	file->outputDouble(getArea());
-
+	ab.draw(drawer);
+	bc.draw(drawer);
+	cd.draw(drawer);
+	da.draw(drawer);
 }
 
 Circle::Circle(const std::string& name, const int id, const vector2D& center, const double radius)
@@ -181,6 +197,8 @@ void Circle::setCenter(const vector2D& center) {
 };
 
 void Circle::setRadius(const double radius) {
+	if ((radius > 2147483647) or (radius < 0))
+		throw std::exception();
 
 	mRadius = radius;
 };
@@ -238,10 +256,13 @@ void Circle::output(std::shared_ptr<OutputFiler> file) {
 	file->outputVector2D(mCenter);
 	file->outputString("radius");
 	file->outputDouble(mRadius);
+}
+
+void Circle::draw(std::shared_ptr<Drawer> drawer) {
 
 	std::vector<Line> lines = createLines();
 	for (int i = 0; i < lines.size() - 1; i++) {
-		lines[i].output(file);
+		lines[i].draw(drawer);
 	}
 }
 
@@ -251,10 +272,17 @@ Polyline::Polyline(const std::string& name, const int id, const std::vector<vect
 
 }
 
+void Polyline::editPoint(const int index, const vector2D& point) {
+	mPoints[index] = point;
+}
+
 void Polyline::input(std::shared_ptr<InputFiler> file) {
 
 
 	int countOfPoints = file->readInt();
+
+	if ((countOfPoints > 2147483647) or (countOfPoints < 0))
+		throw std::exception();
 
 	for (int i = 0; i < countOfPoints; i++) {
 		mPoints.push_back(file->readVector2D());
@@ -275,12 +303,20 @@ void Polyline::output(std::shared_ptr<OutputFiler> file) {
 
 	object::output(file);
 
-	std::vector<Line> lines;
-	createLines(lines);
 	file->outputString("count of points");
 	file->outputInt(mPoints.size());
 
+	for (int i = 0; i < mPoints.size(); i++) {
+		file->outputVector2D(mPoints[i]);
+	}
+}
+
+void Polyline::draw(std::shared_ptr<Drawer> drawer) {
+
+	std::vector<Line> lines;
+	createLines(lines);
+
 	for (int i = 0; i < lines.size(); i++) {
-		lines[i].output(file);
+		lines[i].draw(drawer);
 	}
 }

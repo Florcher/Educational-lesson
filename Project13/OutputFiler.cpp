@@ -5,6 +5,8 @@
 
 OutTextFiler::OutTextFiler(const std::string& fileName) {
 	mOutput.open(fileName);
+	if (!mOutput.is_open())
+		throw std::exception();
 }
 
 OutTextFiler::~OutTextFiler() {
@@ -12,6 +14,10 @@ OutTextFiler::~OutTextFiler() {
 }
 
 void OutTextFiler::outputInt(const int value) {
+
+	if ((value >= 2147483647) or (value <= -2147483647))
+		throw std::exception();
+
 	mOutput << value << std::endl;
 }
 
@@ -35,6 +41,10 @@ OutConsoleFiler::~OutConsoleFiler() {
 }
 
 void OutConsoleFiler::outputInt(const int value) {
+
+	if ((value >= 2147483647) or (value <= -2147483647))
+		throw std::exception();
+
 	std::cout << value << std::endl;
 }
 
@@ -52,6 +62,8 @@ void OutConsoleFiler::outputVector2D(const vector2D& vec) {
 
 OutBinaryFiler::OutBinaryFiler(const std::string& fileName) {
 	mOutput.open(fileName, std::ios::binary);
+	if (!mOutput.is_open())
+		throw std::exception();
 }
 
 OutBinaryFiler::~OutBinaryFiler() {
@@ -59,6 +71,10 @@ OutBinaryFiler::~OutBinaryFiler() {
 }
 
 void OutBinaryFiler::outputInt(const int value) {
+
+	if ((value >= 2147483647) or (value <= -2147483647))
+		throw std::exception();
+
 	mOutput.write((char*)&value, 4);
 }
 

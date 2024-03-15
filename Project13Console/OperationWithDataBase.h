@@ -13,7 +13,7 @@ struct OperationWithDataBase {
 	void removeEntity(std::shared_ptr<DataBase> db, const int typeId, const int objectId);
 	void editEntity(std::shared_ptr<DataBase> db);
 	void listEntities(std::shared_ptr<DataBase> db);
-	
+	void drawObject(std::shared_ptr<DataBase> db, const std::string& filename);
 };
 
 
