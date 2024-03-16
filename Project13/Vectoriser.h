@@ -3,8 +3,7 @@
 #include "Header.h"
 #include <iostream>
 #include <string>
-
-class DataBase;
+#include "DataBase.h"
 
 class PROJECT_EXPORT Vectoriser {
 public:
