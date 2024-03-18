@@ -121,6 +121,7 @@ public:
 	Polyline() = default;
 	Polyline(const std::string& name, const int id, const std::vector<vector2D>& points);
 
+	void setPoint(const vector2D& point);
 	void editPoint(const int index, const vector2D& point);
 
 	void input(std::shared_ptr<InputFiler> file) override;

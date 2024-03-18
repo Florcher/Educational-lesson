@@ -1,20 +1,9 @@
-//#include "Input.h"
-//#include "Output.h"
-//#include "ObjectFactory.h"
 #include <iostream>
 #include "Vector2D.h"
 #include "InputFiler.h"
 #include <string>
 #include "OperationWithDataBase.h"
 
-//std::shared_ptr<object> createEntity(const int typeId, const int objectId, const std::string& name) {
-//
-//	ObjectFactory factory;
-//	auto obj = factory.getObject(typeId);
-//	obj->setName(name);
-//	obj->setId(objectId);
-//	return obj;
-//}
 
 //void addEntity(std::shared_ptr<DataBase> db, const int typeId, const int objectId, const std::string& name) {
 //
@@ -32,16 +21,17 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 	std::string outfilename;
 	std::string drawfilename;
 
-	while (mark != 6) {
+	while (mark != 8) {
 
 		std::cout << "Operation with data base: " << std::endl;
 		std::cout << "1 - loadDb" << std::endl;
 		std::cout << "2 - saveDb" << std::endl;
 		std::cout << "3 - editEntity" << std::endl;
-		std::cout << "4 - removeEntity" << std::endl;
-		std::cout << "5 - listEntity" << std::endl;
-		std::cout << "6 - draw objects" << std::endl;
-		std::cout << "7 - exit" << std::endl;
+		std::cout << "4 - addEntity" << std::endl;
+		std::cout << "5 - removeEntity" << std::endl;
+		std::cout << "6 - listEntity" << std::endl;
+		std::cout << "7 - draw objects" << std::endl;
+		std::cout << "8 - exit" << std::endl;
 
 		std::cin >> mark;
 
@@ -66,6 +56,10 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 			break;
 
 		case 4:
+			operDb.addEntity(db);
+			break;
+
+		case 5:
 			std::cout << "Enter typeId and objecId" << std::endl;
 			int tId;
 			int oId;
@@ -74,17 +68,22 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 			operDb.removeEntity(db, tId, oId);
 			break;
 
-		case 5:
+		case 6:
 			operDb.listEntities(db);
 			break;
 
-		case 6:
+		case 7:
 			std::cout << "Enter file name" << std::endl;
 			std::cin >> drawfilename;
 			operDb.drawObject(db, drawfilename);
 			break;
 
+		case 8:
+			mark = 8;
+			break;
+
 		default:
+			throw std::exception();
 			break;
 
 		}
@@ -93,7 +92,7 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 
 int main() {
 
-	std::shared_ptr<DataBase> db;
+	std::shared_ptr<DataBase> db = std::make_shared<DataBase>();
 
 	operationWithDataBase(db);
 

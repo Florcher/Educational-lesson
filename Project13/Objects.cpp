@@ -272,6 +272,10 @@ Polyline::Polyline(const std::string& name, const int id, const std::vector<vect
 
 }
 
+void Polyline::setPoint(const vector2D& point) {
+	mPoints.push_back(point);
+}
+
 void Polyline::editPoint(const int index, const vector2D& point) {
 	mPoints[index] = point;
 }

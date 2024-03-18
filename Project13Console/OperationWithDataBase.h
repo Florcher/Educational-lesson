@@ -10,6 +10,7 @@ struct OperationWithDataBase {
 	std::shared_ptr<DataBase> loadDb(const std::string& filename);
 	void saveDb(std::shared_ptr<DataBase> db, const std::string& filename);
 
+	void addEntity(std::shared_ptr<DataBase> db);
 	void removeEntity(std::shared_ptr<DataBase> db, const int typeId, const int objectId);
 	void editEntity(std::shared_ptr<DataBase> db);
 	void listEntities(std::shared_ptr<DataBase> db);

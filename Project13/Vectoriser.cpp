@@ -27,9 +27,9 @@ void Vectoriser::draw(std::shared_ptr<DataBase> db, const std::string& filename)
 
 		int typeId = db->typeIds[i];
 
-		for (int j = 0; j < db->objects.at(typeId).size(); ++j) {
+		for (int j = 1; j <= db->objects.at(typeId).size(); ++j) {
 
-			int objectId = db->objectIds[j];
+			int objectId = db->objects.at(typeId).at(j)->getId();
 			auto obj = db->objects.at(typeId).at(objectId);
 			obj->draw(drawer);
 		}

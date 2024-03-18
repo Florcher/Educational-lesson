@@ -74,7 +74,7 @@ double InConsoleFiler::readDouble() {
 std::string InConsoleFiler::readString() {
 
 	std::string str;
-	std::getline(std::cin, str);
+	std::cin >> str;
 	return str;
 }
 
