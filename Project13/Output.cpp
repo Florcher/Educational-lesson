@@ -29,7 +29,7 @@ void Output::output(std::shared_ptr<DataBase> db, const std::string fileName) {
 
 	auto filer = createFiler(f, fileName);
 
-	filer->outputInt(db->objectIds.size());
+	filer->outputInt(db->typeIds.size());
 
 	for (int i = 0; i < db->objects.size(); i++) {
 		

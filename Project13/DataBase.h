@@ -13,7 +13,6 @@ struct PROJECT_EXPORT DataBase {
 	~DataBase();
 
 	std::vector<int> typeIds;
-	std::vector<int> objectIds;
 	std::map<int, std::map<int, std::shared_ptr<object>>> objects;
 };
 

@@ -92,7 +92,6 @@ void OperationWithDataBase::addEntity(std::shared_ptr<DataBase> db) {
 	}
 
 	db->typeIds.push_back(typeId);
-	db->objectIds.push_back(obj->getId());
 
 	if (!db->objects.contains(typeId)) {
 		std::map<int, std::shared_ptr<object>> pair;
@@ -104,8 +103,13 @@ void OperationWithDataBase::addEntity(std::shared_ptr<DataBase> db) {
 }
 
 void OperationWithDataBase::removeEntity(std::shared_ptr<DataBase> db, const int typeId, const int objectId) {
-	db->objects.at(typeId).erase(objectId);
-	db->objects.erase(typeId);
+	if (db->objects.at(typeId).size() == 0) {
+		throw std::exception();
+	}
+	else
+	{
+		db->objects.at(typeId).erase(objectId);
+	}
 }
 
 void OperationWithDataBase::editEntity(std::shared_ptr<DataBase> db) {

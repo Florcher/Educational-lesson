@@ -24,9 +24,6 @@
     <ClInclude Include="FileType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GetFileType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -55,9 +52,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Drawer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project13Console\GetDrawer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -132,12 +132,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Project13Console\GetDrawer.h" />
     <ClInclude Include="DataBase.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Factorys.h" />
     <ClInclude Include="FileType.h" />
-    <ClInclude Include="GetFileType.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputFiler.h" />

@@ -51,7 +51,6 @@ std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
 		std::map<int, std::shared_ptr<object>> pair;
 		pair.emplace(objectId, obj);
 		db->typeIds.push_back(typeId);
-		db->objectIds.push_back(objectId);
 		db->objects.emplace(typeId, pair);
 	}
 
