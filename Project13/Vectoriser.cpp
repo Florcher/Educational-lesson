@@ -13,13 +13,14 @@ std::shared_ptr<Drawer> getDrawer(const FileType& filetype, const std::string& f
 
 	if (filetype == FileType::console)
 		return std::make_shared<ConsoleDrawer>();
-
-	throw std::exception();
 }
 
 void Vectoriser::draw(std::shared_ptr<DataBase> db, const std::string& filename) {
 
 	auto f = getFileType(filename);
+
+	if (f == FileType::unknown)
+		throw std::exception();
 
 	auto drawer = getDrawer(f, filename);
 

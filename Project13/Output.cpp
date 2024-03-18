@@ -18,8 +18,6 @@ std::shared_ptr<OutputFiler> createFiler(const FileType& filetype, const std::st
 
 	if (filetype == FileType::console)
 		return std::make_shared<OutConsoleFiler>();
-
-	throw std::exception();
 }
 
 void Output::output(std::shared_ptr<DataBase> db, const std::string fileName) {

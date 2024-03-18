@@ -18,14 +18,15 @@ std::shared_ptr<InputFiler> createFiler(const FileType& filetype, const std::str
 	
 	if(filetype == FileType::console)
 		return std::make_shared<InConsoleFiler>();
-
-	throw std::exception();
 }
 
 
 std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
 
 	auto f = getFileType(fileName);
+
+	if (f == FileType::unknown)
+		throw std::exception();
 
 	auto filer = createFiler(f, fileName);
 
