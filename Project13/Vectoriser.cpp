@@ -24,16 +24,13 @@ void Vectoriser::draw(std::shared_ptr<DataBase> db, const std::string& filename)
 
 	auto drawer = getDrawer(f, filename);
 
-	for (int i = 0; i < db->objects.size(); ++i) {
+	for (int typeId = 0; typeId <= db->getMapSize(); ++typeId) {
 
-		int typeId = db->typeIds[i];
+		for (int position = 1; position < db->getNestedMapsize(typeId); ++position) {
 
-		for (int j = 1; j <= db->objects.at(typeId).size(); ++j) {
-
-			int objectId = db->objects.at(typeId).at(j)->getId();
-			auto obj = db->objects.at(typeId).at(objectId);
+			int objectId = db->getObjectId(typeId, position);
+			auto obj = db->getObject(typeId, objectId);
 			obj->draw(drawer);
 		}
 	}
-
 }

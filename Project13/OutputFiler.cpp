@@ -15,9 +15,6 @@ OutTextFiler::~OutTextFiler() {
 
 void OutTextFiler::outputInt(const int value) {
 
-	if ((value >= 1569325055) or (value <= -1569325055))
-		throw std::exception();
-
 	mOutput << value << std::endl;
 }
 
@@ -72,9 +69,6 @@ OutBinaryFiler::~OutBinaryFiler() {
 
 void OutBinaryFiler::outputInt(const int value) {
 
-	if ((value >= 2147483647) or (value <= -2147483647))
-		throw std::exception();
-
 	mOutput.write((char*)&value, 4);
 }
 
@@ -83,9 +77,10 @@ void OutBinaryFiler::outputDouble(const double value) {
 }
 
 void OutBinaryFiler::outputString(const std::string& str) {
-	for (int i = 0; i <= str.size(); i++) {
-		mOutput.write((char*)&str[i], 1);
-	}
+ 
+	int size = str.size();
+	mOutput.write((char*)& size, 4);
+	mOutput.write((char*)&str, str.size());
 }
 
 void OutBinaryFiler::outputVector2D(const vector2D& vec) {

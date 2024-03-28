@@ -22,10 +22,17 @@ void object::draw(std::shared_ptr<Drawer> drawer) {
 
 void object::setName(const std::string& name) {
 
+	if (name == "")
+		throw std::exception();
+
 	mName = name;
 }
+
 void object::setId(const int id) {
-	if ((id >= 276447231) or (id <= -276447231))
+
+	constexpr int maxvalue = std::numeric_limits<int32_t>::max();
+
+	if ((id > maxvalue) or (id < -maxvalue))
 		throw std::exception();
 
 	mId = id;
@@ -109,14 +116,15 @@ void Rectangle::setLeftDownPoint(const vector2D& vector2D) {
 };
 
 void Rectangle::setLenth(const double lenth) {
-	if ((lenth > 2147483647) or (lenth < -2147483647))
+	if (lenth <= 0.)
 		throw std::exception();
 
 	mLenth = lenth;
 };
 
 void Rectangle::setWidth(const double width) {
-	if ((width > 2147483647) or (width < -2147483647))
+
+	if (width <= 0.)
 		throw std::exception();
 
 	mWidth = width;
@@ -161,10 +169,10 @@ void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 	file->outputDouble(mLenth);
 	file->outputDouble(mWidth);
 
-	file->outputString("perimetr");
+	/*file->outputString("perimetr");
 	file->outputDouble(getPerimetr());
 	file->outputString("area");
-	file->outputDouble(getArea());
+	file->outputDouble(getArea());*/
 }
 
 void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
@@ -197,7 +205,8 @@ void Circle::setCenter(const vector2D& center) {
 };
 
 void Circle::setRadius(const double radius) {
-	if ((radius > 2147483647) or (radius < 0))
+
+	if (radius <= 0.)
 		throw std::exception();
 
 	mRadius = radius;
@@ -252,9 +261,7 @@ std::vector<Line> Circle::createLines() {
 void Circle::output(std::shared_ptr<OutputFiler> file) {
 
 	object::output(file);
-	file->outputString("center");
 	file->outputVector2D(mCenter);
-	file->outputString("radius");
 	file->outputDouble(mRadius);
 }
 
@@ -284,8 +291,9 @@ void Polyline::input(std::shared_ptr<InputFiler> file) {
 
 
 	int countOfPoints = file->readInt();
+	int maxvalue = std::numeric_limits<int32_t>::max();
 
-	if ((countOfPoints > 2147483647) or (countOfPoints < 0))
+	if ((countOfPoints > maxvalue) or (countOfPoints <= 0))
 		throw std::exception();
 
 	for (int i = 0; i < countOfPoints; i++) {
@@ -307,7 +315,6 @@ void Polyline::output(std::shared_ptr<OutputFiler> file) {
 
 	object::output(file);
 
-	file->outputString("count of points");
 	file->outputInt(mPoints.size());
 
 	for (int i = 0; i < mPoints.size(); i++) {

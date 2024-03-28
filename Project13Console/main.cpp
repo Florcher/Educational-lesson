@@ -4,22 +4,11 @@
 #include <string>
 #include "OperationWithDataBase.h"
 
-
-//void addEntity(std::shared_ptr<DataBase> db, const int typeId, const int objectId, const std::string& name) {
-//
-//	auto obj = createEntity(typeId, objectId, name);
-//	db->addObject(typeId, objectId, obj);
-//}
-
-
-void operationWithDataBase(std::shared_ptr<DataBase> db) {
+void operationWithDataBase(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
 
 	OperationWithDataBase operDb;
 
 	int mark = 0;
-	std::string infilename;
-	std::string outfilename;
-	std::string drawfilename;
 
 	while (mark != 8) {
 
@@ -33,39 +22,30 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 		std::cout << "7 - draw objects" << std::endl;
 		std::cout << "8 - exit" << std::endl;
 
-		std::cin >> mark;
-
-
+		mark = context->getInt();
 
 		switch (mark) {
 
 		case 1:
-			std::cout << "Enter file name: " << std::endl;
-			std::cin >> infilename;
-			db = operDb.loadDb(infilename);
+			db = operDb.loadDb(context);
 			break;
 
 		case 2:
-			std::cout << "Enter file name: " << std::endl;
-			std::cin >> outfilename;
-			operDb.saveDb(db, outfilename);
+			operDb.saveDb(db, context);
 			break;
 
 		case 3:
-			operDb.editEntity(db);
+			operDb.editEntity(db, context);
 			break;
 
 		case 4:
-			operDb.addEntity(db);
+			operDb.addEntity(db, context);
 			break;
 
 		case 5:
 			std::cout << "Enter typeId and objecId" << std::endl;
-			int tId;
-			int oId;
-			std::cin >> tId;
-			std::cin >> oId;
-			operDb.removeEntity(db, tId, oId);
+			
+			operDb.removeEntity(db, context);
 			break;
 
 		case 6:
@@ -73,9 +53,9 @@ void operationWithDataBase(std::shared_ptr<DataBase> db) {
 			break;
 
 		case 7:
-			std::cout << "Enter file name" << std::endl;
-			std::cin >> drawfilename;
-			operDb.drawObject(db, drawfilename);
+			/*std::cout << "Enter file name" << std::endl;
+			drawfilename = context->getString();
+			operDb.drawObject(db, drawfilename);*/
 			break;
 
 		case 8:
@@ -94,7 +74,8 @@ int main() {
 
 	std::shared_ptr<DataBase> db = std::make_shared<DataBase>();
 
-	operationWithDataBase(db);
+	std::shared_ptr<ContextIO> context = std::make_shared<ConcoleContext>();
+	operationWithDataBase(db, context);
 
 	return 0;
 }

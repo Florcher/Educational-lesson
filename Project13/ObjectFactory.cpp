@@ -15,14 +15,11 @@ ObjectFactory::ObjectFactory() {
 	addType(4, std::make_shared<ObjectCreator<object, Polyline>>());
 }
 
-ObjectFactory::~ObjectFactory() {
-
-	mTypes.clear();
-}
-
 void ObjectFactory::addType(const int typeId, std::shared_ptr<Creator<object>> object) {
 
-	if ((typeId > 2147483647) or (typeId < -2147483647))
+	int maxvalue = std::numeric_limits<int32_t>::max();
+
+	if ((typeId > maxvalue) or (typeId < -maxvalue))
 		throw std::exception();
 
 	if (!mTypes.contains(typeId))
@@ -31,7 +28,9 @@ void ObjectFactory::addType(const int typeId, std::shared_ptr<Creator<object>> o
 
 void ObjectFactory::removeType(const int typeId) {
 
-	if ((typeId > 2147483647) or (typeId < -2147483647))
+	int maxvalue = std::numeric_limits<int32_t>::max();
+
+	if ((typeId > maxvalue) or (typeId < -maxvalue))
 		throw std::exception();
 
 	if (mTypes.contains(typeId))
@@ -40,7 +39,9 @@ void ObjectFactory::removeType(const int typeId) {
 
 std::shared_ptr<object> ObjectFactory::getObject(const int typeId) {
 
-	if ((typeId > 2147483647) or (typeId < -2147483647))
+	int maxvalue = std::numeric_limits<int32_t>::max();
+
+	if ((typeId > maxvalue) or (typeId < -maxvalue))
 		throw std::exception();
 
 	return mTypes.at(typeId)->create();

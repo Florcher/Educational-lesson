@@ -6,9 +6,9 @@ lineA
 0
 5
 2
-2
-lineB
 1
+lineB
+2
 10
 10
 5

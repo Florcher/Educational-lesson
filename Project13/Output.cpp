@@ -29,16 +29,15 @@ void Output::output(std::shared_ptr<DataBase> db, const std::string fileName) {
 
 	auto filer = createFiler(f, fileName);
 
-	filer->outputInt(db->typeIds.size());
+	filer->outputInt(db->getObjectsCount());
 
-	for (int i = 0; i < db->objects.size(); i++) {
-		
-		int typeId = db->typeIds[i];
+	for (int typeId = 1; typeId <= db->getMapSize(); typeId++) {
 
-		for (int j = 1; j <= db->objects.at(typeId).size(); j++) {
+		for (int position = 0; position < db->getNestedMapsize(typeId); position++) {
 
-			int objectId = db->objects.at(typeId).at(j)->getId();
-			auto obj = db->objects.at(typeId).at(objectId);
+			int objectId = db->getObjectId(typeId, position);
+			auto obj = db->getObject(typeId, objectId);
+			filer->outputInt(typeId);
 			obj->output(filer);
 		}
 	}

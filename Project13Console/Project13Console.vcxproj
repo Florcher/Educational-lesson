@@ -131,15 +131,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddOperationFactory.cpp" />
     <ClCompile Include="AddOperationWithObject.cpp" />
     <ClCompile Include="ContextIO.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OperationFactory.cpp" />
     <ClCompile Include="OperationWithDataBase.cpp" />
     <ClCompile Include="OperationWithObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddOperationFactory.h" />
     <ClInclude Include="AddOperationWithObject.h" />
     <ClInclude Include="ContextIO.h" />
+    <ClInclude Include="OperationFactory.h" />
+    <ClInclude Include="OperationFactorys.h" />
     <ClInclude Include="OperationWithDataBase.h" />
     <ClInclude Include="OperationWithObject.h" />
   </ItemGroup>

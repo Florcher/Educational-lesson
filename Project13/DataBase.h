@@ -7,13 +7,30 @@
 #include <iostream>
 #include "Objects.h"
 
-struct PROJECT_EXPORT DataBase {
+class PROJECT_EXPORT DataBase {
+public:
 
 	DataBase();
-	~DataBase();
+	~DataBase() = default;
 
-	std::vector<int> typeIds;
-	std::map<int, std::map<int, std::shared_ptr<object>>> objects;
+	void addObject(const int typeId, std::shared_ptr<object> obj);
+	void removeObject(const int typeId, const int objectId);
+	int getObjectsCount() const;
+
+	void addType(const int typeId);
+	void removeType(const int typeId);
+
+	int getObjectId(const int typeId, const int position) const;
+
+	int getMapSize() const;
+	int getNestedMapsize(const int typeId) const;
+
+	std::shared_ptr<object> getObject(const int typeId, const int objectId) const;
+
+private:
+
+	int objectsCount;
+	std::map<int, std::vector<std::shared_ptr<object>>> objects;
 };
 
 

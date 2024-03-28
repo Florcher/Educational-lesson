@@ -11,40 +11,18 @@ enum class PROJECT_EXPORT FileType {
 	unknown
 };
 
-PROJECT_EXPORT inline FileType getFileType(const std::string& filename) 
-{
-	int mark = 0;
+PROJECT_EXPORT inline FileType getFileType(const std::string& filename) {
 
 	if (filename.rfind(".txt") != std::string::npos)
-		mark = 1;
+		return FileType::txt;
 
 	if (filename.rfind(".bindb") != std::string::npos)
-		mark = 2;
+		return FileType::binary;
 
 	if (filename.rfind(".console") != std::string::npos)
-		mark = 3;
-
-
-	switch (mark) {
-	case 0:
-		return FileType::unknown;
-		break;
-
-	case 1:
-		return FileType::txt;
-		break;
-
-	case 2:
-		return FileType::binary;
-		break;
-
-	case 3:
 		return FileType::console;
-		break;
 
-	default:
-		break;
-	}
+	return FileType::unknown;
 }
 
 #endif __FILETYPE_H

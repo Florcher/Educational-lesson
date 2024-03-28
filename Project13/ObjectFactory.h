@@ -11,7 +11,7 @@ class PROJECT_EXPORT ObjectFactory {
 public:
 
 	ObjectFactory();
-	~ObjectFactory();
+	~ObjectFactory() = default;
 
 	void addType(const int typeId, std::shared_ptr<Creator<object>> object);
 	void removeType(const int typeId);

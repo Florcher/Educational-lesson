@@ -19,9 +19,6 @@ int InTextFiler::readInt() {
 
 	int count;
 	mInput >> count;
-	if ((count >= 2147483647) or (count <= -2147483647))
-		throw std::exception();
-
 	return count;
 }
 
@@ -58,9 +55,6 @@ int InConsoleFiler::readInt() {
 
 	int count;
 	std::cin >> count;
-	if ((count >= 2147483647) or (count <= -2147483647))
-		throw std::exception();
-
 	return count;
 }
 
@@ -98,9 +92,6 @@ int InBinaryFiler::readInt() {
 
 	int count;
 	mInput.read((char*)&count, 4);
-	if ((count >= 2147483647) or (count <= -2147483647))
-		throw std::exception();
-
 	return count;
 }
 
@@ -114,7 +105,7 @@ double InBinaryFiler::readDouble() {
 std::string InBinaryFiler::readString() {
 
 	int size = readInt();
-	if ((size >= 2147483647) or (size <= 0))
+	if (size <= 0)
 		throw std::exception();
 
 	std::string res(size + 1,'\0');
@@ -126,7 +117,8 @@ vector2D InBinaryFiler::readVector2D() {
 
 	vector2D point;
 
-	mInput.read((char*)&point.x, 8);
-	mInput.read((char*)&point.y, 8);
+	point.x = readDouble();
+	point.y = readDouble();
+
 	return point;
 }

@@ -34,24 +34,21 @@ std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
 
 	int count = filer->readInt();
 
-	if ((count > 2147483647) or (count < 0))
+	if ((count > std::numeric_limits<int32_t>::max()) or (count < 0))
 		throw std::exception();
 
 	auto db = std::make_shared<DataBase>();
 
 	for (int i = 0; i < count; ++i) {
 
-		int objectId = filer->readInt();
-		auto name = filer->readString();
 		int typeId = filer->readInt();
+		auto name = filer->readString();
+		int objectId = filer->readInt();
 		auto obj = objFactory->getObject(typeId);
 		obj->setId(objectId);
 		obj->setName(name);
 		obj->input(filer);
-		std::map<int, std::shared_ptr<object>> pair;
-		pair.emplace(objectId, obj);
-		db->typeIds.push_back(typeId);
-		db->objects.emplace(typeId, pair);
+		db->addObject(typeId,obj);
 	}
 
 	return db;
