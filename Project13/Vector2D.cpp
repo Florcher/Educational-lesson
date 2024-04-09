@@ -3,7 +3,8 @@
 
 std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
 
-	output << "(" << vector2D.x << ", " << vector2D.y << ")";
+	output << vector2D.x << std::endl;
+	output << vector2D.y << std::endl;
 
 	return output;
 }

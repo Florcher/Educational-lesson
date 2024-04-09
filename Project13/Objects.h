@@ -124,6 +124,9 @@ public:
 	void setPoint(const vector2D& point);
 	void editPoint(const int index, const vector2D& point);
 
+	vector2D getPoint(const int index) const;
+	int getPointsCount() const;
+
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;

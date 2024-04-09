@@ -6,7 +6,6 @@
 #include "Output.h"
 #include "OutputFiler.h"
 #include "FileType.h"
-#include "GetFileType.h"
 
 std::shared_ptr<OutputFiler> createFiler(const FileType& filetype, const std::string& fileName) {
 

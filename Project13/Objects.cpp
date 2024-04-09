@@ -168,11 +168,6 @@ void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 	file->outputVector2D(mLeftDownPoint);
 	file->outputDouble(mLenth);
 	file->outputDouble(mWidth);
-
-	/*file->outputString("perimetr");
-	file->outputDouble(getPerimetr());
-	file->outputString("area");
-	file->outputDouble(getArea());*/
 }
 
 void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
@@ -285,6 +280,17 @@ void Polyline::setPoint(const vector2D& point) {
 
 void Polyline::editPoint(const int index, const vector2D& point) {
 	mPoints[index] = point;
+}
+
+vector2D Polyline::getPoint(const int index) const {
+	if ((index < 0) or (index > (mPoints.size() - 1)))
+		throw std::exception();
+
+	return mPoints[index];
+}
+
+int Polyline::getPointsCount() const {
+	return mPoints.size();
 }
 
 void Polyline::input(std::shared_ptr<InputFiler> file) {

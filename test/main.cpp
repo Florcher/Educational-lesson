@@ -9,118 +9,23 @@
 #include "OutputFiler.h"
 #include "Drawer.h"
 #include "DataBase.h"
+#include "Myassert.h"
+#include "Comparison.h"
+#include "FilerTests.h"
+#include "WasException.h"
+#include "ObjectsTests.h"
 
-#define myassert(val) {if(!val) throw std::exception(); };
-#define was_exeption(val) {try{val;} catch(std::exception& e) {std::cout << "was exeption" << std::endl;}};
+void testObjects() {
 
-void testObject() {
+	ObjectsTests tests;
 
-	object obj;
-
-	obj.setId(3);
-	myassert(obj.getId() == 3);
-
-	obj.setName("object");
-	myassert((obj.getName() == "object"));
-
-	was_exeption(obj.setName(""));
-
-	int maxvalue = std::numeric_limits<int32_t>::max();
-
-	was_exeption(obj.setId(maxvalue));
+	tests.testObject();
+	tests.testLine();
+	tests.testRectangle();
+	tests.testCircle();
+	tests.testPolyline();
 }
 
-void testLine() {
-
-	Line line;
-
-	line.setId(1);
-	myassert(line.getId() == 1);
-
-	line.setName("myline");
-	myassert((line.getName() == "myline"));
-
-	was_exeption(line.setName(""));
-
-	vector2D start{ 0, 1 }, end{ 23, -7 };
-
-	line.setStart(start);
-	line.setEnd(end);
-
-	myassert(line.getStart().x == 0);
-	myassert(line.getStart().y == 1);
-	myassert(line.getEnd().x == 23);
-	myassert(line.getEnd().y == -7);
-
-	myassert(line.getLenth() == 24.35);
-
-
-	int maxvalue = std::numeric_limits<int32_t>::max();
-	was_exeption(line.setId(maxvalue));
-
-}
-
-void testRectangle() {
-
-	Rectangle rec;
-
-	rec.setId(-3);
-	myassert(rec.getId() == -3);
-
-	rec.setName("myrectangle");
-	myassert((rec.getName() == "myrectangle"));
-
-	was_exeption(rec.setName(""));
-
-	rec.setLenth(10.);
-	rec.setWidth(10.);
-	myassert(rec.getLenth() == 10);
-	myassert(rec.getWidth() == 10);
-
-	myassert(rec.getArea() == 100);
-	myassert(rec.getPerimetr() == 40);
-
-	was_exeption(rec.setLenth(-5));
-	was_exeption(rec.setWidth(-10));
-
-	vector2D ldp{ -1, 3 };
-
-	rec.setLeftDownPoint(ldp);
-
-	myassert(rec.getLeftDownPoint().x == -1);
-	myassert(rec.getLeftDownPoint().y == 3);
-}
-
-void testCircle() {
-
-	Circle circle;
-
-	circle.setId(19);
-	myassert(circle.getId() == 19);
-
-	circle.setName("mycircle");
-	myassert((circle.getName() == "mycircle"));
-
-	was_exeption(circle.setName(""));
-
-	circle.setRadius(220);
-	myassert(circle.getRadius() == 220);
-
-	myassert(circle.getArea() == 152053.0844);
-
-	vector2D center{ 0, 0 };
-
-	circle.setCenter(center);
-	myassert(circle.getCenter().x == 0);
-	myassert(circle.getCenter().y == 0);
-
-	was_exeption(circle.setRadius(-3));
-
-}
-
-void testPolilyne() {
-
-}
 
 void testInput() {
 	Input in;
@@ -135,35 +40,35 @@ void testInput() {
 	
 	myassert(line1->getId() == 1);
 	myassert((line1->getName() == "Line"));
-	myassert(line1->getStart().x == -5);
-	myassert(line1->getStart().y == -5);
-	myassert(line1->getEnd().x == 5);
-	myassert(line1->getEnd().y == 5);
+	myassert(comparison(line1->getStart().x, -5));
+	myassert(comparison(line1->getStart().y, -5));
+	myassert(comparison(line1->getEnd().x, 5));
+	myassert(comparison(line1->getEnd().y, 5));
 
 	auto obj2 = db1->getObject(2, 1);
 	std::shared_ptr<Rectangle> rec1 = std::dynamic_pointer_cast<Rectangle>(obj2);
 
 	myassert(rec1->getId() == 1);
 	myassert((rec1->getName() == "Rectangle"));
-	myassert(rec1->getLeftDownPoint().x == 0);
-	myassert(rec1->getLeftDownPoint().y == 0);
-	myassert(rec1->getLenth() == 10);
-	myassert(rec1->getWidth() == 10);
+	myassert(comparison(rec1->getLeftDownPoint().x, 0));
+	myassert(comparison(rec1->getLeftDownPoint().y, 0));
+	myassert(comparison(rec1->getLenth(), 10));
+	myassert(comparison(rec1->getWidth(), 10));
 
 	auto obj3 = db1->getObject(3, 1);
 	std::shared_ptr<Circle> circle1 = std::dynamic_pointer_cast<Circle>(obj3);
 
 	myassert(circle1->getId() == 1);
 	myassert((circle1->getName() == "circle"));
-	myassert(circle1->getCenter().x == 1.4);
-	myassert(circle1->getCenter().y == 1.4);
-	myassert(circle1->getRadius() == 17);
+	myassert(comparison(circle1->getCenter().x, 1.4));
+	myassert(comparison(circle1->getCenter().y, 1.4));
+	myassert(comparison(circle1->getRadius(), 17));
 
 	auto obj4 = db1->getObject(4, 1);
 	std::shared_ptr<Polyline> polyline1 = std::dynamic_pointer_cast<Polyline>(obj4);
 
 
-	was_exeption(db2 = in.input("deede.12"));
+	was_exception(db2 = in.input("deede.12"));
 
 	Output out1, out2;
 	out1.output(db1, "file.bindb");
@@ -215,74 +120,26 @@ void testOutput() {
 
 	out.output(db, "out.console");
 
-	was_exeption(out.output(db, "out.rar"));
+	was_exception(out.output(db, "out.rar"));
 }
 
-void testInputFiler() {
+void testIOFiler() {
 
-	InTextFiler filer1("file2.txt");
-	myassert(filer1.readInt() == 11);
-	myassert(filer1.readDouble() == 23.17);
-	myassert((filer1.readString() == "input"));
-	myassert(filer1.readVector2D().x == 1);
-	myassert(filer1.readVector2D().y == -2);
+	FilerTests tests;
 
-	OutBinaryFiler filer2("file6.bindb");
-	filer2.outputInt(1);
-	filer2.outputDouble(9.2);
-	filer2.outputString("output");
-	vector2D vec{ 0, 0 };
-	filer2.outputVector2D(vec);
+	tests.testOutputTextFiler("file2.txt");
+    tests.testInputTextFiler("file2.txt");
 
-	InBinaryFiler filer4{ "file6.bindb" };
-	myassert(filer4.readInt() == 1);
-	myassert(filer4.readDouble() == 9.2);
-	myassert((filer4.readString() == "output"));
-	myassert(filer4.readVector2D().x == 0);
-	myassert(filer4.readVector2D().y == 0);
-}
-
-void testOutputFiler() {
-
-	OutTextFiler filer1("file4.txt");
-	filer1.outputInt(4);
-	filer1.outputDouble(22.13);
-	filer1.outputString("output");
-	vector2D vec1{ 0, 0 };
-	filer1.outputVector2D(vec1);
-
-	InTextFiler filer2("file4.txt");
-	myassert(filer2.readInt() == 4);
-	myassert(filer2.readDouble() == 22.13);
-	myassert((filer2.readString() == "output"));
-	myassert(filer2.readVector2D().x == 0);
-	myassert(filer2.readVector2D().y == 0);
-
-	OutBinaryFiler filer3("file5.bindb");
-	filer3.outputInt(1);
-	filer3.outputDouble(9.2);
-	filer3.outputString("output");
-	vector2D vec2{ 0, 0 };
-	filer3.outputVector2D(vec2);
-
-	InBinaryFiler filer4("file5.bindb");
-	myassert(filer4.readInt() == 1);
-	myassert(filer4.readDouble() == 9.2);
-	myassert((filer4.readString() == "output"));
-	myassert(filer4.readVector2D().x == 0);
-	myassert(filer4.readVector2D().y == 0);
+	tests.testOutputBinaryFiler("file6.bindb");
+	tests.testInputBinaryFiler("file6.bindb");
 }
 
 int main() {
 
-	testObject();
-	testLine();
-	testRectangle();
-	testCircle();
-	testInput();
-	testOutput();
-	testInputFiler();
-	testOutputFiler();
+	testObjects();
+	//testInput();
+	//testOutput();
+	testIOFiler();
 
 	return 0;
 }

@@ -23,34 +23,4 @@ private:
 	InConsoleFiler filer;
 };
 
-class BinaryContext : public ContextIO {
-public:
-	
-	BinaryContext(std::string& filename);
-
-	vector2D getPoint() override;
-	std::string getString() override;
-	int getInt() override;
-	double getDouble() override;
-
-private:
-	InBinaryFiler filer;
-};
-
-class TextContext : public ContextIO {
-public:
-
-	TextContext(std::string& filename);
-
-	vector2D getPoint() override;
-	std::string getString() override;
-	int getInt() override;
-	double getDouble() override;
-
-private:
-	InTextFiler filer;
-};
-
-
-
 #endif __CONTEXTIO_H_

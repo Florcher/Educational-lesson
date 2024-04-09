@@ -130,7 +130,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FilerTests.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObjectsTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Comparison.h" />
+    <ClInclude Include="FilerTests.h" />
+    <ClInclude Include="Myassert.h" />
+    <ClInclude Include="ObjectsTests.h" />
+    <ClInclude Include="WasException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,7 +5,6 @@
 #include "InputFiler.h"
 #include "DataBase.h"
 #include "FileType.h"
-#include "GetFileType.h"
 
 
 std::shared_ptr<InputFiler> createFiler(const FileType& filetype, const std::string& fileName) {
