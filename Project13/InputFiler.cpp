@@ -31,9 +31,13 @@ double InTextFiler::readDouble() {
 
 std::string InTextFiler::readString() {
 
-	std::string str;
-	mInput >> str;
-	return str;
+	int size = readInt();
+	if (size <= 0)
+		throw std::exception();
+
+	std::string res(size+1,'\0');
+	mInput.read(res.data(), size);
+    return res;
 }
 
 vector2D InTextFiler::readVector2D() {
