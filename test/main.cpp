@@ -134,12 +134,10 @@ void testIOFiler() {
 
 int main() {
 
-	/*testObjects();
+	testObjects();
 	testInput();
 	testOutput();
-	testIOFiler();*/
+	testIOFiler();
 	
-	std::cout << LessOrEqual(1.5, -1.4);
-
 	return 0;
 }
