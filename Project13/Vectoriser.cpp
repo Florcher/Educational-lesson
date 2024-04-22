@@ -24,9 +24,9 @@ void Vectoriser::draw(std::shared_ptr<DataBase> db, const std::string& filename)
 
 	auto drawer = getDrawer(f, filename);
 
-	for (int typeId = 0; typeId <= db->getMapSize(); ++typeId) {
+	for (int typeId = 1; typeId <= db->getMapSize(); ++typeId) {
 
-		for (int position = 1; position < db->getNestedMapsize(typeId); ++position) {
+		for (int position = 0; position < db->getNestedMapsize(typeId); ++position) {
 
 			int objectId = db->getObjectId(typeId, position);
 			auto obj = db->getObject(typeId, objectId);

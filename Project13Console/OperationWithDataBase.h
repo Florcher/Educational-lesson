@@ -14,7 +14,7 @@ struct OperationWithDataBase {
 	void removeEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context);
 	void editEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context);
 	void listEntities(std::shared_ptr<DataBase> db);
-	void drawObject(std::shared_ptr<DataBase> db, const std::string& filename);
+	void drawObject(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context);
 };
 
 

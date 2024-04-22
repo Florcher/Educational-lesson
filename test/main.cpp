@@ -28,10 +28,16 @@ void testObjects() {
 
 
 void testInput() {
+
 	Input in;
 	std::shared_ptr <DataBase> db1 = in.input("file1.txt");;
 	std::shared_ptr <DataBase> db2;
 	std::shared_ptr <DataBase> db3;
+
+	vector2D start{ -5, -5 };
+	vector2D end{ 5, 5 };
+	vector2D ldp{ 0, 0 };
+	vector2D center{ 1.4, 1.4 };
 
 	myassert(db1->getObjectsCount() == 4);
 
@@ -40,29 +46,25 @@ void testInput() {
 	
 	myassert(line1->getId() == 1);
 	myassert((line1->getName() == "Line"));
-	myassert(comparison(line1->getStart().x, -5));
-	myassert(comparison(line1->getStart().y, -5));
-	myassert(comparison(line1->getEnd().x, 5));
-	myassert(comparison(line1->getEnd().y, 5));
+	myassert((line1->getStart() == start));
+	myassert((line1->getEnd() == end));
 
 	auto obj2 = db1->getObject(2, 1);
 	std::shared_ptr<Rectangle> rec1 = std::dynamic_pointer_cast<Rectangle>(obj2);
 
 	myassert(rec1->getId() == 1);
 	myassert((rec1->getName() == "Rectangle"));
-	myassert(comparison(rec1->getLeftDownPoint().x, 0));
-	myassert(comparison(rec1->getLeftDownPoint().y, 0));
-	myassert(comparison(rec1->getLenth(), 10));
-	myassert(comparison(rec1->getWidth(), 10));
+	myassert((rec1->getLeftDownPoint() == ldp));
+	myassert(IsEqual(rec1->getLenth(), 10));
+	myassert(IsEqual(rec1->getWidth(), 10));
 
 	auto obj3 = db1->getObject(3, 1);
 	std::shared_ptr<Circle> circle1 = std::dynamic_pointer_cast<Circle>(obj3);
 
 	myassert(circle1->getId() == 1);
 	myassert((circle1->getName() == "circle"));
-	myassert(comparison(circle1->getCenter().x, 1.4));
-	myassert(comparison(circle1->getCenter().y, 1.4));
-	myassert(comparison(circle1->getRadius(), 17));
+	myassert((circle1->getCenter() == center));
+	myassert(IsEqual(circle1->getRadius(), 17));
 
 	auto obj4 = db1->getObject(4, 1);
 	std::shared_ptr<Polyline> polyline1 = std::dynamic_pointer_cast<Polyline>(obj4);
@@ -83,18 +85,15 @@ void testInput() {
 
 	myassert(line2->getId() == 1);
 	myassert((line2->getName() == "Line"));
-	myassert(line2->getStart().x == -5);
-	myassert(line2->getStart().y == -5);
-	myassert(line2->getEnd().x == 5);
-	myassert(line2->getEnd().y == 5);
+	myassert((line2->getStart() == start));
+	myassert((line2->getEnd() == end));
 
 	auto obj6 = db1->getObject(2, 1);
 	std::shared_ptr<Rectangle> rec2 = std::dynamic_pointer_cast<Rectangle>(obj6);
 
 	myassert(rec2->getId() == 1);
 	myassert((rec2->getName() == "Rectangle"));
-	myassert(rec2->getLeftDownPoint().x == 0);
-	myassert(rec2->getLeftDownPoint().y == 0);
+	myassert((rec2->getLeftDownPoint() == ldp));
 	myassert(rec2->getLenth() == 10);
 	myassert(rec2->getWidth() == 10);
 
@@ -103,8 +102,7 @@ void testInput() {
 
 	myassert(circle2->getId() == 1);
 	myassert((circle2->getName() == "circle"));
-	myassert(circle2->getCenter().x == 1.4);
-	myassert(circle2->getCenter().y == 1.4);
+	myassert((circle2->getCenter() == center));
 	myassert(circle2->getRadius() == 17);
 
 	auto obj8 = db1->getObject(4, 1);
@@ -136,10 +134,12 @@ void testIOFiler() {
 
 int main() {
 
-	testObjects();
-	//testInput();
-	//testOutput();
-	testIOFiler();
+	/*testObjects();
+	testInput();
+	testOutput();
+	testIOFiler();*/
+	
+	std::cout << LessOrEqual(1.5, -1.4);
 
 	return 0;
 }

@@ -80,7 +80,9 @@ void OutBinaryFiler::outputString(const std::string& str) {
  
 	int size = str.size();
 	mOutput.write((char*)& size, 4);
-	mOutput.write((char*)&str, str.size());
+	for (int i = 0; i < str.size(); i++) {
+		mOutput.write((char*)&str[i], 1);
+	}
 }
 
 void OutBinaryFiler::outputVector2D(const vector2D& vec) {

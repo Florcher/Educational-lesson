@@ -34,14 +34,10 @@ void ObjectsTests::testLine() {
 	line.setStart(start);
 	line.setEnd(end);
 
-
-	bool res = comparison(line.getStart().x, 0);
-	myassert(res);
-	myassert(comparison(line.getStart().y, 1));
-	myassert(comparison(line.getEnd().x, 23));
-	myassert(comparison(line.getEnd().y, -7));
-
-	myassert(comparison(line.getLenth(), 24.351591323771842));
+	myassert((line.getStart() == start));
+	myassert((line.getEnd() == end));
+	
+	myassert(IsEqual(line.getLenth(), 24.351591323771842));
 }
 
 void ObjectsTests::testRectangle() {
@@ -58,11 +54,11 @@ void ObjectsTests::testRectangle() {
 
 	rec.setLenth(10.);
 	rec.setWidth(10.);
-	myassert(comparison(rec.getLenth(), 10));
-	myassert(comparison(rec.getWidth(), 10));
+	myassert(IsEqual(rec.getLenth(), 10));
+	myassert(IsEqual(rec.getWidth(), 10));
 
-	myassert(comparison(rec.getArea(), 100));
-	myassert(comparison(rec.getPerimetr(), 40));
+	myassert(IsEqual(rec.getArea(), 100));
+	myassert(IsEqual(rec.getPerimetr(), 40));
 
 	was_exception(rec.setLenth(-5));
 	was_exception(rec.setWidth(-10));
@@ -71,8 +67,7 @@ void ObjectsTests::testRectangle() {
 
 	rec.setLeftDownPoint(ldp);
 
-	myassert(comparison(rec.getLeftDownPoint().x, -1));
-	myassert(comparison(rec.getLeftDownPoint().y, 3));
+	myassert((rec.getLeftDownPoint() == ldp));
 }
 
 void ObjectsTests::testCircle() {
@@ -88,15 +83,14 @@ void ObjectsTests::testCircle() {
 	was_exception(circle.setName(""));
 
 	circle.setRadius(220);
-	myassert(comparison(circle.getRadius(), 220));
+	myassert(IsEqual(circle.getRadius(), 220));
 
-	myassert(comparison(circle.getArea(), 152053.084433745992741));
+	myassert(IsEqual(circle.getArea(), 152053.084433745992741));
 
 	vector2D center{ 0, 0 };
 
 	circle.setCenter(center);
-	myassert(comparison(circle.getCenter().x, 0));
-	myassert(comparison(circle.getCenter().y, 0));
+	myassert((circle.getCenter() == center));
 
 	was_exception(circle.setRadius(-3));
 
@@ -129,18 +123,11 @@ void ObjectsTests::testPolyline() {
 	vector2D poin6 = polyline.getPoint(1);
 	vector2D poin7 = polyline.getPoint(2);
 	vector2D poin8 = polyline.getPoint(3);
-		
-	myassert(comparison(poin5.x, 0));
-	myassert(comparison(poin5.y, 0));
-
-	myassert(comparison(poin6.x, 1));
-	myassert(comparison(poin6.y, 1));
-
-	myassert(comparison(poin7.x, 2));
-	myassert(comparison(poin7.y, 2));
-
-	myassert(comparison(poin8.x, 3));
-	myassert(comparison(poin8.y, 3));
+	
+	myassert((polyline.getPoint(0) == point1));
+	myassert((polyline.getPoint(1) == point2));
+	myassert((polyline.getPoint(2) == point3));
+	myassert((polyline.getPoint(3) == point4));
 
 	myassert(polyline.getPointsCount() == 4);
 

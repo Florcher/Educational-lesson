@@ -4,30 +4,33 @@
 #include "OutputFiler.h"
 #include "Myassert.h"
 #include "Comparison.h"
+#include <string>
 
 void FilerTests::testInputTextFiler(const std::string& filename) {
 
 	InTextFiler filer(filename);
 	myassert(filer.readInt() == 11);
-	myassert(comparison(filer.readDouble(), 23.17));
-	myassert((filer.readString() == "input"));
+	myassert(IsEqual(filer.readDouble(), 23.17));
+	std::string str = filer.readString();
+	myassert(str == "input");
 
 	vector2D point = filer.readVector2D();
-	myassert(comparison(point.x, 1));
-	myassert(comparison(point.y, -2));
+	vector2D testPoint{ 1, -2 };
+	myassert((point == testPoint));
 }
 
 void FilerTests::testInputBinaryFiler(const std::string& filename) {
 
 	InBinaryFiler filer{ filename };
 	myassert(filer.readInt() == 1);
-	myassert(comparison(filer.readDouble(), 9.2));
+	myassert(IsEqual(filer.readDouble(), 9.2));
 	std::string str = filer.readString();
-	myassert((str == "output"));
+	std::string testStr = {'o', 'u', 't','p', 'u', 't', '\0'};
+	myassert(str == testStr);
 
 	vector2D point = filer.readVector2D();
-	myassert(comparison(point.x, 0));
-	myassert(comparison(point.y, 0));
+	vector2D testPoint{ 0, 0 };
+	myassert((point == testPoint));
 }
 
 void FilerTests::testOutputTextFiler(const std::string& filename) {

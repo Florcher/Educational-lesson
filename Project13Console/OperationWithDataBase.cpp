@@ -79,8 +79,10 @@ void OperationWithDataBase::listEntities(std::shared_ptr<DataBase> db) {
 	}
 }
 
-void OperationWithDataBase::drawObject(std::shared_ptr<DataBase> db, const std::string& filename) {
+void OperationWithDataBase::drawObject(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
 	
+	std::cout << "Enter file name" << std::endl;
+	std::string filename = context->getString();
 	Vectoriser vectoriser;
 	vectoriser.draw(db, filename);
 }

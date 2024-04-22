@@ -53,9 +53,7 @@ void operationWithDataBase(std::shared_ptr<DataBase> db, std::shared_ptr<Context
 			break;
 
 		case 7:
-			/*std::cout << "Enter file name" << std::endl;
-			drawfilename = context->getString();
-			operDb.drawObject(db, drawfilename);*/
+			operDb.drawObject(db, context);
 			break;
 
 		case 8:
