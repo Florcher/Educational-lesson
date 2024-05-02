@@ -39,7 +39,7 @@ void OperationWithDataBase::addEntity(std::shared_ptr<DataBase> db, std::shared_
 	auto obj = factory.getObject(typeId);
 	auto operation = addOperationFactory.createAddOperation(typeId, obj);
 	operation->addObject(context);
-	db->addObject(typeId, obj);
+	db->addObject(obj);
 }
 
 void OperationWithDataBase::removeEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
@@ -52,30 +52,50 @@ void OperationWithDataBase::removeEntity(std::shared_ptr<DataBase> db, std::shar
 
 void OperationWithDataBase::editEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
 
-		std::cout << "Enter typeid and objectid. Press -1 to exit." << std::endl;
-		int typeId = context->getInt();
-		int objectId = context->getInt();
+	std::cout << "Enter typeid and objectid. Press -1 to exit." << std::endl;
+	int typeId = context->getInt();
+	int objectId = context->getInt();
 
-		OperationFactory opFactory;
+	OperationFactory opFactory;
 
-		auto obj = db->getObject(typeId, objectId);
-		auto operation = opFactory.createOperation(typeId, obj);
-		operation->operation(context);
+	std::vector<std::shared_ptr<object>> objects = db->getObjects();
+
+	int mark = true;
+
+	for (auto iter = objects.begin(); iter != objects.end(); ++iter) {
+
+		if ((*iter)->getType() == typeId) {
+
+			if ((*iter)->getId() == objectId) {
+
+				mark = false;
+				auto obj = (*iter);
+				auto operation = opFactory.createOperation(typeId, obj);
+				operation->operation(context);
+				break;
+			}
+		}
+	}
+
+	if (mark) 
+	{
+		throw std::exception();
+	}
 }
 
 void OperationWithDataBase::listEntities(std::shared_ptr<DataBase> db) {
 
 	std::cout << "typeId" << " " << "objectId" << " " << "name" << std::endl;
 
-	for (int typeId = 1; typeId <= db->getMapSize(); ++typeId) {
 
-		for (int position = 0; position < db->getNestedMapsize(typeId); ++position) {
+	std::vector<std::shared_ptr<object>> objects = db->getObjects();
+	for (int i = 0; i < objects.size(); i++) {
 
-			int objectId = db->getObjectId(typeId, position);
-			auto obj = db->getObject(typeId, objectId);
-			std::string name = obj->getName();
-			std::cout << typeId << " " << objectId << " " << name << std::endl;
-		}
+		int objectId = objects[i]->getId();
+		int typeId = objects[i]->getType();
+		std::string name = objects[i]->getName();
+
+		std::cout << typeId << " " << objectId << " " << name << std::endl;
 	}
 }
 

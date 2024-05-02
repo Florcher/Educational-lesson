@@ -6,6 +6,7 @@
 #include "InputFiler.h"
 #include "Vector2D.h"
 #include "Drawer.h"
+#include "TypeNamespace.h"
 
 object::object(const std::string& name, const int id) : mName(name), mId(id) {
 
@@ -54,6 +55,10 @@ void object::input(std::shared_ptr<InputFiler> file) {
 	mId = file->readInt();
 }
 
+int object::getType() const {
+	return 0;
+}
+
 Line::Line(const std::string& name_, const int id_, const vector2D& start_, const vector2D& end_)
 	: object(name_, id_), mStart(start_), mEnd(end_)
 {
@@ -89,6 +94,7 @@ vector2D Line::getEnd() const {
 
 void Line::input(std::shared_ptr<InputFiler> file) {
 	
+	object::input(file);
 	mStart = file->readVector2D();
 	mEnd = file->readVector2D();
 }
@@ -102,6 +108,14 @@ void Line::output(std::shared_ptr<OutputFiler> file) {
 
 void Line::draw(std::shared_ptr<Drawer> drawer) {
 	drawer->drawLine(mStart, mEnd);
+}
+
+int Line::getLineType() {
+	return LineType();
+}
+
+int Line::getType() const {
+	return getLineType();
 }
 
 Rectangle::Rectangle(const std::string& name_, const int id_, const vector2D& vector2D, const double lenth_, const double width_)
@@ -157,6 +171,7 @@ double Rectangle::getPerimetr() const {
 
 void Rectangle::input(std::shared_ptr<InputFiler> file) {
 
+	object::input(file);
 	mLeftDownPoint = file->readVector2D();
 	mLenth = file->readDouble();
 	mWidth = file->readDouble();
@@ -187,6 +202,14 @@ void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
 	bc.draw(drawer);
 	cd.draw(drawer);
 	da.draw(drawer);
+}
+
+int Rectangle::getRectangleType() {
+	return RectangleType();
+}
+
+int Rectangle::getType() const {
+	return getRectangleType();
 }
 
 Circle::Circle(const std::string& name, const int id, const vector2D& center, const double radius)
@@ -225,6 +248,7 @@ double Circle::getArea() const {
 
 void Circle::input(std::shared_ptr<InputFiler> file) {
 
+	object::input(file);
 	mCenter = file->readVector2D();
 	mRadius = file->readDouble();
 }
@@ -244,7 +268,6 @@ std::vector<Line> Circle::createLines() {
 	}
 
 	std::vector<Line> lines;
-	std::vector<Line> line;
 	for (int i = 0; i < 359; i++) {
 
 		Line line("vector", i, points[i], points[i + 1]);
@@ -266,6 +289,14 @@ void Circle::draw(std::shared_ptr<Drawer> drawer) {
 	for (int i = 0; i < lines.size() - 1; i++) {
 		lines[i].draw(drawer);
 	}
+}
+
+int Circle::getCircleType() {
+	return CircleType();
+}
+
+int Circle::getType() const {
+	return getCircleType();
 }
 
 Polyline::Polyline(const std::string& name, const int id, const std::vector<vector2D>& points)
@@ -295,6 +326,7 @@ int Polyline::getPointsCount() const {
 
 void Polyline::input(std::shared_ptr<InputFiler> file) {
 
+	object::input(file);
 
 	int countOfPoints = file->readInt();
 	int maxvalue = std::numeric_limits<int32_t>::max();
@@ -336,4 +368,12 @@ void Polyline::draw(std::shared_ptr<Drawer> drawer) {
 	for (int i = 0; i < lines.size(); i++) {
 		lines[i].draw(drawer);
 	}
+}
+
+int Polyline::getPolylineType() {
+	return PolylineType();
+}
+
+int Polyline::getType() const {
+	return getPolylineType();
 }

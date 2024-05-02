@@ -89,6 +89,6 @@ void OutBinaryFiler::outputString(const std::string& str) {
 }
 
 void OutBinaryFiler::outputVector2D(const vector2D& vec) {
-	mOutput.write((char*)&vec.x, 8);
-	mOutput.write((char*)&vec.y, 8);
+	outputDouble(vec.x);
+	outputDouble(vec.y);
 }

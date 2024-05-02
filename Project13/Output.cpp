@@ -30,14 +30,10 @@ void Output::output(std::shared_ptr<DataBase> db, const std::string fileName) {
 
 	filer->outputInt(db->getObjectsCount());
 
-	for (int typeId = 1; typeId <= db->getMapSize(); typeId++) {
-
-		for (int position = 0; position < db->getNestedMapsize(typeId); position++) {
-
-			int objectId = db->getObjectId(typeId, position);
-			auto obj = db->getObject(typeId, objectId);
-			filer->outputInt(typeId);
-			obj->output(filer);
-		}
+	std::vector<std::shared_ptr<object>> objects = db->getObjects();
+	for (int i = 0; i < objects.size(); i++) {
+		
+		filer->outputInt(objects[i]->getType());
+		objects[i]->output(filer);
 	}
 }

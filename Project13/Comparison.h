@@ -7,7 +7,7 @@ bool inline IsEqual(double x, double y, double epsilon = std::numeric_limits<dou
 }
 
 bool inline Greater(double x, double y, double epsilon = std::numeric_limits<double>::epsilon()) {
-	return ((x - y) > epsilon) ? 1 : 0;
+	return ((x - y) > epsilon);
 }
 
 bool inline Less(double x, double y, double epsilon = std::numeric_limits<double>::epsilon()) {
@@ -15,18 +15,11 @@ bool inline Less(double x, double y, double epsilon = std::numeric_limits<double
 }
 
 bool inline GreaterOrEqual(double x, double y, double epsilon = std::numeric_limits<double>::epsilon()) {
-
-	int mark1 = Greater(x, y, epsilon);
-	int mark2 = IsEqual(x, y, epsilon);
-
-	return ((mark1 == 1) or (mark2 == 1)) ? 1 : 0;
+	return Greater(x, y, epsilon) or IsEqual(x, y, epsilon);
 }
 
 bool inline LessOrEqual(double x, double y, double epsilon = std::numeric_limits<double>::epsilon()) {
 
-	int mark1 = Less(x, y, epsilon);
-	int mark2 = IsEqual(x, y, epsilon);
-
-	return ((mark1 == 1) or (mark2 == 1)) ? 1 : 0;
+	return Less(x, y, epsilon) or IsEqual(x, y, epsilon);
 }
 #endif __COMPARISON_H_

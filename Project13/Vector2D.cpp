@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Vector2D.h"
+#include "Comparison.h"
 
 std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
 
@@ -19,10 +20,7 @@ std::istream& operator>> (std::istream& input, vector2D& vector2D) {
 
 int vector2D::operator==(const vector2D& rhs) {
 
-	int mark1 = (std::fabs(x - rhs.x) < std::numeric_limits<double>::epsilon()) ? 1 : 0;
-	int mark2 = (std::fabs(x - rhs.x) < std::numeric_limits<double>::epsilon()) ? 1 : 0;
-
-	return (mark1 == mark2) ? 1 : 0;
+	return IsEqual(x, rhs.x) && IsEqual(y, rhs.y);
 }
 
 vector2D vector2D::operator+(const vector2D& rhs) {

@@ -3,16 +3,16 @@
 #include <map>
 #include "Header.h"
 #include "ObjectFactory.h"
-
+#include "TypeNamespace.h"
 
 
 
 ObjectFactory::ObjectFactory() {
 
-	addType(1, std::make_shared<ObjectCreator<object, Line>>());
-	addType(2, std::make_shared<ObjectCreator<object, Rectangle>>());
-	addType(3, std::make_shared<ObjectCreator<object, Circle>>());
-	addType(4, std::make_shared<ObjectCreator<object, Polyline>>());
+	addType(Line::getLineType(), std::make_shared<ObjectCreator<object, Line>>());
+	addType(Rectangle::getRectangleType(), std::make_shared<ObjectCreator<object, Rectangle>>());
+	addType(Circle::getCircleType(), std::make_shared<ObjectCreator<object, Circle>>());
+	addType(Polyline::getPolylineType(), std::make_shared<ObjectCreator<object, Polyline>>());
 }
 
 void ObjectFactory::addType(const int typeId, std::shared_ptr<Creator<object>> object) {

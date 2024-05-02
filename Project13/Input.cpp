@@ -41,13 +41,9 @@ std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
 	for (int i = 0; i < count; ++i) {
 
 		int typeId = filer->readInt();
-		auto name = filer->readString();
-		int objectId = filer->readInt();
 		auto obj = objFactory->getObject(typeId);
-		obj->setId(objectId);
-		obj->setName(name);
 		obj->input(filer);
-		db->addObject(typeId,obj);
+		db->addObject(obj);
 	}
 
 	return db;
