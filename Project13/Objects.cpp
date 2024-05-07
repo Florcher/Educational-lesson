@@ -110,12 +110,12 @@ void Line::draw(std::shared_ptr<Drawer> drawer) {
 	drawer->drawLine(mStart, mEnd);
 }
 
-int Line::getLineType() {
-	return LineType();
+int Line::Type() {
+	return LineType;
 }
 
 int Line::getType() const {
-	return getLineType();
+	return Type();
 }
 
 Rectangle::Rectangle(const std::string& name_, const int id_, const vector2D& vector2D, const double lenth_, const double width_)
@@ -204,12 +204,12 @@ void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
 	da.draw(drawer);
 }
 
-int Rectangle::getRectangleType() {
-	return RectangleType();
+int Rectangle::Type() {
+	return RectangleType;
 }
 
 int Rectangle::getType() const {
-	return getRectangleType();
+	return Type();
 }
 
 Circle::Circle(const std::string& name, const int id, const vector2D& center, const double radius)
@@ -291,12 +291,12 @@ void Circle::draw(std::shared_ptr<Drawer> drawer) {
 	}
 }
 
-int Circle::getCircleType() {
-	return CircleType();
+int Circle::Type() {
+	return CircleType;
 }
 
 int Circle::getType() const {
-	return getCircleType();
+	return Type();
 }
 
 Polyline::Polyline(const std::string& name, const int id, const std::vector<vector2D>& points)
@@ -370,10 +370,10 @@ void Polyline::draw(std::shared_ptr<Drawer> drawer) {
 	}
 }
 
-int Polyline::getPolylineType() {
-	return PolylineType();
+int Polyline::Type() {
+	return PolylineType;
 }
 
 int Polyline::getType() const {
-	return getPolylineType();
+	return Type();
 }

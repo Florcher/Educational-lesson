@@ -24,8 +24,8 @@ void Vectoriser::draw(std::shared_ptr<DataBase> db, const std::string& filename)
 
 	auto drawer = getDrawer(f, filename);
 
-	std::vector<std::shared_ptr<object>> objects = db->getObjects();
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->draw(drawer);
+	auto objects = db->getObjects();
+	for (auto object : objects) {
+		object->draw(drawer);
 	}
 }

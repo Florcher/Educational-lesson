@@ -15,6 +15,7 @@ void ComparisonTests::testGreater() {
 void ComparisonTests::testLess() {
 	myassert(Less(-23.32, 2.48) == 1);
 	myassert(Less(4.3213, 0.198) == 0);
+	myassert(Less(0, 0) == 0);
 }
 
 void ComparisonTests::testGreaterOrEqual() {

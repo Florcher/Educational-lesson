@@ -9,10 +9,10 @@
 
 ObjectFactory::ObjectFactory() {
 
-	addType(Line::getLineType(), std::make_shared<ObjectCreator<object, Line>>());
-	addType(Rectangle::getRectangleType(), std::make_shared<ObjectCreator<object, Rectangle>>());
-	addType(Circle::getCircleType(), std::make_shared<ObjectCreator<object, Circle>>());
-	addType(Polyline::getPolylineType(), std::make_shared<ObjectCreator<object, Polyline>>());
+	addType(Line::Type(), std::make_shared<ObjectCreator<object, Line>>());
+	addType(Rectangle::Type(), std::make_shared<ObjectCreator<object, Rectangle>>());
+	addType(Circle::Type(), std::make_shared<ObjectCreator<object, Circle>>());
+	addType(Polyline::Type(), std::make_shared<ObjectCreator<object, Polyline>>());
 }
 
 void ObjectFactory::addType(const int typeId, std::shared_ptr<Creator<object>> object) {

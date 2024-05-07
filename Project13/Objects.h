@@ -27,6 +27,7 @@ public:
 
 	std::string getName() const;
 	int getId() const;
+
     virtual int getType() const;
 
 private:
@@ -54,7 +55,7 @@ public:
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;
 	
-	static int getLineType();
+	inline static int Type();
     int getType() const override;
 
 private:
@@ -86,7 +87,7 @@ public:
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;
 	
-	static int getRectangleType();
+	inline static int Type();
 	int getType() const override;
 
 private:
@@ -115,7 +116,7 @@ public:
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;
 
-	static int getCircleType();
+	inline static int Type();
 	int getType() const override;
 
 private:
@@ -141,7 +142,7 @@ public:
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;
 
-	static int getPolylineType();
+	inline static int Type();
 	int getType() const override;
 
 private:

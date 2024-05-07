@@ -11,7 +11,7 @@ bool inline Greater(double x, double y, double epsilon = std::numeric_limits<dou
 }
 
 bool inline Less(double x, double y, double epsilon = std::numeric_limits<double>::epsilon()) {
-	return !Greater(x, y, epsilon);
+	return Greater(-x, -y, epsilon);
 }
 
 bool inline GreaterOrEqual(double x, double y, double epsilon = std::numeric_limits<double>::epsilon()) {

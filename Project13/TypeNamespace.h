@@ -1,9 +1,9 @@
 #ifndef __TYPENAMESPACE_H_
 #define __TYPENAMESPACE_H_
 
-#define LineType() (1);
-#define RectangleType() (2);
-#define CircleType() (3);
-#define PolylineType() (4);
+ const int LineType = 1;
+ const int RectangleType = 2;
+ const int CircleType = 3;
+ const int PolylineType = 4;
 
 #endif __TYPENAMESPACE_H_
