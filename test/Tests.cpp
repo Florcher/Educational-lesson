@@ -89,4 +89,7 @@ void Tests::testDataBase() {
 	tests.testRemoveObject(db);
 	tests.testObjectAfterRemove(db);
 	tests.testExceptionRemove(db);
+	tests.testGetObject(db);
+	tests.testObjectAfterGetObject(db);
+	tests.testExceptionGetObject(db);
 }

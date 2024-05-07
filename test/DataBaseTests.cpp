@@ -17,7 +17,7 @@ void DataBaseTests::testAddObject(std::shared_ptr<DataBase> db) {
 
 	std::shared_ptr<Circle> circle = std::make_shared<Circle>();
 
-	circle->setId(1);
+	circle->setId(3);
 	circle->setName("Mycircle");
 	circle->setCenter(center);
 	circle->setRadius(1.4);
@@ -27,10 +27,9 @@ void DataBaseTests::testAddObject(std::shared_ptr<DataBase> db) {
 
 void DataBaseTests::testRemoveObject(std::shared_ptr<DataBase> db) {
 
-	int typeId = 2;
-	int objectId = 1;
+	int objectId = 2;
 
-	db->removeObject(typeId, objectId);
+	db->removeObject(objectId);
 
 }
 
@@ -52,7 +51,7 @@ void DataBaseTests::testObjectsUntilAdd(std::shared_ptr<DataBase> db) {
 
 	myassert(rec->getType() == 2);
 	myassert(rec->getName() == "Myrectangle");
-	myassert(rec->getId() == 1);
+	myassert(rec->getId() == 2);
 	myassert(rec->getLeftDownPoint() == ldp);
 	myassert(rec->getLenth() == 10);
 	myassert(rec->getWidth() == 10);
@@ -70,7 +69,7 @@ void DataBaseTests::testObjectsAfterAdd(std::shared_ptr<DataBase> db) {
 
 	myassert(circle->getType() == 3);
 	myassert(circle->getName() == "Mycircle");
-	myassert(circle->getId() == 1);
+	myassert(circle->getId() == 3);
 	myassert(circle->getCenter() == center);
 	myassert(circle->getRadius() == 1.4);
 }
@@ -93,20 +92,39 @@ void DataBaseTests::testObjectAfterRemove(std::shared_ptr<DataBase> db) {
 
 	myassert(circle->getType() == 3);
 	myassert(circle->getName() == "Mycircle");
-	myassert(circle->getId() == 1);
+	myassert(circle->getId() == 3);
 	myassert(circle->getCenter() == center);
 	myassert(circle->getRadius() == 1.4);
 }
 
 void DataBaseTests::testExceptionRemove(std::shared_ptr<DataBase> db) {
 
-	int typeId1 = 1;
-	int objecId1 = 34;
+	int objecId = 34;
+	was_exception(db->removeObject(objecId));
+}
 
- 	was_exception(db->removeObject(typeId1, objecId1));
+void DataBaseTests::testGetObject(std::shared_ptr<DataBase> db) {
+	
+	int objectId = 1;
+	auto object = db->getObject(1);
 
-	int typeId2 = -6;
-	int objecId2 = 1;
+	auto line = std::dynamic_pointer_cast<Line>(object);
+	vector2D start{ -5, -5 }, end{ 5, 5 };
 
-	was_exception(db->removeObject(typeId2, objecId2));
+	myassert(line->getType() == 1);
+	myassert(line->getName() == "Myline");
+	myassert(line->getId() == 1);
+	myassert(line->getStart() == start);
+	myassert(line->getEnd() == end);
+}
+
+void DataBaseTests::testExceptionGetObject(std::shared_ptr<DataBase> db) {
+
+	int objectId = 48;
+	std::shared_ptr<object> obj;
+	was_exception(obj = db->getObject(objectId));
+}
+
+void DataBaseTests::testObjectAfterGetObject(std::shared_ptr<DataBase> db) {
+	testObjectAfterRemove(db);
 }

@@ -29,7 +29,7 @@ void InputTests::test(std::shared_ptr<DataBase> db) {
 
 	std::string rectangleName = { 'R', 'e', 'c', 't', 'a', 'n', 'g', 'l', 'e' };
 
-	myassert(rec1->getId() == 1);
+	myassert(rec1->getId() == 2);
 	myassert((rec1->getName() == rectangleName));
 	myassert((rec1->getLeftDownPoint() == ldp));
 	myassert(IsEqual(rec1->getLenth(), 10));
@@ -61,7 +61,7 @@ void InputTests::binaryTest(std::shared_ptr<DataBase> db) {
 
 	std::string rectangleName = { 'R', 'e', 'c', 't', 'a', 'n', 'g', 'l', 'e', '\0'};
 
-	myassert(rec1->getId() == 1);
+	myassert(rec1->getId() == 2);
 	myassert((rec1->getName() == rectangleName));
 	myassert((rec1->getLeftDownPoint() == ldp));
 	myassert(IsEqual(rec1->getLenth(), 10));

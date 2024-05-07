@@ -9,12 +9,15 @@ struct DataBaseTests {
 
 	void testAddObject(std::shared_ptr<DataBase> db);
 	void testRemoveObject(std::shared_ptr<DataBase> db);
+	void testGetObject(std::shared_ptr<DataBase> db);
 
 	void testObjectsUntilAdd(std::shared_ptr<DataBase> db);
 	void testObjectsAfterAdd(std::shared_ptr<DataBase> db);
 	void testObjectAfterRemove(std::shared_ptr<DataBase> db);
+	void testObjectAfterGetObject(std::shared_ptr<DataBase> db);
 
 	void testExceptionRemove(std::shared_ptr<DataBase> db);
+	void testExceptionGetObject(std::shared_ptr<DataBase> db);
 };
 
 

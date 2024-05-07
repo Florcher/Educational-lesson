@@ -43,11 +43,9 @@ void OperationWithDataBase::addEntity(std::shared_ptr<DataBase> db, std::shared_
 }
 
 void OperationWithDataBase::removeEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
-	
-	int typeId = context->getInt();
-	int objectId = context->getInt();
 
-	db->removeObject(typeId, objectId);
+	int objectId = context->getInt();
+	db->removeObject(objectId);
 }
 
 void OperationWithDataBase::editEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
