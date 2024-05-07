@@ -14,11 +14,11 @@ public:
 	~DataBase() = default;
 
 	void addObject(std::shared_ptr<object> obj);
-	void removeObject(const int typeId, const int objectId);
+	void removeObject(const int objectId);
 	int getObjectsCount() const;
 
 	std::vector<std::shared_ptr<object>> getObjects() const;
-	std::shared_ptr<object> getObject(const int typeId, const int objectId) const;
+	std::shared_ptr<object> getObject(const int objectId) const;
 
 private:
 
