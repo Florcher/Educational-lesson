@@ -20,6 +20,7 @@ int main() {
 
 	Renderer rend;
 	Window w(1200,800);
+
 	while (w.update()) {
 
 		PAINTSTRUCT ps;
@@ -29,7 +30,6 @@ int main() {
 		rend.rendering(db, hdc);
 
 		EndPaint(w._hwnd, &ps);
-
 	}
 
 

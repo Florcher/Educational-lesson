@@ -3,7 +3,6 @@
 #include <iostream>
 #include <Windows.h>
 #include <gdiplus.h>
-#include "InputAndDraw.h"
 
 class Window {
 public:
