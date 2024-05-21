@@ -30,10 +30,16 @@ public:
 
     virtual int getType() const;
 
+	void setIsDirty(bool dirty);
+	bool isDirty() const;
+	void invalidate();
+
 private:
 
 	std::string mName;
 	int mId;
+
+	bool mIsDitry;
 };
 
 

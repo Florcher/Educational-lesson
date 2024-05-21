@@ -13,6 +13,7 @@ std::shared_ptr<Drawer> getDrawer(const FileType& filetype, const std::string& f
 
 	if (filetype == FileType::console)
 		return std::make_shared<ConsoleDrawer>();
+
 }
 
 void Vectoriser::draw(std::shared_ptr<DataBase> db, const std::string& filename) {
@@ -22,10 +23,29 @@ void Vectoriser::draw(std::shared_ptr<DataBase> db, const std::string& filename)
 	if (f == FileType::unknown)
 		throw std::exception();
 
+	
+
+	if (f == FileType::win32) {
+		std::shared_ptr<WinDrawer> winDrawer = std::make_shared<WinDrawer>();
+
+		auto objects = db->getObjects();
+		for (auto object : objects) {
+			object->draw(winDrawer);
+		}
+
+		data = std::make_shared<DrawData>(winDrawer->getData());
+
+		return;
+	}
+
 	auto drawer = getDrawer(f, filename);
 
 	auto objects = db->getObjects();
 	for (auto object : objects) {
 		object->draw(drawer);
 	}
+}
+
+std::shared_ptr<DrawData> Vectoriser::getData() const {
+	return data;
 }

@@ -9,7 +9,6 @@ void InputTests::test(std::shared_ptr<DataBase> db) {
 	vector2D start{ -5, -5 };
 	vector2D end{ 5, 5 };
 	vector2D ldp{ 0, 0 };
-	vector2D center{ 1.4, 1.4 };
 
 	myassert(db->getObjectsCount() == 2);
 
@@ -17,7 +16,7 @@ void InputTests::test(std::shared_ptr<DataBase> db) {
 
 	std::shared_ptr<Line> line1 = std::dynamic_pointer_cast<Line>(objects[0]);
 
-	std::string lineName = { 'L','i', 'n', 'e' };
+	std::string lineName = "Line";
 
 	myassert(line1->getId() == 1);
 	myassert((line1->getName() == lineName));
@@ -27,7 +26,7 @@ void InputTests::test(std::shared_ptr<DataBase> db) {
 
 	std::shared_ptr<Rectangle> rec1 = std::dynamic_pointer_cast<Rectangle>(objects[1]);
 
-	std::string rectangleName = { 'R', 'e', 'c', 't', 'a', 'n', 'g', 'l', 'e' };
+	std::string rectangleName = "Rectangle";
 
 	myassert(rec1->getId() == 2);
 	myassert((rec1->getName() == rectangleName));
@@ -41,7 +40,6 @@ void InputTests::binaryTest(std::shared_ptr<DataBase> db) {
 	vector2D start{ -5, -5 };
 	vector2D end{ 5, 5 };
 	vector2D ldp{ 0, 0 };
-	vector2D center{ 1.4, 1.4 };
 
 	myassert(db->getObjectsCount() == 2);
 

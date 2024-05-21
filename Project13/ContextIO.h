@@ -3,7 +3,7 @@
 #include "Vector2D.h"
 #include "InputFiler.h"
 
-class ContextIO {
+class PROJECT_EXPORT ContextIO {
 public:
 	virtual vector2D getPoint() = 0;
 	virtual std::string getString() = 0;
@@ -11,7 +11,7 @@ public:
 	virtual double getDouble() = 0;
 };
 
-class ConcoleContext : public ContextIO {
+class PROJECT_EXPORT ConcoleContext : public ContextIO {
 public:
 
 	vector2D getPoint() override;

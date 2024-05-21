@@ -8,7 +8,7 @@
 #include "Drawer.h"
 #include "TypeNamespace.h"
 
-object::object(const std::string& name, const int id) : mName(name), mId(id) {
+object::object(const std::string& name, const int id) : mName(name), mId(id), mIsDitry(false) {
 
 }
 
@@ -59,6 +59,18 @@ int object::getType() const {
 	return 0;
 }
 
+bool object::isDirty() const {
+	return mIsDitry;
+}
+
+void object::invalidate() {
+	mIsDitry = true;
+}
+
+void object::setIsDirty(bool dirty) {
+	mIsDitry = dirty;
+}
+
 Line::Line(const std::string& name_, const int id_, const vector2D& start_, const vector2D& end_)
 	: object(name_, id_), mStart(start_), mEnd(end_)
 {
@@ -75,11 +87,13 @@ double Line::getLenth() {
 void Line::setStart(const vector2D& start) {
 
 	mStart = start;
+	object::invalidate();
 };
 
 void Line::setEnd(const vector2D& end) {
 
 	mEnd = end;
+	object::invalidate();
 };
 
 vector2D Line::getStart() const {
@@ -108,6 +122,7 @@ void Line::output(std::shared_ptr<OutputFiler> file) {
 
 void Line::draw(std::shared_ptr<Drawer> drawer) {
 	drawer->drawLine(mStart, mEnd);
+	object::setIsDirty(false);
 }
 
 int Line::Type() {
@@ -127,6 +142,7 @@ Rectangle::Rectangle(const std::string& name_, const int id_, const vector2D& ve
 void Rectangle::setLeftDownPoint(const vector2D& vector2D) {
 
 	mLeftDownPoint = vector2D;
+	object::invalidate();
 };
 
 void Rectangle::setLenth(const double lenth) {
@@ -134,6 +150,7 @@ void Rectangle::setLenth(const double lenth) {
 		throw std::exception();
 
 	mLenth = lenth;
+	object::invalidate();
 };
 
 void Rectangle::setWidth(const double width) {
@@ -142,6 +159,7 @@ void Rectangle::setWidth(const double width) {
 		throw std::exception();
 
 	mWidth = width;
+	object::invalidate();
 };
 
 vector2D Rectangle::getLeftDownPoint() {
@@ -220,6 +238,7 @@ Circle::Circle(const std::string& name, const int id, const vector2D& center, co
 void Circle::setCenter(const vector2D& center) {
 
 	mCenter = center;
+	object::invalidate();
 };
 
 void Circle::setRadius(const double radius) {
@@ -228,6 +247,7 @@ void Circle::setRadius(const double radius) {
 		throw std::exception();
 
 	mRadius = radius;
+	object::invalidate();
 };
 
 vector2D Circle::getCenter() const {
@@ -273,6 +293,10 @@ std::vector<Line> Circle::createLines() {
 		Line line("vector", i, points[i], points[i + 1]);
 		lines.push_back(line);
 	}
+
+	Line line("vector", 360, points[359], points[0]);
+	lines.push_back(line);
+
 	return lines;
 }
 
@@ -306,11 +330,15 @@ Polyline::Polyline(const std::string& name, const int id, const std::vector<vect
 }
 
 void Polyline::setPoint(const vector2D& point) {
+
 	mPoints.push_back(point);
+	object::invalidate();
 }
 
 void Polyline::editPoint(const int index, const vector2D& point) {
+
 	mPoints[index] = point;
+	object::invalidate();
 }
 
 vector2D Polyline::getPoint(const int index) const {

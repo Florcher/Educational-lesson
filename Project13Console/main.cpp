@@ -3,6 +3,8 @@
 #include "InputFiler.h"
 #include <string>
 #include "OperationWithDataBase.h"
+#include "ContextIO.h"
+
 
 void operationWithDataBase(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
 
