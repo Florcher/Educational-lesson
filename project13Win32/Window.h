@@ -1,8 +1,8 @@
 #ifndef __WINDOW_H_
 #define __WINDOW_H_
 #include <iostream>
-#include <Windows.h>
 #include <gdiplus.h>
+#include <Windows.h>
 
 class Window {
 public:
@@ -81,6 +81,5 @@ public:
 };
 
 const std::wstring Window::CLASS_NAME = L"MY_CLASS_NAME";
-
 
 #endif __WINDOW_H_

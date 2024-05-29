@@ -102,5 +102,5 @@ void OperationWithDataBase::drawObject(std::shared_ptr<DataBase> db, std::shared
 	std::cout << "Enter file name" << std::endl;
 	std::string filename = context->getString();
 	Vectoriser vectoriser;
-	vectoriser.draw(db, filename);
+	vectoriser.draw(db);
 }

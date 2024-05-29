@@ -1,11 +1,22 @@
 #ifndef __RENDERER_H_
 #define __RENDERER_H_
 #include "DataBase.h"
-#include "Windows.h"
+#include <Windows.h>
+#include "Vectoriser.h"
 
-struct Renderer {
+class Renderer {
 public:
-	void rendering(std::shared_ptr<DataBase> db, HDC hdc) const;
+
+	Renderer(HWND hwnd);
+	~Renderer();
+
+	void rendering(std::shared_ptr<DataBase> db, Vectoriser& vec) const;
+
+private:
+
+	HWND mHwnd;
+	HDC mHdc;
+	PAINTSTRUCT ps;
 };
 
 

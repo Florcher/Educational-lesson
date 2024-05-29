@@ -66,6 +66,9 @@
     <ClInclude Include="ContextIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LineSegment2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">

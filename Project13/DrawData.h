@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Objects.h"
 #include "Header.h"
+#include "LineSegment2D.h"
 
 class PROJECT_EXPORT DrawData {
 public:
@@ -10,12 +11,12 @@ public:
 	DrawData();
 	DrawData(std::shared_ptr<DrawData> dt);
 
-	void addData(std::shared_ptr<Line> dt);
+	void addData(const Math::LineSegment2D& dt);
 
-	std::vector<std::shared_ptr<Line>> getData() const;
+	std::vector<Math::LineSegment2D> getData() const;
 
 private:
-	std::vector<std::shared_ptr<Line>> data;
+	std::vector<Math::LineSegment2D> data;
 };
 
 

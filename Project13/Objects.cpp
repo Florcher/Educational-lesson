@@ -72,56 +72,57 @@ void object::setIsDirty(bool dirty) {
 }
 
 Line::Line(const std::string& name_, const int id_, const vector2D& start_, const vector2D& end_)
-	: object(name_, id_), mStart(start_), mEnd(end_)
+	: object(name_, id_)
 {
-
+	line.start = start_;
+	line.end = end_;
 }
 
 double Line::getLenth() {
 
-	vector2D dir = mEnd - mStart;
+	vector2D dir = line.end - line.start;
 
 	return sqrt(dir.x * dir.x + dir.y * dir.y);
 }
 
 void Line::setStart(const vector2D& start) {
 
-	mStart = start;
+	line.start = start;
 	object::invalidate();
 };
 
 void Line::setEnd(const vector2D& end) {
 
-	mEnd = end;
+	line.end = end;
 	object::invalidate();
 };
 
 vector2D Line::getStart() const {
 
-	return mStart;
+	return line.start;
 };
 
 vector2D Line::getEnd() const {
 
-	return mEnd;
+	return line.end;
 };
 
 void Line::input(std::shared_ptr<InputFiler> file) {
 	
 	object::input(file);
-	mStart = file->readVector2D();
-	mEnd = file->readVector2D();
+	line.start = file->readVector2D();
+	line.end = file->readVector2D();
 }
 
 void Line::output(std::shared_ptr<OutputFiler> file) {
 
 	object::output(file);
-	file->outputVector2D(mStart);
-	file->outputVector2D(mEnd);
+	file->outputVector2D(line.start);
+	file->outputVector2D(line.end);
 }
 
 void Line::draw(std::shared_ptr<Drawer> drawer) {
-	drawer->drawLine(mStart, mEnd);
+	drawer->drawLine(line);
 	object::setIsDirty(false);
 }
 
@@ -288,13 +289,13 @@ std::vector<Line> Circle::createLines() {
 	}
 
 	std::vector<Line> lines;
-	for (int i = 0; i < 359; i++) {
+	for (int i = 0; i < countOfpoints - 1; i++) {
 
 		Line line("vector", i, points[i], points[i + 1]);
 		lines.push_back(line);
 	}
 
-	Line line("vector", 360, points[359], points[0]);
+	Line line("vector", 360, points[countOfpoints - 1], points[0]);
 	lines.push_back(line);
 
 	return lines;

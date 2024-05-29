@@ -1,11 +1,12 @@
 #include <iostream>
-#include "Window.h"
 #include "DataBase.h"
 #include "Input.h"
 #include "Renderer.h"
+#include <gdiplus.h>
+#include "Window.h"
+#include <Windows.h>
 
 using namespace Gdiplus;
-
 
 
 int main() {
@@ -18,18 +19,15 @@ int main() {
 	Input in;
 	std::shared_ptr <DataBase> db = in.input("file.txt");
 
-	Renderer rend;
+	Vectoriser vec;
+	vec.draw(db);
+
 	Window w(1200,800);
+	Renderer rend(w._hwnd);
 
 	while (w.update()) {
-
-		PAINTSTRUCT ps;
-
-		auto hdc = BeginPaint(w._hwnd, &ps);
 		
-		rend.rendering(db, hdc);
-
-		EndPaint(w._hwnd, &ps);
+		rend.rendering(db, vec);
 	}
 
 

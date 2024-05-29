@@ -142,6 +142,7 @@
     <ClInclude Include="Header.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputFiler.h" />
+    <ClInclude Include="LineSegment2D.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Output.h" />

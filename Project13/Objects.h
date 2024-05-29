@@ -5,7 +5,7 @@
 #include <vector>
 #include "Header.h"
 #include "Vector2D.h"
-
+#include "LineSegment2D.h"
 
 class InputFiler;
 class OutputFiler;
@@ -66,7 +66,7 @@ public:
 
 private:
 
-	vector2D mStart, mEnd;
+	Math::LineSegment2D line;
 };
 
 
