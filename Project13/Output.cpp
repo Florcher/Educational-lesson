@@ -7,7 +7,7 @@
 #include "OutputFiler.h"
 #include "FileType.h"
 
-std::shared_ptr<OutputFiler> createFiler(const FileType& filetype, const std::string& fileName) {
+OutputFiler::ptr createFiler(const FileType& filetype, const std::string& fileName) {
 
 	if (filetype == FileType::txt)
 		return std::make_shared<OutTextFiler>(fileName);
@@ -19,7 +19,7 @@ std::shared_ptr<OutputFiler> createFiler(const FileType& filetype, const std::st
 		return std::make_shared<OutConsoleFiler>();
 }
 
-void Output::output(std::shared_ptr<DataBase> db, const std::string fileName) {
+void Output::output(DataBase::ptr db, const std::string fileName) {
 
 	auto f = getFileType(fileName);
 
@@ -30,7 +30,7 @@ void Output::output(std::shared_ptr<DataBase> db, const std::string fileName) {
 
 	filer->outputInt(db->getObjectsCount());
 
-	std::vector<std::shared_ptr<object>> objects = db->getObjects();
+	std::vector<object::ptr> objects = db->getObjects();
 	for (int i = 0; i < objects.size(); i++) {
 		
 		filer->outputInt(objects[i]->getType());

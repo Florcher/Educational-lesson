@@ -7,13 +7,12 @@ void Vectoriser::draw(std::shared_ptr<DataBase> db) {
 
 	auto objects = db->getObjects();
 	for (auto object : objects) {
-		std::shared_ptr<WinDrawer> winDrawer = std::make_shared<WinDrawer>();
-		object->draw(winDrawer);
-		data.emplace(object->getId(), std::make_shared<DrawData>(winDrawer->getData()));
-		winDrawer.~shared_ptr();
+		std::shared_ptr<Drawer> drawer = std::make_shared<Drawer>();
+		object->draw(drawer);
+		data.emplace(object->getId(), drawer->getData());
 	}
 }
 
-std::map<int, std::shared_ptr<DrawData>> Vectoriser::getData() const {
-	return data;
+DrawData::ptr Vectoriser::getData(int entityId) const {
+	return data.at(entityId);
 }

@@ -18,13 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OperationWithObject.cpp">
+    <ClCompile Include="ObjectOperations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OperationWithDataBase.cpp">
+    <ClCompile Include="DataBaseOperations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddOperationWithObject.cpp">
+    <ClCompile Include="ObjectAddOperation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OperationFactory.cpp">
@@ -35,13 +35,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OperationWithObject.h">
+    <ClInclude Include="ObjectOpreations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OperationWithDataBase.h">
+    <ClInclude Include="DataBaseOperations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AddOperationWithObject.h">
+    <ClInclude Include="ObjectAddOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OperationFactory.h">

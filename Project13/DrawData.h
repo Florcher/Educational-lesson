@@ -15,6 +15,8 @@ public:
 
 	std::vector<Math::LineSegment2D> getData() const;
 
+	using ptr = std::shared_ptr<DrawData>;
+
 private:
 	std::vector<Math::LineSegment2D> data;
 };

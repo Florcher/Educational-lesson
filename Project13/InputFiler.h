@@ -11,6 +11,8 @@ public:
 	virtual double readDouble() = 0;
 	virtual std::string readString() = 0;
 	virtual vector2D readVector2D() = 0;
+
+	using ptr = std::shared_ptr<InputFiler>;
 };
 
 class PROJECT_EXPORT InTextFiler : public InputFiler {
@@ -22,6 +24,8 @@ public:
 	double readDouble() override;
 	std::string readString() override;
 	vector2D readVector2D() override;
+
+	using ptr = std::shared_ptr<InTextFiler>;
 
 private:
 	std::ifstream mInput;
@@ -37,6 +41,8 @@ public:
 	std::string readString() override;
 	vector2D readVector2D() override;
 
+	using ptr = std::shared_ptr<InConsoleFiler>;
+
 private:
 
 };
@@ -51,9 +57,10 @@ public:
 	std::string readString() override;
 	vector2D readVector2D() override;
 
+	using ptr = std::shared_ptr<InBinaryFiler>;
+
 private:
 	std::ifstream mInput;
 };
-
 
 #endif __INPUTFILER_H_

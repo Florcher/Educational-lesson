@@ -1,13 +1,13 @@
-#include "AddOperationWithObject.h"
+#include "ObjectAddOperation.h"
 #include <iostream>
 #include "ContextIO.h"
 #include <string>
 
-BaseAddOperationWithObject::BaseAddOperationWithObject(std::shared_ptr<object> obj) {
+ObjectBaseAddOperation::ObjectBaseAddOperation(object::ptr obj) {
 	mObj = obj;
 }
 
-void BaseAddOperationWithObject::addObject(std::shared_ptr<ContextIO> context) {
+void ObjectBaseAddOperation::addObject(ContextIO::ptr context) {
 
 	std::cout << "Enter objecId: " << std::endl;
 	int objectId = context->getInt();
@@ -19,13 +19,13 @@ void BaseAddOperationWithObject::addObject(std::shared_ptr<ContextIO> context) {
 	mObj->setName(name);
 }
 
-AddOperationWithLine::AddOperationWithLine(std::shared_ptr<object> obj) : BaseAddOperationWithObject(obj) {
+LineAddOperation::LineAddOperation(object::ptr obj) : ObjectBaseAddOperation(obj) {
 	mLine = std::dynamic_pointer_cast<Line>(obj);
 }
 
-void AddOperationWithLine::addObject(std::shared_ptr<ContextIO> context) {
+void LineAddOperation::addObject(ContextIO::ptr context) {
 
-	BaseAddOperationWithObject::addObject(context);
+	ObjectBaseAddOperation::addObject(context);
 
 	std::cout << "Enter start point: " << std::endl;
 	vector2D start = context->getPoint();
@@ -37,13 +37,13 @@ void AddOperationWithLine::addObject(std::shared_ptr<ContextIO> context) {
 	mLine->setEnd(end);
 }
 
-AddOperationWithRectangle::AddOperationWithRectangle(std::shared_ptr<object> obj) : BaseAddOperationWithObject(obj) {
+RectagleAddOperation::RectagleAddOperation(object::ptr obj) : ObjectBaseAddOperation(obj) {
 	mRec = std::dynamic_pointer_cast<Rectangle>(obj);
 }
 
-void AddOperationWithRectangle::addObject(std::shared_ptr<ContextIO> context) {
+void RectagleAddOperation::addObject(ContextIO::ptr context) {
 
-	BaseAddOperationWithObject::addObject(context);
+	ObjectBaseAddOperation::addObject(context);
 
 	std::cout << "Enter left down point: " << std::endl;
 	vector2D leftDownPoint = context->getPoint();
@@ -59,13 +59,13 @@ void AddOperationWithRectangle::addObject(std::shared_ptr<ContextIO> context) {
 	mRec->setWidth(width);
 }
 
-AddOperationWithCircle::AddOperationWithCircle(std::shared_ptr<object> obj) : BaseAddOperationWithObject(obj) {
+CircleAddOperation::CircleAddOperation(object::ptr obj) : ObjectBaseAddOperation(obj) {
 	mCircle = std::dynamic_pointer_cast<Circle>(obj);
 }
 
-void AddOperationWithCircle::addObject(std::shared_ptr<ContextIO> context) {
+void CircleAddOperation::addObject(ContextIO::ptr context) {
 
-	BaseAddOperationWithObject::addObject(context);
+	ObjectBaseAddOperation::addObject(context);
 
 	std::cout << "Enter center: " << std::endl;
 	vector2D center = context->getPoint();
@@ -77,13 +77,13 @@ void AddOperationWithCircle::addObject(std::shared_ptr<ContextIO> context) {
 	mCircle->setRadius(radius);
 }
 
-AddOperationWithPolyline::AddOperationWithPolyline(std::shared_ptr<object> obj) : BaseAddOperationWithObject(obj) {
+PolylineAddOperation::PolylineAddOperation(object::ptr obj) : ObjectBaseAddOperation(obj) {
 	mPolyline = std::dynamic_pointer_cast<Polyline>(obj);
 }
 
-void AddOperationWithPolyline::addObject(std::shared_ptr<ContextIO> context) {
+void PolylineAddOperation::addObject(ContextIO::ptr context) {
 
-	BaseAddOperationWithObject::addObject(context);
+	ObjectBaseAddOperation::addObject(context);
 
 	std::cout << "Enter count of points: " << std::endl;
 	int pointsCount = context->getInt();

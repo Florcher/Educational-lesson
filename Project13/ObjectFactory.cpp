@@ -37,7 +37,7 @@ void ObjectFactory::removeType(const int typeId) {
 		mTypes.erase(typeId);
 }
 
-std::shared_ptr<object> ObjectFactory::getObject(const int typeId) {
+object::ptr ObjectFactory::getObject(const int typeId) {
 
 	int maxvalue = std::numeric_limits<int32_t>::max();
 

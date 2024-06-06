@@ -2,13 +2,13 @@
 #include "Vector2D.h"
 #include "InputFiler.h"
 #include <string>
-#include "OperationWithDataBase.h"
+#include "DataBaseOperations.h"
 #include "ContextIO.h"
 
 
-void operationWithDataBase(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
+void operationWithDataBase(DataBase::ptr db, std::shared_ptr<ContextIO> context) {
 
-	OperationWithDataBase operDb;
+	DataBaseOperations operDb;
 
 	int mark = 0;
 
@@ -72,9 +72,9 @@ void operationWithDataBase(std::shared_ptr<DataBase> db, std::shared_ptr<Context
 
 int main() {
 
-	std::shared_ptr<DataBase> db = std::make_shared<DataBase>();
+	DataBase::ptr db = std::make_shared<DataBase>();
 
-	std::shared_ptr<ContextIO> context = std::make_shared<ConcoleContext>();
+	ContextIO::ptr context = std::make_shared<ConcoleContext>();
 	operationWithDataBase(db, context);
 
 	return 0;

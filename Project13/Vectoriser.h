@@ -11,18 +11,12 @@ public:
 
 	void draw(std::shared_ptr<DataBase> db);
 
-	std::map<int, std::shared_ptr<DrawData>> getData() const;
+	DrawData::ptr getData(int entityID) const;
+
+	using ptr = std::shared_ptr<Vectoriser>;
 
 private:
-	std::map<int, std::shared_ptr<DrawData>> data;
+	std::map<int, DrawData::ptr> data;
 };
-
-
-
-
-
-
-
-
 
 #endif __VECTORISER_H_

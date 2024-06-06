@@ -16,6 +16,8 @@ struct PROJECT_EXPORT vector2D {
 
 	double x = 0;
 	double y = 0;
+
+	using ptr = std::shared_ptr<vector2D>;
 };
 
 #endif __VECTOR2D_H_

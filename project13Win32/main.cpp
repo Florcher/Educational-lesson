@@ -14,22 +14,18 @@ int main() {
 	GdiplusStartupInput gdiplusStartupInput;
 	ULONG_PTR gdiplusToken;
 
-	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
-
 	Input in;
-	std::shared_ptr <DataBase> db = in.input("file.txt");
+	DataBase::ptr db = in.input("file.txt");
 
 	Vectoriser vec;
 	vec.draw(db);
 
 	Window w(1200,800);
-	Renderer rend(w._hwnd);
+	Renderer rend(gdiplusStartupInput, gdiplusToken, w._hwnd);
 
-	while (w.update()) {
-		
-		rend.rendering(db, vec);
-	}
-
+	while (w.update()) 
+	    rend.render(db, vec);
+	
 
 	return 0;
 }

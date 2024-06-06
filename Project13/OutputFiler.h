@@ -12,6 +12,8 @@ public:
 	virtual void outputDouble(const double value) = 0;
 	virtual void outputString(const std::string& str) = 0;
 	virtual void outputVector2D(const vector2D& vec) = 0;
+
+	using ptr = std::shared_ptr<OutputFiler>;
 };
 
 class PROJECT_EXPORT OutTextFiler : public OutputFiler {
@@ -23,6 +25,8 @@ public:
 	void outputDouble(const double value) override;
 	void outputString(const std::string& str) override;
 	void outputVector2D(const vector2D& vec) override;
+
+	using ptr = std::shared_ptr<OutTextFiler>;
 
 private:
 	std::ofstream mOutput;
@@ -37,6 +41,8 @@ public:
 	void outputDouble(const double value) override;
 	void outputString(const std::string& str) override;
 	void outputVector2D(const vector2D& vec) override;
+	
+	using ptr = std::shared_ptr<OutConsoleFiler>;
 
 private:
 
@@ -51,6 +57,8 @@ public:
 	void outputDouble(const double value) override;
 	void outputString(const std::string& str) override;
 	void outputVector2D(const vector2D& vec) override;
+
+	using ptr = std::shared_ptr<OutBinaryFiler>;
 
 private:
 	std::ofstream mOutput;

@@ -6,23 +6,25 @@
 #include "DrawData.h"
 
 
-class PROJECT_EXPORT Drawer {
+class PROJECT_EXPORT AbstractDrawer {
 public:
 	virtual void drawLine(const Math::LineSegment2D& line) = 0;
-
+	using ptr = std::shared_ptr<Drawer>;
 };
 
-class PROJECT_EXPORT WinDrawer : public Drawer {
+class PROJECT_EXPORT Drawer : public AbstractDrawer {
 public:
 
-	WinDrawer();
+	Drawer();
 
 	void drawLine(const Math::LineSegment2D& line) override;
 
-	std::shared_ptr<DrawData> getData();
+	DrawData::ptr getData();
+
+	using ptr = std::shared_ptr<Drawer>;
 
 private:
-	std::shared_ptr<DrawData> data;
+	DrawData::ptr data;
 };
 
 #endif __DRAWER_H_

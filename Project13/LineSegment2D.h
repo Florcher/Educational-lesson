@@ -9,6 +9,8 @@ namespace Math {
 
 		vector2D start = { 0,0 };
 		vector2D end = { 0,0 };
+
+		using ptr = std::shared_ptr<LineSegment2D>;
 	};
 
 }

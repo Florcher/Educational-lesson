@@ -7,7 +7,7 @@
 #include "FileType.h"
 
 
-std::shared_ptr<InputFiler> createFiler(const FileType& filetype, const std::string& fileName) {
+InputFiler::ptr createFiler(const FileType& filetype, const std::string& fileName) {
 
 	if (filetype == FileType::txt) 
 		return std::make_shared<InTextFiler>(fileName);
@@ -20,7 +20,7 @@ std::shared_ptr<InputFiler> createFiler(const FileType& filetype, const std::str
 }
 
 
-std::shared_ptr<DataBase> Input::input(const std::string& fileName) {
+DataBase::ptr Input::input(const std::string& fileName) {
 
 	auto f = getFileType(fileName);
 

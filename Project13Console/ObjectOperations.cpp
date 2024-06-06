@@ -1,41 +1,42 @@
-#include "OperationWithObject.h"
+#include "ObjectOpreations.h"
 #include <iostream>
 #include "Header.h"
 #include "Vector2D.h"
 #include "ContextIO.h"
 
-BaseOperationWithObject::BaseOperationWithObject(std::shared_ptr<object> obj) {
+
+ObjectBaseOperations::ObjectBaseOperations(object::ptr obj) {
 	mObj = obj;
 }
 
-void BaseOperationWithObject::operation(std::shared_ptr<ContextIO> context) {
+void ObjectBaseOperations::operation(ContextIO::ptr context) {
 	std::cout << "Press 1 to edit id." << std::endl;
 	std::cout << "Press 2 to edit name." << std::endl;
 }
 
-void BaseOperationWithObject::editId(const int id) {
+void ObjectBaseOperations::editId(const int id) {
 	mObj->setId(id);
 }
 
- void BaseOperationWithObject::editName(const std::string& name) {
+ void ObjectBaseOperations::editName(const std::string& name) {
 	mObj->setName(name);
 }
 
-void BaseOperationWithObject::remove() {
+void ObjectBaseOperations::remove() {
 	mObj.~shared_ptr();
 }
 
-OperationWithLine::OperationWithLine(std::shared_ptr<object> obj) : BaseOperationWithObject(obj) {
+LineOperations::LineOperations(object::ptr obj) : ObjectBaseOperations(obj) {
 	mLine = std::dynamic_pointer_cast<Line>(obj);
 };
 
-void OperationWithLine::operation(std::shared_ptr<ContextIO> context) {
+void LineOperations::operation(ContextIO::ptr context) {
 
 	int mark = 0;
 
 	while (mark != -1) {
 
-		BaseOperationWithObject::operation(context);
+		ObjectBaseOperations::operation(context);
 
 		std::cout << "Press 3 to edit startpoint." << std::endl;
 		std::cout << "Press 4 to edit endpoint." << std::endl;
@@ -71,24 +72,24 @@ void OperationWithLine::operation(std::shared_ptr<ContextIO> context) {
 	}
 }
 
-void OperationWithLine::editStartPoint(const vector2D& start) {
+void LineOperations::editStartPoint(const vector2D& start) {
 	mLine->setStart(start);
 }
-void OperationWithLine::editEndPoint(const vector2D& end) {
+void LineOperations::editEndPoint(const vector2D& end) {
 	mLine->setEnd(end);
 }
 
-OpertationWithRectangle::OpertationWithRectangle(std::shared_ptr<object> obj) : BaseOperationWithObject(obj) {
+RectangleOperations::RectangleOperations(object::ptr obj) : ObjectBaseOperations(obj) {
 	mRec = std::dynamic_pointer_cast<Rectangle>(obj);
 }
 
-void OpertationWithRectangle::operation(std::shared_ptr<ContextIO> context) {
+void RectangleOperations::operation(ContextIO::ptr context) {
 
 	int mark = 0;
 
 	while (mark != -1) {
 
-		BaseOperationWithObject::operation(context);
+		ObjectBaseOperations::operation(context);
 
 		std::cout << "Press 3 to edit leftDownPoint." << std::endl;
 		std::cout << "Press 4 to edit lenth." << std::endl;
@@ -99,7 +100,6 @@ void OpertationWithRectangle::operation(std::shared_ptr<ContextIO> context) {
 		std::string name;
 		vector2D leftDownPoint;
 		int id, lenth, width;
-		InConsoleFiler filer;
 
 		switch (mark) {
 
@@ -131,29 +131,29 @@ void OpertationWithRectangle::operation(std::shared_ptr<ContextIO> context) {
 	}
 }
 
-void OpertationWithRectangle::editLeftDownPoint(const vector2D& leftDownPoint) {
+void RectangleOperations::editLeftDownPoint(const vector2D& leftDownPoint) {
 	mRec->setLeftDownPoint(leftDownPoint);
 }
 
-void OpertationWithRectangle::editLenth(const double lenth) {
+void RectangleOperations::editLenth(const double lenth) {
 	mRec->setLenth(lenth);
 }
 
-void OpertationWithRectangle::editWidth(const double width) {
+void RectangleOperations::editWidth(const double width) {
 	mRec->setWidth(width);
 }
 
-OpertationWithCircle::OpertationWithCircle(std::shared_ptr<object> obj) : BaseOperationWithObject(obj) {
+CircleOperations::CircleOperations(object::ptr obj) : ObjectBaseOperations(obj) {
 	mCircle = std::dynamic_pointer_cast<Circle>(obj);
 }
 
-void OpertationWithCircle::operation(std::shared_ptr<ContextIO> context) {
+void CircleOperations::operation(ContextIO::ptr context) {
 
 	int mark = 0;
 
 	while (mark != -1) {
 
-		BaseOperationWithObject::operation(context);
+		ObjectBaseOperations::operation(context);
 
 		std::cout << "Press 3 to edit center." << std::endl;
 		std::cout << "Press 4 to edit radius." << std::endl;
@@ -163,7 +163,6 @@ void OpertationWithCircle::operation(std::shared_ptr<ContextIO> context) {
 		std::string name;
 		vector2D center;
 		int id, radius;
-		InConsoleFiler filer;
 
 		switch (mark) {
 
@@ -190,32 +189,31 @@ void OpertationWithCircle::operation(std::shared_ptr<ContextIO> context) {
 	}
 }
 
-void OpertationWithCircle::editCenter(const vector2D& center) {
+void CircleOperations::editCenter(const vector2D& center) {
 	mCircle->setCenter(center);
 }
 
-void OpertationWithCircle::editRadius(const double radius) {
+void CircleOperations::editRadius(const double radius) {
 	mCircle->setRadius(radius);
 }
 
-OperationWithPolyline::OperationWithPolyline(std::shared_ptr<object> obj) : BaseOperationWithObject(obj) {
+PolylineOperations::PolylineOperations(object::ptr obj) : ObjectBaseOperations(obj) {
 	mPolyline = std::dynamic_pointer_cast<Polyline>(obj);
 }
 
-void OperationWithPolyline::operation(std::shared_ptr<ContextIO> context) {
+void PolylineOperations::operation(ContextIO::ptr context) {
 
 	int mark = 0;
 
 	while (mark != -1) {
 
-		BaseOperationWithObject::operation(context);
+		ObjectBaseOperations::operation(context);
 
 		std::cout << "Press 3 to edit point." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 
 		std::string name;
 		int id;
-
 
 		switch (mark) {
 
@@ -246,6 +244,6 @@ void OperationWithPolyline::operation(std::shared_ptr<ContextIO> context) {
 	}
 }
 
-void OperationWithPolyline::editPoint(const int index, const vector2D& point) {
+void PolylineOperations::editPoint(const int index, const vector2D& point) {
 	mPolyline->editPoint(index, point);
 }

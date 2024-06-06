@@ -16,7 +16,9 @@ public:
 	void addType(const int typeId, std::shared_ptr<Creator<object>> object);
 	void removeType(const int typeId);
 
-	std::shared_ptr<object> getObject(const int typeId);
+	object::ptr getObject(const int typeId);
+
+	using ptr = std::shared_ptr<ObjectFactory>;
 
 private:
 

@@ -132,19 +132,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddOperationFactory.cpp" />
-    <ClCompile Include="AddOperationWithObject.cpp" />
+    <ClCompile Include="ObjectAddOperation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OperationFactory.cpp" />
-    <ClCompile Include="OperationWithDataBase.cpp" />
-    <ClCompile Include="OperationWithObject.cpp" />
+    <ClCompile Include="DataBaseOperations.cpp" />
+    <ClCompile Include="ObjectOperations.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddOperationFactory.h" />
-    <ClInclude Include="AddOperationWithObject.h" />
+    <ClInclude Include="ObjectAddOperation.h" />
     <ClInclude Include="OperationFactory.h" />
     <ClInclude Include="OperationFactorys.h" />
-    <ClInclude Include="OperationWithDataBase.h" />
-    <ClInclude Include="OperationWithObject.h" />
+    <ClInclude Include="DataBaseOperations.h" />
+    <ClInclude Include="ObjectOpreations.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

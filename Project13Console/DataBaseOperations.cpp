@@ -1,16 +1,16 @@
 #include "Input.h"
 #include "Output.h"
-#include "OperationWithDataBase.h"
-#include "OperationWithObject.h"
+#include "DataBaseOperations.h"
+#include "ObjectOpreations.h"
 #include "ContextIO.h"
 #include "Vectoriser.h"
 #include "ObjectFactory.h"
-#include "AddOperationWithObject.h"
+#include "ObjectAddOperation.h"
 #include "OperationFactory.h"
 #include "AddOperationFactory.h"
 #include "DataBase.h"
 
-std::shared_ptr<DataBase> OperationWithDataBase::loadDb(std::shared_ptr<ContextIO> context) {
+DataBase::ptr DataBaseOperations::loadDb(ContextIO::ptr context) {
 
 	std::cout << "Enter file name: " << std::endl;
 	std::string filename = context->getString();
@@ -19,7 +19,7 @@ std::shared_ptr<DataBase> OperationWithDataBase::loadDb(std::shared_ptr<ContextI
 	return in.input(filename);
 }
 
-void OperationWithDataBase::saveDb(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
+void DataBaseOperations::saveDb(DataBase::ptr db, ContextIO::ptr context) {
 
 	std::cout << "Enter file name: " << std::endl;
 	std::string filename = context->getString();
@@ -28,7 +28,7 @@ void OperationWithDataBase::saveDb(std::shared_ptr<DataBase> db, std::shared_ptr
 	out.output(db, filename);
 }
 
-void OperationWithDataBase::addEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
+void DataBaseOperations::addEntity(DataBase::ptr db, ContextIO::ptr context) {
 
 	std::cout << "Enter typeid." << std::endl;
 	int typeId = context->getInt();
@@ -42,13 +42,13 @@ void OperationWithDataBase::addEntity(std::shared_ptr<DataBase> db, std::shared_
 	db->addObject(obj);
 }
 
-void OperationWithDataBase::removeEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
+void DataBaseOperations::removeEntity(DataBase::ptr db, ContextIO::ptr context) {
 
 	int objectId = context->getInt();
 	db->removeObject(objectId);
 }
 
-void OperationWithDataBase::editEntity(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
+void DataBaseOperations::editEntity(DataBase::ptr db, ContextIO::ptr context) {
 
 	std::cout << "Enter typeid and objectid. Press -1 to exit." << std::endl;
 	int typeId = context->getInt();
@@ -56,7 +56,7 @@ void OperationWithDataBase::editEntity(std::shared_ptr<DataBase> db, std::shared
 
 	OperationFactory opFactory;
 
-	std::vector<std::shared_ptr<object>> objects = db->getObjects();
+	std::vector<object::ptr> objects = db->getObjects();
 
 	int mark = true;
 
@@ -81,12 +81,12 @@ void OperationWithDataBase::editEntity(std::shared_ptr<DataBase> db, std::shared
 	}
 }
 
-void OperationWithDataBase::listEntities(std::shared_ptr<DataBase> db) {
+void DataBaseOperations::listEntities(DataBase::ptr db) {
 
 	std::cout << "typeId" << " " << "objectId" << " " << "name" << std::endl;
 
 
-	std::vector<std::shared_ptr<object>> objects = db->getObjects();
+	std::vector<object::ptr> objects = db->getObjects();
 	for (int i = 0; i < objects.size(); i++) {
 
 		int objectId = objects[i]->getId();
@@ -97,7 +97,7 @@ void OperationWithDataBase::listEntities(std::shared_ptr<DataBase> db) {
 	}
 }
 
-void OperationWithDataBase::drawObject(std::shared_ptr<DataBase> db, std::shared_ptr<ContextIO> context) {
+void DataBaseOperations::drawObject(DataBase::ptr db, ContextIO::ptr context) {
 	
 	std::cout << "Enter file name" << std::endl;
 	std::string filename = context->getString();

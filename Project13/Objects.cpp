@@ -278,9 +278,9 @@ std::vector<Line> Circle::createLines() {
 
 	std::vector<vector2D> points;
 
-	int countOfpoints = 360;
+	int pointsCount = 360;
 	const double Pi = 3.141592653589793;
-	double increment = 2 * Pi / countOfpoints;
+	double increment = 2 * Pi / pointsCount;
 
 	for (double i = 0; i < 2 * Pi; i += increment) {
 
@@ -289,13 +289,13 @@ std::vector<Line> Circle::createLines() {
 	}
 
 	std::vector<Line> lines;
-	for (int i = 0; i < countOfpoints - 1; i++) {
+	for (int i = 0; i < pointsCount - 1; i++) {
 
 		Line line("vector", i, points[i], points[i + 1]);
 		lines.push_back(line);
 	}
 
-	Line line("vector", 360, points[countOfpoints - 1], points[0]);
+	Line line("vector", 360, points[pointsCount - 1], points[0]);
 	lines.push_back(line);
 
 	return lines;

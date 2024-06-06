@@ -3,7 +3,7 @@
 #include <iostream>
 #include <map>
 #include "OperationFactorys.h"
-#include "OperationWithObject.h"
+#include "ObjectOpreations.h"
 
 class OperationFactory {
 public:
@@ -11,15 +11,12 @@ public:
 	OperationFactory();
 	~OperationFactory() = default;
 
-	std::shared_ptr<BaseOperationWithObject> createOperation(const int typeId, std::shared_ptr<object> obj);
+	ObjectBaseOperations::ptr createOperation(const int typeId, std::shared_ptr<object> obj);
 
 private:
 
-	std::map<int, std::shared_ptr<OpCreator<BaseOperationWithObject>>> mOperation;
+	std::map<int, std::shared_ptr<OpCreator<ObjectBaseOperations>>> mOperation;
 
 };
-
-
-
 
 #endif __OPERATIONFACTORY_H_

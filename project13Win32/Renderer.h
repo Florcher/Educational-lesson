@@ -3,20 +3,24 @@
 #include "DataBase.h"
 #include <Windows.h>
 #include "Vectoriser.h"
+#include <gdiplus.h>
+
+using namespace Gdiplus;
 
 class Renderer {
 public:
 
-	Renderer(HWND hwnd);
+	Renderer(GdiplusStartupInput& gdiplusInput, ULONG_PTR& Token, HWND hwnd);
 	~Renderer();
 
-	void rendering(std::shared_ptr<DataBase> db, Vectoriser& vec) const;
+	void draw(DrawData::ptr data, HDC& mHdc) const;
+	void render(DataBase::ptr db, Vectoriser& vec) const;
 
 private:
 
+	GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR gdiplusToken;
 	HWND mHwnd;
-	HDC mHdc;
-	PAINTSTRUCT ps;
 };
 
 

@@ -34,6 +34,8 @@ public:
 	bool isDirty() const;
 	void invalidate();
 
+	using ptr = std::shared_ptr<object>;
+
 private:
 
 	std::string mName;
@@ -63,6 +65,8 @@ public:
 	
 	inline static int Type();
     int getType() const override;
+
+	using ptr = std::shared_ptr<Line>;
 
 private:
 
@@ -96,6 +100,8 @@ public:
 	inline static int Type();
 	int getType() const override;
 
+	using ptr = std::shared_ptr<Rectangle>;
+
 private:
 
 	vector2D mLeftDownPoint;
@@ -125,6 +131,8 @@ public:
 	inline static int Type();
 	int getType() const override;
 
+	using ptr = std::shared_ptr<Circle>;
+
 private:
 
 	vector2D mCenter;
@@ -150,6 +158,8 @@ public:
 
 	inline static int Type();
 	int getType() const override;
+
+	using ptr = std::shared_ptr<Polyline>;
 
 private:
 

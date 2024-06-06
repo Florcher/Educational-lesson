@@ -1,6 +1,6 @@
 #include "DataBase.h"
 
-void DataBase::addObject(std::shared_ptr<object> obj) {
+void DataBase::addObject(object::ptr obj) {
 	objects.push_back(obj);
 }
 
@@ -21,11 +21,11 @@ int DataBase::getObjectsCount() const {
 	return objects.size();
 }
 
-std::vector<std::shared_ptr<object>> DataBase::getObjects() const {
+std::vector<object::ptr> DataBase::getObjects() const {
 	return objects;
 }
 
-std::shared_ptr<object> DataBase::getObject(const int objectId) const {
+object::ptr DataBase::getObject(const int objectId) const {
 
 	for (auto iter = objects.begin(); iter != objects.end(); ++iter) {
 		if ((*iter)->getId() == objectId) {

@@ -6,7 +6,8 @@
 
 class PROJECT_EXPORT Output {
 public:
-     void output(std::shared_ptr<DataBase> db, const std::string fileName);
+     void output(DataBase::ptr db, const std::string fileName);
+     using ptr = std::shared_ptr<Output>;
 };
 
 

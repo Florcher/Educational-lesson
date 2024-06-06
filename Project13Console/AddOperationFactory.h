@@ -3,22 +3,18 @@
 #include <iostream>
 #include <map>
 #include "OperationFactorys.h"
-#include "AddOperationWithObject.h"
+#include "ObjectAddOperation.h"
 
 class AddOperationFactory {
 public:
 	AddOperationFactory();
 	~AddOperationFactory() = default;
 
-	std::shared_ptr<BaseAddOperationWithObject> createAddOperation(const int typeId, std::shared_ptr<object> obj);
+    ObjectBaseAddOperation::ptr createAddOperation(const int typeId, object::ptr obj);
 	
 private:
 
-	std::map<int, std::shared_ptr<OpCreator<BaseAddOperationWithObject>>> mOperation;
+	std::map<int, std::shared_ptr<OpCreator<ObjectBaseAddOperation>>> mOperation;
 };
-
-
-
-
 
 #endif __ADDOPERATIONFACTORY_H_

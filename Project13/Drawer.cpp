@@ -2,14 +2,14 @@
 #include "DrawData.h"
 #include "LineSegment2D.h"
 
-WinDrawer::WinDrawer() {
+Drawer::Drawer() {
 	data = std::make_shared<DrawData>();
 }
 
-void WinDrawer::drawLine(const Math::LineSegment2D& line) {
+void Drawer::drawLine(const Math::LineSegment2D& line) {
 	data->addData(line);
 }
 
-std::shared_ptr<DrawData> WinDrawer::getData() {
+DrawData::ptr Drawer::getData() {
 	return data;
 }
