@@ -4,13 +4,15 @@
 #include <gdiplus.h>
 #include <Windows.h>
 
+
+
 class Window {
 public:
 	Window(uint32_t width, uint32_t height) {
 		RegWndClass();
 		_hwnd = CreateWindowEx(0,
-			CLASS_NAME.c_str(),
-			L"WIND_NAME",
+			reinterpret_cast<LPCSTR>(CLASS_NAME.c_str()),
+			"WIND_NAME",
 			WS_OVERLAPPEDWINDOW |
 			WS_VISIBLE | WS_SYSMENU,
 			CW_USEDEFAULT, CW_USEDEFAULT,
@@ -35,21 +37,21 @@ public:
 	~Window() {
 		CloseWindow(_hwnd);
 		update();
-		UnregisterClass(CLASS_NAME.c_str(), GetModuleHandle(nullptr));
+		UnregisterClass(reinterpret_cast<LPCSTR>(CLASS_NAME.c_str()), GetModuleHandle(nullptr));
 	}
 
 private:
 
 	void RegWndClass() {
 		WNDCLASSEX win_class = { 0 };
-		if (GetClassInfoEx(GetModuleHandle(nullptr), CLASS_NAME.c_str(), &win_class))
+		if (GetClassInfoEx(GetModuleHandle(nullptr), reinterpret_cast<LPCSTR>(CLASS_NAME.c_str()), &win_class))
 			return;
 
 		win_class.cbSize = sizeof(WNDCLASSEX);
 		win_class.style = CS_HREDRAW | CS_VREDRAW;
 		win_class.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 		win_class.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		win_class.lpszClassName = CLASS_NAME.c_str();
+		win_class.lpszClassName = reinterpret_cast<LPCSTR>(CLASS_NAME.c_str());
 		win_class.lpfnWndProc = mywndproc;
 
 		if (!RegisterClassEx(&win_class))

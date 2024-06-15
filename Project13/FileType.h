@@ -2,9 +2,9 @@
 #define __FILETYPE_H_
 #include <string>
 #include <vector>
-#include "Header.h"
+#include "kernel_export.h"
 
-enum class PROJECT_EXPORT FileType {
+enum class KERNEL_EXPORT FileType {
 	binary,
 	txt,
 	console,
@@ -12,7 +12,7 @@ enum class PROJECT_EXPORT FileType {
 	unknown
 };
 
-PROJECT_EXPORT inline FileType getFileType(const std::string& filename) {
+KERNEL_EXPORT inline FileType getFileType(const std::string& filename) {
 
 	if (filename.rfind(".txt") != std::string::npos)
 		return FileType::txt;

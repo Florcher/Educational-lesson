@@ -1,13 +1,12 @@
 #ifndef __DATABASE_H_
 #define __DATABASE_H_
-
+#include "kernel_export.h"
 #include <map>
-#include "Header.h"
 #include <vector>
 #include <iostream>
 #include "Objects.h"
 
-class PROJECT_EXPORT DataBase {
+class KERNEL_EXPORT DataBase {
 public:
 
 	DataBase() = default;

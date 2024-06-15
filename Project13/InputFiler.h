@@ -2,10 +2,10 @@
 #define __INPUTFILER_H_
 #include <string>
 #include <fstream>
-#include "Header.h"
+#include "kernel_export.h"
 #include "Vector2D.h"
 
-class PROJECT_EXPORT InputFiler {
+class KERNEL_EXPORT InputFiler {
 public:
 	virtual int readInt() = 0;
 	virtual double readDouble() = 0;
@@ -15,7 +15,7 @@ public:
 	using ptr = std::shared_ptr<InputFiler>;
 };
 
-class PROJECT_EXPORT InTextFiler : public InputFiler {
+class KERNEL_EXPORT InTextFiler : public InputFiler {
 public:
 	InTextFiler(const std::string& fileName);
 	~InTextFiler();
@@ -31,7 +31,7 @@ private:
 	std::ifstream mInput;
 };
 
-class PROJECT_EXPORT InConsoleFiler : public InputFiler {
+class KERNEL_EXPORT InConsoleFiler : public InputFiler {
 public:
 	InConsoleFiler();
 	~InConsoleFiler();
@@ -47,7 +47,7 @@ private:
 
 };
 
-class PROJECT_EXPORT InBinaryFiler : public InputFiler {
+class KERNEL_EXPORT InBinaryFiler : public InputFiler {
 public:
 	InBinaryFiler(const std::string& fileName);
 	~InBinaryFiler();

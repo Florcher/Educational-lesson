@@ -1,15 +1,15 @@
 #ifndef __FACTORYS_H_
 #define __FACTORYS_H_
-#include "Header.h"
+#include "kernel_export.h"
 
 template <typename TBase>
-struct PROJECT_EXPORT Creator {
+struct KERNEL_EXPORT Creator {
 
 	virtual std::shared_ptr<TBase> create() = 0;
 };
 
 template <typename TBase, typename TDerived>
-struct PROJECT_EXPORT ObjectCreator : public Creator<TBase> {
+struct KERNEL_EXPORT ObjectCreator : public Creator<TBase> {
 
 	std::shared_ptr<TBase> create() override
 	{

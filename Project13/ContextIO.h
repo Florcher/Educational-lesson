@@ -2,8 +2,9 @@
 #define __CONTEXTIO_H_
 #include "Vector2D.h"
 #include "InputFiler.h"
+#include "kernel_export.h"
 
-class PROJECT_EXPORT ContextIO {
+class KERNEL_EXPORT ContextIO {
 public:
 	virtual vector2D getPoint() = 0;
 	virtual std::string getString() = 0;
@@ -13,7 +14,7 @@ public:
 	using ptr = std::shared_ptr<ContextIO>;
 };
 
-class PROJECT_EXPORT ConcoleContext : public ContextIO {
+class KERNEL_EXPORT ConcoleContext : public ContextIO {
 public:
 
 	vector2D getPoint() override;

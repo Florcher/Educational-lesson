@@ -1,0 +1,1 @@
+.\CMake\bin\cmake.exe -S ./ -B ./MSVC-win64/ -A x64 -DBUILD_SHARED_LIBS=ON

@@ -2,12 +2,12 @@
 #define __OBJECTFACTORY_H_
 #include "Objects.h"
 #include <map>
-#include "Header.h"
+#include "kernel_export.h"
 #include "Factorys.h"
 #include <vector>
 
 
-class PROJECT_EXPORT ObjectFactory {
+class KERNEL_EXPORT ObjectFactory {
 public:
 
 	ObjectFactory();

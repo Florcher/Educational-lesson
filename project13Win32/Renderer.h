@@ -1,6 +1,5 @@
 #ifndef __RENDERER_H_
 #define __RENDERER_H_
-#include "DataBase.h"
 #include <Windows.h>
 #include "Vectoriser.h"
 #include <gdiplus.h>

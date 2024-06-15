@@ -2,9 +2,9 @@
 #define __VECTOR2D_H_
 
 #include <iostream>
-#include "Header.h"
+#include "kernel_export.h"
 
-struct PROJECT_EXPORT vector2D {
+struct KERNEL_EXPORT vector2D {
 
 	friend std::ostream& operator<< (std::ostream&, const vector2D&);
 	friend std::istream& operator>> (std::istream&, vector2D&);

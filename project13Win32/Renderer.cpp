@@ -1,7 +1,6 @@
 #include "Renderer.h"
-#include "DataBase.h"
 #include <gdiplus.h>
-#include "LineSegment2D.h"
+
 
 using namespace Gdiplus;
 

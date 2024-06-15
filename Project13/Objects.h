@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Header.h"
+#include "kernel_export.h"
 #include "Vector2D.h"
 #include "LineSegment2D.h"
 
@@ -11,7 +11,7 @@ class InputFiler;
 class OutputFiler;
 class Drawer;
 
-class PROJECT_EXPORT object {
+class KERNEL_EXPORT object {
 public:
 
 	object() = default;
@@ -45,7 +45,7 @@ private:
 };
 
 
-class PROJECT_EXPORT Line : public object {
+class KERNEL_EXPORT Line : public object {
 public:
 
 	Line() = default;
@@ -74,7 +74,7 @@ private:
 };
 
 
-class PROJECT_EXPORT Rectangle : public object {
+class KERNEL_EXPORT Rectangle : public object {
 
 public:
 
@@ -110,7 +110,7 @@ private:
 };
 
 
-class PROJECT_EXPORT Circle : public object {
+class KERNEL_EXPORT Circle : public object {
 public:
 
 	Circle() = default;
@@ -140,7 +140,7 @@ private:
 	std::vector<Line> createLines();
 };
 
-class PROJECT_EXPORT Polyline : public object {
+class KERNEL_EXPORT Polyline : public object {
 public:
 
 	Polyline() = default;

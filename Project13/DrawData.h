@@ -2,10 +2,10 @@
 #define __DRAWDATA_H_
 #include <iostream>
 #include "Objects.h"
-#include "Header.h"
+#include "kernel_export.h"
 #include "LineSegment2D.h"
 
-class PROJECT_EXPORT DrawData {
+class KERNEL_EXPORT DrawData {
 public:
 
 	DrawData();

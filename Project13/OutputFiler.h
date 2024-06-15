@@ -1,12 +1,12 @@
 #ifndef __OUTPUTFILER_H_
 #define __OUTPUTFILER_H_
-#include "Header.h"
+#include "kernel_export.h"
 #include "Vector2D.h"
 #include "string"
 #include <iostream>
 #include <fstream>
 
-class PROJECT_EXPORT OutputFiler {
+class KERNEL_EXPORT OutputFiler {
 public:
 	virtual void outputInt(const int value) = 0;
 	virtual void outputDouble(const double value) = 0;
@@ -16,7 +16,7 @@ public:
 	using ptr = std::shared_ptr<OutputFiler>;
 };
 
-class PROJECT_EXPORT OutTextFiler : public OutputFiler {
+class KERNEL_EXPORT OutTextFiler : public OutputFiler {
 public:
 	OutTextFiler(const std::string& fileName);
 	~OutTextFiler();
@@ -32,7 +32,7 @@ private:
 	std::ofstream mOutput;
 };
 
-class PROJECT_EXPORT OutConsoleFiler : public OutputFiler {
+class KERNEL_EXPORT OutConsoleFiler : public OutputFiler {
 public:
 	OutConsoleFiler();
 	~OutConsoleFiler();
@@ -48,7 +48,7 @@ private:
 
 };
 
-class PROJECT_EXPORT OutBinaryFiler : public OutputFiler {
+class KERNEL_EXPORT OutBinaryFiler : public OutputFiler {
 public:
 	OutBinaryFiler(const std::string& fileName);
 	~OutBinaryFiler();

@@ -1,10 +1,10 @@
 #ifndef __OUTPUT_H_
 #define __OUTPUT_H_
 #include <string>
-#include "Header.h"
+#include "kernel_export.h"
 #include "DataBase.h"
 
-class PROJECT_EXPORT Output {
+class KERNEL_EXPORT Output {
 public:
      void output(DataBase::ptr db, const std::string fileName);
      using ptr = std::shared_ptr<Output>;
