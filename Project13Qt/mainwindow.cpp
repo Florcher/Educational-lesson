@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete scene;
 }
 
 void MainWindow::on_btnEnter_clicked()
