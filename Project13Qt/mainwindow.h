@@ -5,8 +5,12 @@
 #include <QGraphicsScene>
 #include <QGraphicsLineItem>
 #include "DataBase.h"
-#include <vector>
 #include "DrawData.h"
+#include "createlineform.h"
+#include "createrectangleform.h"
+#include "createcircleform.h"
+#include "createpolylineform.h"
+#include "errorform.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,13 +30,37 @@ private slots:
     void on_btnEnter_clicked();
     void on_btnDraw_clicked();
 
+    void on_btnCreatePolyline_clicked();
+    void on_btnCreateCircle_clicked();
+    void on_btnCreateRectangle_clicked();
+    void on_btnCreateLine_clicked();
+
+public slots:
+    void Lineslot(object::ptr obj);
+    void Rectangleslot(object::ptr obj);
+    void Circleslot(object::ptr obj);
+    void Polylineslot(object::ptr obj);
+
+    void LineExitSlot();
+    void RectangleExitSlot();
+    void CircleExitSlot();
+    void PolylineExitSlot();
+
+    void ErrorExitSignal();
+
 private:
     void Draw(DrawData::ptr data);
 
-    std::shared_ptr<DataBase> db;
+    DataBase::ptr db;
+
+    CreateLineForm* lineForm;
+    CreateRectangleForm* rectangleForm;
+    CreateCircleForm* circleForm;
+    CreatePolylineForm* polylineForm;
+
+    ErrorForm* errorForm;
 
     Ui::MainWindow *ui;
     QGraphicsScene* scene;
-    std::vector<QGraphicsLineItem> items;
 };
 #endif // MAINWINDOW_H

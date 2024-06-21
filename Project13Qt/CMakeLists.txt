@@ -21,6 +21,18 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QtProject
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        createlineform.h createlineform.cpp createlineform.ui
+        createrectangleform.h createrectangleform.cpp createrectangleform.ui
+        createcircleform.h createcircleform.cpp createcircleform.ui
+        createpolylineform.h createpolylineform.cpp createpolylineform.ui
+        errorform.h errorform.cpp errorform.ui
+
+
+
+
+
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET QtProject APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
