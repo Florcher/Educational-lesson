@@ -40,10 +40,10 @@
    <widget class="QPushButton" name="btnEnter">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>140</x>
       <y>420</y>
-      <width>75</width>
-      <height>24</height>
+      <width>61</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -66,14 +66,14 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>200</x>
       <y>20</y>
       <width>611</width>
       <height>421</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="DrawObject">
+   <widget class="QLabel" name="CreateObject">
     <property name="geometry">
      <rect>
       <x>820</x>
@@ -125,6 +125,16 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QGraphicsView" name="textGraphicsView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>181</width>
+      <height>171</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

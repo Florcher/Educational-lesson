@@ -12,6 +12,7 @@
 #include "createpolylineform.h"
 #include "errorform.h"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -35,6 +36,8 @@ private slots:
     void on_btnCreateRectangle_clicked();
     void on_btnCreateLine_clicked();
 
+
+
 public slots:
     void Lineslot(object::ptr obj);
     void Rectangleslot(object::ptr obj);
@@ -50,6 +53,7 @@ public slots:
 
 private:
     void Draw(DrawData::ptr data);
+    void appendInfoToScene(int typeID, int ObjectID, std::string name);
 
     DataBase::ptr db;
 
@@ -61,6 +65,8 @@ private:
     ErrorForm* errorForm;
 
     Ui::MainWindow *ui;
-    QGraphicsScene* scene;
+    QGraphicsScene* objectScene, *textScene;
+    QString info;
+
 };
 #endif // MAINWINDOW_H

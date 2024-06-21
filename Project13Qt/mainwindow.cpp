@@ -2,15 +2,21 @@
 #include "./ui_mainwindow.h"
 #include "Input.h"
 #include "Vectoriser.h"
+#include "QFont"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    scene = new QGraphicsScene;
-    ui->graphicsView->setScene(scene);
     db = std::make_shared<DataBase>();
+
+    objectScene = new QGraphicsScene;
+    ui->graphicsView->setScene(objectScene);
+
+    textScene = new QGraphicsScene();
+    ui->textGraphicsView->setSceneRect(80,80,20,20);
+    ui->textGraphicsView->setScene(textScene);
 
     lineForm = new CreateLineForm();
     connect(lineForm, &CreateLineForm::signal, this, &MainWindow::Lineslot);
@@ -30,12 +36,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     errorForm = new ErrorForm();
     connect(errorForm, &ErrorForm::signalExit,this, &MainWindow::ErrorExitSignal);
+
+    info.append("TypeID");
+    info.append(" ");
+    info.append("ObjectID");
+    info.append(" ");
+    info.append("Name");
+    info.append("\n");
+
+    QFont font{"Times", 10};
+    textScene->addText(info, font);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete scene;
+    delete objectScene;
     delete lineForm;
     delete rectangleForm;
     delete circleForm;
@@ -52,6 +68,11 @@ void MainWindow::on_btnEnter_clicked()
     catch(...){
         errorForm->show();
     }
+
+    auto objects = db->getObjects();
+    for(auto obj : objects){
+        appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
+    }
 }
 
 void MainWindow::on_btnDraw_clicked()
@@ -60,8 +81,9 @@ void MainWindow::on_btnDraw_clicked()
     vec.draw(db);
 
     auto objects = db->getObjects();
-    for(auto obj : objects)
+    for(auto obj : objects){
         Draw(vec.getData(obj->getId()));
+    }
 }
 
 void MainWindow::Draw(DrawData::ptr data)
@@ -75,7 +97,7 @@ void MainWindow::Draw(DrawData::ptr data)
         qreal x2 = line.end.x;
         qreal y2 = line.end.y;
 
-        scene->addLine(x1,y1,x2,y2, QPen(Qt::red));
+        objectScene->addLine(x1,y1,x2,y2, QPen(Qt::red));
     }
 }
 
@@ -88,6 +110,7 @@ void MainWindow::Lineslot(object::ptr obj)
     db->addObject(obj);
     lineForm->hide();
 
+    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
 }
 
 void MainWindow::Rectangleslot(object::ptr obj)
@@ -98,6 +121,8 @@ void MainWindow::Rectangleslot(object::ptr obj)
     obj->setId(db->getObjectsCount()+1);
     db->addObject(obj);
     rectangleForm->hide();
+
+    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
 }
 
 void MainWindow::Circleslot(object::ptr obj)
@@ -108,6 +133,8 @@ void MainWindow::Circleslot(object::ptr obj)
     obj->setId(db->getObjectsCount()+1);
     db->addObject(obj);
     circleForm->hide();
+
+    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
 }
 
 void MainWindow::Polylineslot(object::ptr obj)
@@ -118,6 +145,21 @@ void MainWindow::Polylineslot(object::ptr obj)
     obj->setId(db->getObjectsCount()+1);
     db->addObject(obj);
     polylineForm->hide();
+
+    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
+}
+
+void MainWindow::appendInfoToScene(int typeID, int ObjectID, std::string name)
+{
+    info.append(QString::number(typeID));
+    info.append(" ");
+    info.append(QString::number(ObjectID));
+    info.append(" ");
+    info.append(QString::fromStdString(name));
+    info.append("\n");
+
+    QFont font{"Times", 10};
+    textScene->addText(info, font);
 }
 
 void MainWindow::LineExitSlot()
@@ -164,6 +206,9 @@ void MainWindow::on_btnCreatePolyline_clicked()
 {
     polylineForm->show();
 }
+
+
+
 
 
 
