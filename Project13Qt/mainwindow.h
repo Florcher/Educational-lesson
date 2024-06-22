@@ -53,7 +53,7 @@ public slots:
 
 private:
     void Draw(DrawData::ptr data);
-    void appendInfoToScene(int typeID, int ObjectID, std::string name);
+    void appendInfoToScene(QString typeID, QString ObjectID, QString name);
 
     DataBase::ptr db;
 

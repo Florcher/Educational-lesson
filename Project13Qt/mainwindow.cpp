@@ -15,8 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(objectScene);
 
     textScene = new QGraphicsScene();
-    ui->textGraphicsView->setSceneRect(80,80,20,20);
+    ui->textGraphicsView->setSceneRect(70,80,5,5);
     ui->textGraphicsView->setScene(textScene);
+    ui->textGraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    appendInfoToScene("TypeID", "ObjectID", "Name");
 
     lineForm = new CreateLineForm();
     connect(lineForm, &CreateLineForm::signal, this, &MainWindow::Lineslot);
@@ -36,16 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     errorForm = new ErrorForm();
     connect(errorForm, &ErrorForm::signalExit,this, &MainWindow::ErrorExitSignal);
-
-    info.append("TypeID");
-    info.append(" ");
-    info.append("ObjectID");
-    info.append(" ");
-    info.append("Name");
-    info.append("\n");
-
-    QFont font{"Times", 10};
-    textScene->addText(info, font);
 }
 
 MainWindow::~MainWindow()
@@ -71,7 +63,7 @@ void MainWindow::on_btnEnter_clicked()
 
     auto objects = db->getObjects();
     for(auto obj : objects){
-        appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
+        appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
     }
 }
 
@@ -110,7 +102,7 @@ void MainWindow::Lineslot(object::ptr obj)
     db->addObject(obj);
     lineForm->hide();
 
-    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
+    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
 
 void MainWindow::Rectangleslot(object::ptr obj)
@@ -122,7 +114,7 @@ void MainWindow::Rectangleslot(object::ptr obj)
     db->addObject(obj);
     rectangleForm->hide();
 
-    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
+    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
 
 void MainWindow::Circleslot(object::ptr obj)
@@ -134,7 +126,7 @@ void MainWindow::Circleslot(object::ptr obj)
     db->addObject(obj);
     circleForm->hide();
 
-    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
+    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
 
 void MainWindow::Polylineslot(object::ptr obj)
@@ -146,16 +138,16 @@ void MainWindow::Polylineslot(object::ptr obj)
     db->addObject(obj);
     polylineForm->hide();
 
-    appendInfoToScene(obj->getType(), obj->getId(), obj->getName());
+    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
 
-void MainWindow::appendInfoToScene(int typeID, int ObjectID, std::string name)
+void MainWindow::appendInfoToScene(QString typeID, QString ObjectID, QString name)
 {
-    info.append(QString::number(typeID));
+    info.append(typeID);
     info.append(" ");
-    info.append(QString::number(ObjectID));
+    info.append(ObjectID);
     info.append(" ");
-    info.append(QString::fromStdString(name));
+    info.append(name);
     info.append("\n");
 
     QFont font{"Times", 10};
