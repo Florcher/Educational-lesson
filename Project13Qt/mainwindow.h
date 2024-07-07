@@ -6,11 +6,13 @@
 #include <QGraphicsLineItem>
 #include "DataBase.h"
 #include "DrawData.h"
-#include "createlineform.h"
-#include "createrectangleform.h"
-#include "createcircleform.h"
-#include "createpolylineform.h"
-#include "errorform.h"
+#include "createlinedialog.h"
+#include "createrectangledialog.h"
+#include "createcircledialog.h"
+#include "createpolylinedialog.h"
+#include "errordialog.h"
+#include "QListWidget"
+#include "enterfiledialog.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -39,34 +41,17 @@ private slots:
 
 
 public slots:
-    void Lineslot(object::ptr obj);
-    void Rectangleslot(object::ptr obj);
-    void Circleslot(object::ptr obj);
-    void Polylineslot(object::ptr obj);
-
-    void LineExitSlot();
-    void RectangleExitSlot();
-    void CircleExitSlot();
-    void PolylineExitSlot();
-
-    void ErrorExitSignal();
+    void getDataBaseFromDialog(DataBase::ptr db);
 
 private:
     void Draw(DrawData::ptr data);
-    void appendInfoToScene(QString typeID, QString ObjectID, QString name);
+    void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);
+    void addObjetToDb(object::ptr obj, int mark);
 
     DataBase::ptr db;
 
-    CreateLineForm* lineForm;
-    CreateRectangleForm* rectangleForm;
-    CreateCircleForm* circleForm;
-    CreatePolylineForm* polylineForm;
-
-    ErrorForm* errorForm;
-
     Ui::MainWindow *ui;
     QGraphicsScene* objectScene, *textScene;
-    QString info;
-
+    QListWidget* lwidget;
 };
 #endif // MAINWINDOW_H

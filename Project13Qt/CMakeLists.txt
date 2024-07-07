@@ -21,11 +21,17 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QtProject
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        createlineform.h createlineform.cpp createlineform.ui
-        createrectangleform.h createrectangleform.cpp createrectangleform.ui
-        createcircleform.h createcircleform.cpp createcircleform.ui
-        createpolylineform.h createpolylineform.cpp createpolylineform.ui
-        errorform.h errorform.cpp errorform.ui
+
+
+
+
+
+        createlinedialog.h createlinedialog.cpp createlinedialog.ui
+        createrectangledialog.h createrectangledialog.cpp createrectangledialog.ui
+        createcircledialog.h createcircledialog.cpp createcircledialog.ui
+        createpolylinedialog.h createpolylinedialog.cpp createpolylinedialog.ui
+        errordialog.h errordialog.cpp errordialog.ui
+        enterfiledialog.h enterfiledialog.cpp enterfiledialog.ui
 
 
 

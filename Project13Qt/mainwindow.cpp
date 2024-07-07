@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "Input.h"
 #include "Vectoriser.h"
 #include "QFont"
 
@@ -14,56 +13,25 @@ MainWindow::MainWindow(QWidget *parent)
     objectScene = new QGraphicsScene;
     ui->graphicsView->setScene(objectScene);
 
-    textScene = new QGraphicsScene();
-    ui->textGraphicsView->setSceneRect(70,80,5,5);
-    ui->textGraphicsView->setScene(textScene);
-    ui->textGraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    appendInfoToScene("TypeID", "ObjectID", "Name");
-
-    lineForm = new CreateLineForm();
-    connect(lineForm, &CreateLineForm::signal, this, &MainWindow::Lineslot);
-    connect(lineForm, &CreateLineForm::signalExit, this, &MainWindow::LineExitSlot);
-
-    rectangleForm = new CreateRectangleForm();
-    connect(rectangleForm, &CreateRectangleForm::signal, this, &MainWindow::Rectangleslot);
-    connect(rectangleForm, &CreateRectangleForm::signalExit, this, &MainWindow::RectangleExitSlot);
-
-    circleForm = new CreateCircleForm();
-    connect(circleForm, &CreateCircleForm::signal, this, &MainWindow::Circleslot);
-    connect(circleForm, &CreateCircleForm::signalExit,this, &MainWindow::CircleExitSlot);
-
-    polylineForm = new CreatePolylineForm();
-    connect(polylineForm, &CreatePolylineForm::signal, this, &MainWindow::Polylineslot);
-    connect(polylineForm, &CreatePolylineForm::signalExit, this, &MainWindow::PolylineExitSlot);
-
-    errorForm = new ErrorForm();
-    connect(errorForm, &ErrorForm::signalExit,this, &MainWindow::ErrorExitSignal);
+    lwidget = new QListWidget();
+    lwidget->show();
+    appendInfoToListWindget("TypeID", "ObjectID", "Name");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete objectScene;
-    delete lineForm;
-    delete rectangleForm;
-    delete circleForm;
-    delete polylineForm;
 }
 
 void MainWindow::on_btnEnter_clicked()
 {
-    try{
-    auto filename = ui->lineEdit->text();
-    Input in;
-    db = in.input(filename.toStdString());
-    }
-    catch(...){
-        errorForm->show();
-    }
-
+    EnterFileDialog dialog;
+    connect(&dialog, &EnterFileDialog::enterDatasignal, this, &MainWindow::getDataBaseFromDialog);
+    dialog.exec();
     auto objects = db->getObjects();
     for(auto obj : objects){
-        appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
+        appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
     }
 }
 
@@ -93,56 +61,10 @@ void MainWindow::Draw(DrawData::ptr data)
     }
 }
 
-void MainWindow::Lineslot(object::ptr obj)
+void MainWindow::appendInfoToListWindget(QString typeID, QString ObjectID, QString name)
 {
-    if(db->getObjectsCount() == 0)
-        obj->setId(1);
+    QString info;
 
-    obj->setId(db->getObjectsCount()+1);
-    db->addObject(obj);
-    lineForm->hide();
-
-    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
-}
-
-void MainWindow::Rectangleslot(object::ptr obj)
-{
-    if(db->getObjectsCount() == 0)
-        obj->setId(1);
-
-    obj->setId(db->getObjectsCount()+1);
-    db->addObject(obj);
-    rectangleForm->hide();
-
-    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
-}
-
-void MainWindow::Circleslot(object::ptr obj)
-{
-    if(db->getObjectsCount() == 0)
-        obj->setId(1);
-
-    obj->setId(db->getObjectsCount()+1);
-    db->addObject(obj);
-    circleForm->hide();
-
-    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
-}
-
-void MainWindow::Polylineslot(object::ptr obj)
-{
-    if(db->getObjectsCount() == 0)
-        obj->setId(1);
-
-    obj->setId(db->getObjectsCount()+1);
-    db->addObject(obj);
-    polylineForm->hide();
-
-    appendInfoToScene(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
-}
-
-void MainWindow::appendInfoToScene(QString typeID, QString ObjectID, QString name)
-{
     info.append(typeID);
     info.append(" ");
     info.append(ObjectID);
@@ -150,53 +72,54 @@ void MainWindow::appendInfoToScene(QString typeID, QString ObjectID, QString nam
     info.append(name);
     info.append("\n");
 
-    QFont font{"Times", 10};
-    textScene->addText(info, font);
+    lwidget->addItem(info);
 }
 
-void MainWindow::LineExitSlot()
+void MainWindow::addObjetToDb(object::ptr obj, int mark)
 {
-    lineForm->hide();
-}
+    if(mark == QDialog::Accepted){
 
-void MainWindow::RectangleExitSlot()
-{
-    rectangleForm->hide();
-}
+    if(db->getObjectsCount() == 0)
+        obj->setId(1);
 
-void MainWindow::CircleExitSlot()
-{
-    circleForm->hide();
-}
+    obj->setId(db->getObjectsCount()+1);
+    db->addObject(obj);
 
-void MainWindow::PolylineExitSlot()
-{
-    polylineForm->hide();
-}
-
-void MainWindow::ErrorExitSignal()
-{
-    errorForm->hide();
+    appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
+    }
 }
 
 void MainWindow::on_btnCreateLine_clicked()
 {
-    lineForm->show();
+    createlineDialog dialog(this);
+    connect(&dialog, &createlineDialog::sendLineSignal, this, &MainWindow::addObjetToDb);
+    dialog.exec();
+}
+
+void MainWindow::getDataBaseFromDialog(DataBase::ptr data)
+{
+    db = data;
 }
 
 void MainWindow::on_btnCreateRectangle_clicked()
 {
-    rectangleForm->show();
+    createRectangleDialog dialog;
+    connect(&dialog, &createRectangleDialog::sendRectangleSignal, this, &MainWindow::addObjetToDb);
+    dialog.exec();
 }
 
 void MainWindow::on_btnCreateCircle_clicked()
 {
-    circleForm->show();
+    createCircleDialog dialog;
+    connect(&dialog, &createCircleDialog::sendCircleSignal, this, &MainWindow::addObjetToDb);
+    dialog.exec();
 }
 
 void MainWindow::on_btnCreatePolyline_clicked()
 {
-    polylineForm->show();
+    createPolylineDialog dialog;
+    connect(&dialog, &createPolylineDialog::sendPolylineSignal, this, &MainWindow::addObjetToDb);
+    dialog.exec();
 }
 
 
