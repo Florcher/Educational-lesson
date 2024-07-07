@@ -3,32 +3,28 @@
 
 #include <QDialog>
 #include "Objects.h"
+#include <vector>
 
 namespace Ui {
-class createPolylineDialog;
+class CreatePolylineDialog;
 }
 
-class createPolylineDialog : public QDialog
+class CreatePolylineDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit createPolylineDialog(QWidget *parent = nullptr);
-    ~createPolylineDialog();
+    explicit CreatePolylineDialog(QWidget *parent = nullptr);
+    ~CreatePolylineDialog();
 
-signals:
-    void sendPolylineSignal(object::ptr obj, int mark);
+    std::vector<vector2D> getPoints() const;
 
 private slots:
-    void on_btnEnterData_clicked();
-
-    void on_btnExit_clicked();
-
     void on_btnNextPoint_clicked();
 
 private:
+    Ui::CreatePolylineDialog *ui;
     std::vector<vector2D> points;
-    Ui::createPolylineDialog *ui;
 };
 
 #endif // CREATEPOLYLINEDIALOG_H

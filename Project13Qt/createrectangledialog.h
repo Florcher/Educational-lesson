@@ -5,27 +5,23 @@
 #include "Objects.h"
 
 namespace Ui {
-class createRectangleDialog;
+class CreateRectangleDialog;
 }
 
-class createRectangleDialog : public QDialog
+class CreateRectangleDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit createRectangleDialog(QWidget *parent = nullptr);
-    ~createRectangleDialog();
+    explicit CreateRectangleDialog(QWidget *parent = nullptr);
+    ~CreateRectangleDialog();
 
-signals:
-    void sendRectangleSignal(object::ptr obj, int mark);
-
-private slots:
-    void on_btnEnterData_clicked();
-
-    void on_btnExit_clicked();
+    vector2D getLeftDownPoint() const;
+    double getLenth() const;
+    double getWidth() const;
 
 private:
-    Ui::createRectangleDialog *ui;
+    Ui::CreateRectangleDialog *ui;
 };
 
 #endif // CREATERECTANGLEDIALOG_H

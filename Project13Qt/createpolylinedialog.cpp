@@ -1,41 +1,26 @@
 #include "createpolylinedialog.h"
 #include "ui_createpolylinedialog.h"
 
-createPolylineDialog::createPolylineDialog(QWidget *parent)
+CreatePolylineDialog::CreatePolylineDialog(QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::createPolylineDialog)
+    , ui(new Ui::CreatePolylineDialog)
 {
     ui->setupUi(this);
 }
 
-createPolylineDialog::~createPolylineDialog()
+CreatePolylineDialog::~CreatePolylineDialog()
 {
     delete ui;
 }
 
-void createPolylineDialog::on_btnEnterData_clicked()
+std::vector<vector2D> CreatePolylineDialog::getPoints() const
 {
-    object::ptr obj = std::make_shared<Polyline>("Polyline", 0, points);
-    ui->editCoordinateX->clear();
-    ui->editCoordinateY->clear();
-    createPolylineDialog::accept();
-    emit sendPolylineSignal(obj, QDialog::Accepted);
+    return points;
 }
 
-
-void createPolylineDialog::on_btnExit_clicked()
+void CreatePolylineDialog::on_btnNextPoint_clicked()
 {
-    points.clear();
-    ui->editCoordinateX->clear();
-    ui->editCoordinateY->clear();
-    createPolylineDialog::reject();
-}
-
-
-void createPolylineDialog::on_btnNextPoint_clicked()
-{
-    points.push_back({ui->editCoordinateX->text().toDouble(),ui->editCoordinateY->text().toDouble()});
-
+    points.push_back({ui->editCoordinateX->text().toDouble(), ui->editCoordinateY->text().toDouble()});
     ui->editCoordinateX->clear();
     ui->editCoordinateY->clear();
 }

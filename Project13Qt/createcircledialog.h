@@ -5,27 +5,22 @@
 #include "Objects.h"
 
 namespace Ui {
-class createCircleDialog;
+class CreateCircleDialog;
 }
 
-class createCircleDialog : public QDialog
+class CreateCircleDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit createCircleDialog(QWidget *parent = nullptr);
-    ~createCircleDialog();
+    explicit CreateCircleDialog(QWidget *parent = nullptr);
+    ~CreateCircleDialog();
 
-signals:
-    void sendCircleSignal(object::ptr obj, int mark);
-
-private slots:
-    void on_btnEnterData_clicked();
-
-    void on_btnExit_clicked();
+    vector2D getCenter() const;
+    double getRadius() const;
 
 private:
-    Ui::createCircleDialog *ui;
+    Ui::CreateCircleDialog *ui;
 };
 
 #endif // CREATECIRCLEDIALOG_H

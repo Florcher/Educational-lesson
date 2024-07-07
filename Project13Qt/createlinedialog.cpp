@@ -1,38 +1,24 @@
 #include "createlinedialog.h"
 #include "ui_createlinedialog.h"
 
-createlineDialog::createlineDialog(QWidget *parent)
+CreateLineDialog::CreateLineDialog(QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::createlineDialog)
+    , ui(new Ui::CreateLineDialog)
 {
     ui->setupUi(this);
 }
 
-createlineDialog::~createlineDialog()
+CreateLineDialog::~CreateLineDialog()
 {
     delete ui;
 }
 
-void createlineDialog::on_btnEnterData_clicked()
+vector2D CreateLineDialog::getStartPoint() const
 {
-    vector2D start{ui->editStartX->text().toDouble(), ui->editStartY->text().toDouble()};
-    vector2D end{ui->editEndX->text().toDouble(), ui->editEndY->text().toDouble()};
-
-    object::ptr obj = std::make_shared<Line>("line", 0, start, end);
-    ui->editStartX->clear();
-    ui->editStartY->clear();
-    ui->editEndX->clear();
-    ui->editEndY->clear();
-    createlineDialog::accept();
-    emit sendLineSignal(obj, QDialog::Accepted);
+    return {ui->editStartX->text().toDouble(), ui->editStartY->text().toDouble()};
 }
 
-void createlineDialog::on_btnExit_clicked()
+vector2D CreateLineDialog::getEndPoint() const
 {
-    ui->editStartX->clear();
-    ui->editStartY->clear();
-    ui->editEndX->clear();
-    ui->editEndY->clear();
-    createlineDialog::reject();
+    return {ui->editEndX->text().toDouble(), ui->editEndY->text().toDouble()};
 }
-

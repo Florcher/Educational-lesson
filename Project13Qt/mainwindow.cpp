@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "Input.h"
 #include "Vectoriser.h"
 #include "QFont"
+#include "QFileDialog"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,8 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     objectScene = new QGraphicsScene;
     ui->graphicsView->setScene(objectScene);
 
-    lwidget = new QListWidget();
-    lwidget->show();
     appendInfoToListWindget("TypeID", "ObjectID", "Name");
 }
 
@@ -26,12 +26,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnEnter_clicked()
 {
-    EnterFileDialog dialog;
-    connect(&dialog, &EnterFileDialog::enterDatasignal, this, &MainWindow::getDataBaseFromDialog);
-    dialog.exec();
-    auto objects = db->getObjects();
-    for(auto obj : objects){
-        appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
+    QString filename = QFileDialog::getOpenFileName(this, tr("открыть файл"), QDir::currentPath(), tr("*.txt"));
+    try{
+        Input in;
+        db = in.input(filename.toStdString());
+        auto objects = db->getObjects();
+        for(auto obj : objects){
+            appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
+        }
+    }
+    catch(...){
+        errorDialog dialog;
+        dialog.exec();
     }
 }
 
@@ -72,13 +78,11 @@ void MainWindow::appendInfoToListWindget(QString typeID, QString ObjectID, QStri
     info.append(name);
     info.append("\n");
 
-    lwidget->addItem(info);
+    ui->listWidget->addItem(info);
 }
 
-void MainWindow::addObjetToDb(object::ptr obj, int mark)
+void MainWindow::addObjetToDb(object::ptr obj)
 {
-    if(mark == QDialog::Accepted){
-
     if(db->getObjectsCount() == 0)
         obj->setId(1);
 
@@ -86,40 +90,46 @@ void MainWindow::addObjetToDb(object::ptr obj, int mark)
     db->addObject(obj);
 
     appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
-    }
 }
 
 void MainWindow::on_btnCreateLine_clicked()
 {
-    createlineDialog dialog(this);
-    connect(&dialog, &createlineDialog::sendLineSignal, this, &MainWindow::addObjetToDb);
-    dialog.exec();
-}
-
-void MainWindow::getDataBaseFromDialog(DataBase::ptr data)
-{
-    db = data;
+    CreateLineDialog dialog;
+    auto res = dialog.exec();
+    if(res == QDialog::Accepted){
+        auto line = std::make_shared<Line>("Line",0,dialog.getStartPoint(),dialog.getEndPoint());
+        addObjetToDb(line);
+    }
 }
 
 void MainWindow::on_btnCreateRectangle_clicked()
 {
-    createRectangleDialog dialog;
-    connect(&dialog, &createRectangleDialog::sendRectangleSignal, this, &MainWindow::addObjetToDb);
-    dialog.exec();
+    CreateRectangleDialog dialog;
+    auto res = dialog.exec();
+    if(res == QDialog::Accepted){
+        auto rec = std::make_shared<Rectangle>("Rectangle", 0, dialog.getLeftDownPoint(), dialog.getLenth(), dialog.getWidth());
+        addObjetToDb(rec);
+    }
 }
 
 void MainWindow::on_btnCreateCircle_clicked()
 {
-    createCircleDialog dialog;
-    connect(&dialog, &createCircleDialog::sendCircleSignal, this, &MainWindow::addObjetToDb);
-    dialog.exec();
+    CreateCircleDialog dialog;
+    auto res = dialog.exec();
+    if(res == QDialog::Accepted){
+        auto circle = std::make_shared<Circle>("Circle", 0, dialog.getCenter(), dialog.getRadius());
+        addObjetToDb(circle);
+    }
 }
 
 void MainWindow::on_btnCreatePolyline_clicked()
 {
-    createPolylineDialog dialog;
-    connect(&dialog, &createPolylineDialog::sendPolylineSignal, this, &MainWindow::addObjetToDb);
-    dialog.exec();
+    CreatePolylineDialog dialog;
+    auto res = dialog.exec();
+    if(res == QDialog::Accepted){
+        auto polyline = std::make_shared<Polyline>("Polyline", 0, dialog.getPoints());
+        addObjetToDb(polyline);
+    }
 }
 
 

@@ -12,8 +12,6 @@
 #include "createpolylinedialog.h"
 #include "errordialog.h"
 #include "QListWidget"
-#include "enterfiledialog.h"
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -38,20 +36,14 @@ private slots:
     void on_btnCreateRectangle_clicked();
     void on_btnCreateLine_clicked();
 
-
-
-public slots:
-    void getDataBaseFromDialog(DataBase::ptr db);
-
 private:
     void Draw(DrawData::ptr data);
     void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);
-    void addObjetToDb(object::ptr obj, int mark);
+    void addObjetToDb(object::ptr obj);
 
     DataBase::ptr db;
 
     Ui::MainWindow *ui;
-    QGraphicsScene* objectScene, *textScene;
-    QListWidget* lwidget;
+    QGraphicsScene* objectScene;
 };
 #endif // MAINWINDOW_H

@@ -5,27 +5,22 @@
 #include "Objects.h"
 
 namespace Ui {
-class createlineDialog;
+class CreateLineDialog;
 }
 
-class createlineDialog : public QDialog
+class CreateLineDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit createlineDialog(QWidget *parent = nullptr);
-    ~createlineDialog();
+    explicit CreateLineDialog(QWidget *parent = nullptr);
+    ~CreateLineDialog();
 
-signals:
-    void sendLineSignal(object::ptr obj, int mark);
-
-private slots:
-    void on_btnEnterData_clicked();
-
-    void on_btnExit_clicked();
+    vector2D getStartPoint() const;
+    vector2D getEndPoint() const;
 
 private:
-    Ui::createlineDialog *ui;
+    Ui::CreateLineDialog *ui;
 };
 
 #endif // CREATELINEDIALOG_H

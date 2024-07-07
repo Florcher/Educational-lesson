@@ -26,12 +26,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
 
 
-        createlinedialog.h createlinedialog.cpp createlinedialog.ui
-        createrectangledialog.h createrectangledialog.cpp createrectangledialog.ui
-        createcircledialog.h createcircledialog.cpp createcircledialog.ui
-        createpolylinedialog.h createpolylinedialog.cpp createpolylinedialog.ui
+
+
+
+
         errordialog.h errordialog.cpp errordialog.ui
-        enterfiledialog.h enterfiledialog.cpp enterfiledialog.ui
+
+        createlinedialog.h createlinedialog.cpp createlinedialog.ui
+        createcircledialog.h createcircledialog.cpp createcircledialog.ui
+        createrectangledialog.h createrectangledialog.cpp createrectangledialog.ui
+        createpolylinedialog.h createpolylinedialog.cpp createpolylinedialog.ui
 
 
 

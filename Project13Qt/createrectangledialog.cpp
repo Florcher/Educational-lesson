@@ -1,40 +1,29 @@
 #include "createrectangledialog.h"
 #include "ui_createrectangledialog.h"
 
-createRectangleDialog::createRectangleDialog(QWidget *parent)
+CreateRectangleDialog::CreateRectangleDialog(QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::createRectangleDialog)
+    , ui(new Ui::CreateRectangleDialog)
 {
     ui->setupUi(this);
 }
 
-createRectangleDialog::~createRectangleDialog()
+CreateRectangleDialog::~CreateRectangleDialog()
 {
     delete ui;
 }
 
-void createRectangleDialog::on_btnEnterData_clicked()
+vector2D CreateRectangleDialog::getLeftDownPoint() const
 {
-    vector2D ldp{ui->editLdpX->text().toDouble(),ui->editLdpY->text().toDouble()};
-    double lenth = ui->editLenth->text().toDouble();
-    double width = ui->editWidth->text().toDouble();
-
-    object::ptr obj = std::make_shared<Rectangle>("Rectangle", 0, ldp, lenth, width);
-    ui->editLdpX->clear();
-    ui->editLdpY->clear();
-    ui->editLenth->clear();
-    ui->editWidth->clear();
-    createRectangleDialog::accept();
-    emit sendRectangleSignal(obj, QDialog::Accepted);
+    return {ui->editLdpX->text().toDouble(), ui->editLdpY->text().toDouble()};
 }
 
-
-void createRectangleDialog::on_btnExit_clicked()
+double CreateRectangleDialog::getLenth() const
 {
-    ui->editLdpX->clear();
-    ui->editLdpY->clear();
-    ui->editLenth->clear();
-    ui->editWidth->clear();
-    createRectangleDialog::reject();
+    return ui->editLenth->text().toDouble();
 }
 
+double CreateRectangleDialog::getWidth() const
+{
+    return ui->editWidth->text().toDouble();
+}
