@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Objects.h"
 #include <string>
-#include "Header.h"
 #include "DataBase.h"
 #include "Output.h"
 #include "OutputFiler.h"
@@ -29,6 +28,7 @@ void Output::output(DataBase::ptr db, const std::string fileName) {
 	auto filer = createFiler(f, fileName);
 
 	filer->outputInt(db->getObjectsCount());
+    db->write(filer);
 
 	std::vector<object::ptr> objects = db->getObjects();
 	for (int i = 0; i < objects.size(); i++) {

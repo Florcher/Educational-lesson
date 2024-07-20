@@ -12,10 +12,11 @@ class OutputFiler;
 class Drawer;
 
 class KERNEL_EXPORT object {
+    friend class DataBase;
 public:
 
 	object() = default;
-	object(const std::string& name, const int id);
+    object(const std::string& name);
 	virtual ~object() {};
 
 	virtual void input(std::shared_ptr<InputFiler> file);
@@ -23,7 +24,6 @@ public:
 	virtual void draw(std::shared_ptr<Drawer> drawer);
 
 	void setName(const std::string& name);
-	void setId(const int id);
 
 	std::string getName() const;
 	int getId() const;
@@ -39,9 +39,10 @@ public:
 private:
 
 	std::string mName;
-	int mId;
-
+    uint64_t mId;
 	bool mIsDitry;
+
+    void setId(const uint64_t id);
 };
 
 
@@ -49,7 +50,7 @@ class KERNEL_EXPORT Line : public object {
 public:
 
 	Line() = default;
-	Line(const std::string& name, const int id, const vector2D& stat, const vector2D& end);
+    Line(const std::string& name, const vector2D& stat, const vector2D& end);
 	~Line() {};
 
 	void setStart(const vector2D& start);
@@ -79,7 +80,7 @@ class KERNEL_EXPORT Rectangle : public object {
 public:
 
 	Rectangle() = default;
-	Rectangle(const std::string& name, const int id, const vector2D& leftDownPoint, const double lenth, const double width);
+    Rectangle(const std::string& name, const vector2D& leftDownPoint, const double lenth, const double width);
 	~Rectangle() {};
 
 	void setLeftDownPoint(const vector2D& vector2D);
@@ -114,7 +115,7 @@ class KERNEL_EXPORT Circle : public object {
 public:
 
 	Circle() = default;
-	Circle(const std::string& name, const int id, const vector2D& center, const double radius);
+    Circle(const std::string& name, const vector2D& center, const double radius);
 
 	void setCenter(const vector2D& center_);
 	void setRadius(const double radius_);
@@ -144,7 +145,7 @@ class KERNEL_EXPORT Polyline : public object {
 public:
 
 	Polyline() = default;
-	Polyline(const std::string& name, const int id, const std::vector<vector2D>& points);
+    Polyline(const std::string& name, const std::vector<vector2D>& points);
 
 	void setPoint(const vector2D& point);
 	void editPoint(const int index, const vector2D& point);

@@ -10,7 +10,6 @@ struct ObjectBaseOperations {
 
 	virtual void operation(ContextIO::ptr context);
 
-	virtual void editId(const int id);
 	virtual void editName(const std::string& name);
 	virtual void remove();
 

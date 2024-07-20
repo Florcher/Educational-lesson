@@ -52,7 +52,7 @@ void DataBaseOperations::editEntity(DataBase::ptr db, ContextIO::ptr context) {
 
 	std::cout << "Enter typeid and objectid. Press -1 to exit." << std::endl;
 	int typeId = context->getInt();
-	int objectId = context->getInt();
+    uint64_t objectId = context->getUint64_t();
 
 	OperationFactory opFactory;
 

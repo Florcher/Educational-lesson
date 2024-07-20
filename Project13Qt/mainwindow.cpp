@@ -83,12 +83,7 @@ void MainWindow::appendInfoToListWindget(QString typeID, QString ObjectID, QStri
 
 void MainWindow::addObjetToDb(object::ptr obj)
 {
-    if(db->getObjectsCount() == 0)
-        obj->setId(1);
-
-    obj->setId(db->getObjectsCount()+1);
     db->addObject(obj);
-
     appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
 
@@ -97,7 +92,7 @@ void MainWindow::on_btnCreateLine_clicked()
     CreateLineDialog dialog;
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
-        auto line = std::make_shared<Line>("Line",0,dialog.getStartPoint(),dialog.getEndPoint());
+        auto line = std::make_shared<Line>("Line", dialog.getStartPoint(),dialog.getEndPoint());
         addObjetToDb(line);
     }
 }
@@ -107,7 +102,7 @@ void MainWindow::on_btnCreateRectangle_clicked()
     CreateRectangleDialog dialog;
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
-        auto rec = std::make_shared<Rectangle>("Rectangle", 0, dialog.getLeftDownPoint(), dialog.getLenth(), dialog.getWidth());
+        auto rec = std::make_shared<Rectangle>("Rectangle", dialog.getLeftDownPoint(), dialog.getLenth(), dialog.getWidth());
         addObjetToDb(rec);
     }
 }
@@ -117,7 +112,7 @@ void MainWindow::on_btnCreateCircle_clicked()
     CreateCircleDialog dialog;
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
-        auto circle = std::make_shared<Circle>("Circle", 0, dialog.getCenter(), dialog.getRadius());
+        auto circle = std::make_shared<Circle>("Circle", dialog.getCenter(), dialog.getRadius());
         addObjetToDb(circle);
     }
 }
@@ -127,7 +122,7 @@ void MainWindow::on_btnCreatePolyline_clicked()
     CreatePolylineDialog dialog;
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
-        auto polyline = std::make_shared<Polyline>("Polyline", 0, dialog.getPoints());
+        auto polyline = std::make_shared<Polyline>("Polyline", dialog.getPoints());
         addObjetToDb(polyline);
     }
 }

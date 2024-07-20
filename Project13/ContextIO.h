@@ -10,6 +10,7 @@ public:
 	virtual std::string getString() = 0;
 	virtual int getInt() = 0;
 	virtual double getDouble() = 0;
+    virtual uint64_t getUint64_t() = 0;
 
 	using ptr = std::shared_ptr<ContextIO>;
 };
@@ -21,6 +22,7 @@ public:
 	std::string getString() override;
 	int getInt() override;
 	double getDouble() override;
+    uint64_t getUint64_t() override;
 
 	using ptr = std::shared_ptr<ConcoleContext>;
 

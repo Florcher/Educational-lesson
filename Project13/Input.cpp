@@ -28,23 +28,7 @@ DataBase::ptr Input::input(const std::string& fileName) {
 		throw std::exception();
 
 	auto filer = createFiler(f, fileName);
-
-	auto objFactory = std::make_shared<ObjectFactory>();
-
-	int count = filer->readInt();
-
-	if ((count > std::numeric_limits<int32_t>::max()) or (count < 0))
-		throw std::exception();
-
 	auto db = std::make_shared<DataBase>();
-
-	for (int i = 0; i < count; ++i) {
-
-		int typeId = filer->readInt();
-		auto obj = objFactory->getObject(typeId);
-		obj->input(filer);
-		db->addObject(obj);
-	}
-
+    db->read(filer);
 	return db;
 }

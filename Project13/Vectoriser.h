@@ -4,6 +4,7 @@
 #include <iostream>
 #include "DataBase.h"
 #include "DrawData.h"
+#include "map"
 
 class KERNEL_EXPORT Vectoriser {
 public:

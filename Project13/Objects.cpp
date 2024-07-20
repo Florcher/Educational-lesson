@@ -8,13 +8,13 @@
 #include "Drawer.h"
 #include "TypeNamespace.h"
 
-object::object(const std::string& name, const int id) : mName(name), mId(id), mIsDitry(false) {
+object::object(const std::string& name) : mName(name), mId(0), mIsDitry(false) {
 
 }
 
 void object::output(std::shared_ptr<OutputFiler> file) {
 	file->outputString(mName);
-	file->outputInt(mId);
+    file->outputUint64_t(mId);
 }
 
 void object::draw(std::shared_ptr<Drawer> drawer) {
@@ -29,11 +29,11 @@ void object::setName(const std::string& name) {
 	mName = name;
 }
 
-void object::setId(const int id) {
+void object::setId(const uint64_t id) {
 
-	constexpr int maxvalue = std::numeric_limits<int32_t>::max();
+    constexpr uint64_t maxvalue = std::numeric_limits<uint64_t>::max();
 
-	if ((id > maxvalue) or (id < -maxvalue))
+    if (id > maxvalue)
 		throw std::exception();
 
 	mId = id;
@@ -52,7 +52,7 @@ int object::getId() const {
 void object::input(std::shared_ptr<InputFiler> file) {
 
 	mName = file->readString();
-	mId = file->readInt();
+    mId = file->readUint64_t();
 }
 
 int object::getType() const {
@@ -71,8 +71,8 @@ void object::setIsDirty(bool dirty) {
 	mIsDitry = dirty;
 }
 
-Line::Line(const std::string& name_, const int id_, const vector2D& start_, const vector2D& end_)
-	: object(name_, id_)
+Line::Line(const std::string& name_, const vector2D& start_, const vector2D& end_)
+    : object(name_)
 {
 	line.start = start_;
 	line.end = end_;
@@ -134,8 +134,8 @@ int Line::getType() const {
 	return Type();
 }
 
-Rectangle::Rectangle(const std::string& name_, const int id_, const vector2D& vector2D, const double lenth_, const double width_)
-	: object(name_, id_), mLeftDownPoint(vector2D), mLenth(lenth_), mWidth(width_)
+Rectangle::Rectangle(const std::string& name_, const vector2D& vector2D, const double lenth_, const double width_)
+    : object(name_), mLeftDownPoint(vector2D), mLenth(lenth_), mWidth(width_)
 {
 
 }
@@ -207,15 +207,15 @@ void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
 
 	vector2D leftUpPoint = { mLeftDownPoint.x, mLeftDownPoint.y + mWidth };
-	Line ab{ "vector AB", 1, mLeftDownPoint, leftUpPoint };
+    Line ab{ "vector AB", mLeftDownPoint, leftUpPoint };
 
 	vector2D rightUpPoint = { mLeftDownPoint.x + mLenth, mLeftDownPoint.y + mWidth };
-	Line bc{ "vector BC", 2, leftUpPoint, rightUpPoint };
+    Line bc{ "vector BC", leftUpPoint, rightUpPoint };
 
 	vector2D rightDownPoint = { mLeftDownPoint.x + mLenth, mLeftDownPoint.y };
-	Line cd{ "vector CD", 3, rightUpPoint, rightDownPoint };
+    Line cd{ "vector CD", rightUpPoint, rightDownPoint };
 
-	Line da{ "vector DA", 4, rightDownPoint, mLeftDownPoint };
+    Line da{ "vector DA", rightDownPoint, mLeftDownPoint };
 
 	ab.draw(drawer);
 	bc.draw(drawer);
@@ -231,8 +231,8 @@ int Rectangle::getType() const {
 	return Type();
 }
 
-Circle::Circle(const std::string& name, const int id, const vector2D& center, const double radius)
-	: object(name, id), mCenter(center), mRadius(radius) {
+Circle::Circle(const std::string& name, const vector2D& center, const double radius)
+    : object(name), mCenter(center), mRadius(radius) {
 
 }
 
@@ -291,11 +291,11 @@ std::vector<Line> Circle::createLines() {
 	std::vector<Line> lines;
 	for (int i = 0; i < pointsCount - 1; i++) {
 
-		Line line("vector", i, points[i], points[i + 1]);
+        Line line("vector", points[i], points[i + 1]);
 		lines.push_back(line);
 	}
 
-	Line line("vector", 360, points[pointsCount - 1], points[0]);
+    Line line("vector", points[pointsCount - 1], points[0]);
 	lines.push_back(line);
 
 	return lines;
@@ -324,8 +324,8 @@ int Circle::getType() const {
 	return Type();
 }
 
-Polyline::Polyline(const std::string& name, const int id, const std::vector<vector2D>& points)
-	: object(name, id), mPoints(points)
+Polyline::Polyline(const std::string& name, const std::vector<vector2D>& points)
+    : object(name), mPoints(points)
 {
 
 }
@@ -373,7 +373,7 @@ void Polyline::createLines(std::vector<Line>& lines)
 
 	for (int i = 0; i < mPoints.size() - 1; i++) {
 
-		Line line("vector", i, mPoints[i], mPoints[i + 1]);
+        Line line("vector", mPoints[i], mPoints[i + 1]);
 		lines.push_back(line);
 	}
 }

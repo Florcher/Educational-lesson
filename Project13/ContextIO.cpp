@@ -16,3 +16,8 @@ int ConcoleContext::getInt() {
 double ConcoleContext::getDouble() {
 	return filer.readDouble();
 }
+
+uint64_t ConcoleContext::getUint64_t()
+{
+    return filer.readUint64_t();
+}

@@ -30,6 +30,10 @@ void OutTextFiler::outputVector2D(const vector2D& vec) {
 	mOutput << vec << std::endl;
 }
 
+void OutTextFiler::outputUint64_t(const uint64_t value) {
+    mOutput <<value;
+}
+
 OutConsoleFiler::OutConsoleFiler() {
 
 }
@@ -57,6 +61,10 @@ void OutConsoleFiler::outputVector2D(const vector2D& vec) {
 	std::cout << vec << std::endl;
 }
 
+void OutConsoleFiler::outputUint64_t(const uint64_t value) {
+    std::cout <<value << std::endl;
+}
+
 OutBinaryFiler::OutBinaryFiler(const std::string& fileName) {
 	mOutput.open(fileName, std::ios::binary);
 	if (!mOutput.is_open())
@@ -68,7 +76,6 @@ OutBinaryFiler::~OutBinaryFiler() {
 }
 
 void OutBinaryFiler::outputInt(const int value) {
-
 	mOutput.write((char*)&value, 4);
 }
 
@@ -91,4 +98,8 @@ void OutBinaryFiler::outputString(const std::string& str) {
 void OutBinaryFiler::outputVector2D(const vector2D& vec) {
 	outputDouble(vec.x);
 	outputDouble(vec.y);
+}
+
+void OutBinaryFiler::outputUint64_t(const uint64_t value) {
+    mOutput.write((char*)&value, 8);
 }

@@ -9,13 +9,11 @@ ObjectBaseAddOperation::ObjectBaseAddOperation(object::ptr obj) {
 
 void ObjectBaseAddOperation::addObject(ContextIO::ptr context) {
 
-	std::cout << "Enter objecId: " << std::endl;
-	int objectId = context->getInt();
+    std::cout << "Enter objecId: " << std::endl;
 
 	std::cout << "Enter name: " << std::endl;
 	std::string name = context->getString();
 
-	mObj->setId(objectId);
 	mObj->setName(name);
 }
 

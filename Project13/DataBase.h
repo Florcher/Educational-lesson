@@ -1,15 +1,17 @@
 #ifndef __DATABASE_H_
 #define __DATABASE_H_
 #include "kernel_export.h"
-#include <map>
 #include <vector>
 #include <iostream>
 #include "Objects.h"
+#include "InputFiler.h"
+#include "OutputFiler.h"
 
 class KERNEL_EXPORT DataBase {
+    friend class Input;
 public:
 
-	DataBase() = default;
+    DataBase();
 	~DataBase() = default;
 
 	void addObject(object::ptr obj);
@@ -19,10 +21,16 @@ public:
 	std::vector<object::ptr> getObjects() const;
 	object::ptr getObject(const int objectId) const;
 
+    uint64_t getNextId();
+    void write(OutputFiler::ptr filer) const;
+
 	using ptr = std::shared_ptr<DataBase>;
 
 private:
+    void read(InputFiler::ptr filer);
 
+
+    uint64_t nextId;
 	std::vector<object::ptr> objects;
 };
 
