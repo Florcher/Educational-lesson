@@ -9,6 +9,7 @@
 
 class KERNEL_EXPORT DataBase {
     friend class Input;
+	friend class Output;
 public:
 
     DataBase();
@@ -22,13 +23,12 @@ public:
 	object::ptr getObject(const int objectId) const;
 
     uint64_t getNextId();
-    void write(OutputFiler::ptr filer) const;
-
+    
 	using ptr = std::shared_ptr<DataBase>;
 
 private:
     void read(InputFiler::ptr filer);
-
+	void write(OutputFiler::ptr filer) const;
 
     uint64_t nextId;
 	std::vector<object::ptr> objects;

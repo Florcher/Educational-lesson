@@ -30,27 +30,18 @@ void object::setName(const std::string& name) {
 }
 
 void object::setId(const uint64_t id) {
-
-    constexpr uint64_t maxvalue = std::numeric_limits<uint64_t>::max();
-
-    if (id > maxvalue)
-		throw std::exception();
-
 	mId = id;
 }
 
 std::string object::getName() const {
-
 	return mName;
 }
 
 int object::getId() const {
-
 	return mId;
 }
 
 void object::input(std::shared_ptr<InputFiler> file) {
-
 	mName = file->readString();
     mId = file->readUint64_t();
 }

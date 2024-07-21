@@ -70,5 +70,12 @@ void DataBase::read(InputFiler::ptr filer) {
 }
 
 void DataBase::write(OutputFiler::ptr filer) const {
-    filer->outputUint64_t(nextId);
+
+	filer->outputInt(getObjectsCount());
+	filer->outputUint64_t(nextId);
+
+	for (int i = 0; i < objects.size(); i++) {
+		filer->outputInt(objects[i]->getType());
+		objects[i]->output(filer);
+	}
 }
