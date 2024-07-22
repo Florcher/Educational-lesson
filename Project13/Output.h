@@ -6,8 +6,8 @@
 
 class KERNEL_EXPORT Output {
 public:
-     void output(DataBase::ptr db, const std::string fileName);
-     using ptr = std::shared_ptr<Output>;
+	void output(DataBase::ptr db, const std::string fileName);
+	using ptr = std::shared_ptr<Output>;
 };
 
 

@@ -14,7 +14,7 @@ object::object(const std::string& name) : mName(name), mId(0), mIsDitry(false) {
 
 void object::output(std::shared_ptr<OutputFiler> file) {
 	file->outputString(mName);
-    file->outputUint64_t(mId);
+	file->outputUint64_t(mId);
 }
 
 void object::draw(std::shared_ptr<Drawer> drawer) {
@@ -43,7 +43,7 @@ int object::getId() const {
 
 void object::input(std::shared_ptr<InputFiler> file) {
 	mName = file->readString();
-    mId = file->readUint64_t();
+	mId = file->readUint64_t();
 }
 
 int object::getType() const {
@@ -63,7 +63,7 @@ void object::setIsDirty(bool dirty) {
 }
 
 Line::Line(const std::string& name_, const vector2D& start_, const vector2D& end_)
-    : object(name_)
+	: object(name_)
 {
 	line.start = start_;
 	line.end = end_;
@@ -99,7 +99,7 @@ vector2D Line::getEnd() const {
 };
 
 void Line::input(std::shared_ptr<InputFiler> file) {
-	
+
 	object::input(file);
 	line.start = file->readVector2D();
 	line.end = file->readVector2D();
@@ -126,7 +126,7 @@ int Line::getType() const {
 }
 
 Rectangle::Rectangle(const std::string& name_, const vector2D& vector2D, const double lenth_, const double width_)
-    : object(name_), mLeftDownPoint(vector2D), mLenth(lenth_), mWidth(width_)
+	: object(name_), mLeftDownPoint(vector2D), mLenth(lenth_), mWidth(width_)
 {
 
 }
@@ -198,15 +198,15 @@ void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
 
 	vector2D leftUpPoint = { mLeftDownPoint.x, mLeftDownPoint.y + mWidth };
-    Line ab{ "vector AB", mLeftDownPoint, leftUpPoint };
+	Line ab{ "vector AB", mLeftDownPoint, leftUpPoint };
 
 	vector2D rightUpPoint = { mLeftDownPoint.x + mLenth, mLeftDownPoint.y + mWidth };
-    Line bc{ "vector BC", leftUpPoint, rightUpPoint };
+	Line bc{ "vector BC", leftUpPoint, rightUpPoint };
 
 	vector2D rightDownPoint = { mLeftDownPoint.x + mLenth, mLeftDownPoint.y };
-    Line cd{ "vector CD", rightUpPoint, rightDownPoint };
+	Line cd{ "vector CD", rightUpPoint, rightDownPoint };
 
-    Line da{ "vector DA", rightDownPoint, mLeftDownPoint };
+	Line da{ "vector DA", rightDownPoint, mLeftDownPoint };
 
 	ab.draw(drawer);
 	bc.draw(drawer);
@@ -223,7 +223,7 @@ int Rectangle::getType() const {
 }
 
 Circle::Circle(const std::string& name, const vector2D& center, const double radius)
-    : object(name), mCenter(center), mRadius(radius) {
+	: object(name), mCenter(center), mRadius(radius) {
 
 }
 
@@ -282,11 +282,11 @@ std::vector<Line> Circle::createLines() {
 	std::vector<Line> lines;
 	for (int i = 0; i < pointsCount - 1; i++) {
 
-        Line line("vector", points[i], points[i + 1]);
+		Line line("vector", points[i], points[i + 1]);
 		lines.push_back(line);
 	}
 
-    Line line("vector", points[pointsCount - 1], points[0]);
+	Line line("vector", points[pointsCount - 1], points[0]);
 	lines.push_back(line);
 
 	return lines;
@@ -316,7 +316,7 @@ int Circle::getType() const {
 }
 
 Polyline::Polyline(const std::string& name, const std::vector<vector2D>& points)
-    : object(name), mPoints(points)
+	: object(name), mPoints(points)
 {
 
 }
@@ -364,7 +364,7 @@ void Polyline::createLines(std::vector<Line>& lines)
 
 	for (int i = 0; i < mPoints.size() - 1; i++) {
 
-        Line line("vector", mPoints[i], mPoints[i + 1]);
+		Line line("vector", mPoints[i], mPoints[i + 1]);
 		lines.push_back(line);
 	}
 }

@@ -45,9 +45,9 @@ vector2D InTextFiler::readVector2D() {
 
 uint64_t InTextFiler::readUint64_t() {
 
-    uint64_t count;
-    mInput >> count;
-    return count;
+	uint64_t count;
+	mInput >> count;
+	return count;
 }
 
 InConsoleFiler::InConsoleFiler() {
@@ -88,9 +88,9 @@ vector2D InConsoleFiler::readVector2D() {
 
 uint64_t InConsoleFiler::readUint64_t() {
 
-    uint64_t count;
-    std::cin >> count;
-    return count;
+	uint64_t count;
+	std::cin >> count;
+	return count;
 }
 
 InBinaryFiler::InBinaryFiler(const std::string& fileName) : mInput(fileName, std::ios_base::binary) {
@@ -122,7 +122,7 @@ std::string InBinaryFiler::readString() {
 	if (size <= 0)
 		throw std::exception();
 
-	std::string res(size + 1,'\0');
+	std::string res(size + 1, '\0');
 	mInput.read(res.data(), size);
 	return res;
 }
@@ -139,7 +139,7 @@ vector2D InBinaryFiler::readVector2D() {
 
 uint64_t InBinaryFiler::readUint64_t() {
 
-    uint64_t count;
-    mInput.read((char*)&count, 8);
-    return count;
+	uint64_t count;
+	mInput.read((char*)&count, 8);
+	return count;
 }

@@ -9,13 +9,13 @@
 
 InputFiler::ptr createFiler(const FileType& filetype, const std::string& fileName) {
 
-	if (filetype == FileType::txt) 
+	if (filetype == FileType::txt)
 		return std::make_shared<InTextFiler>(fileName);
 
 	if (filetype == FileType::binary)
-        return std::make_shared<InBinaryFiler>(fileName);;
-	
-	if(filetype == FileType::console)
+		return std::make_shared<InBinaryFiler>(fileName);;
+
+	if (filetype == FileType::console)
 		return std::make_shared<InConsoleFiler>();
 }
 
@@ -29,6 +29,6 @@ DataBase::ptr Input::input(const std::string& fileName) {
 
 	auto filer = createFiler(f, fileName);
 	auto db = std::make_shared<DataBase>();
-    db->read(filer);
+	db->read(filer);
 	return db;
 }

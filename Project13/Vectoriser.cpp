@@ -9,7 +9,7 @@ void Vectoriser::draw(std::shared_ptr<DataBase> db) {
 	for (auto object : objects) {
 		std::shared_ptr<Drawer> drawer = std::make_shared<Drawer>();
 		object->draw(drawer);
-        data.emplace(object->getId(), drawer->getData());
+		data.emplace(object->getId(), drawer->getData());
 	}
 }
 

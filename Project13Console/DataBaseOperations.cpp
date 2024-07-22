@@ -32,7 +32,7 @@ void DataBaseOperations::addEntity(DataBase::ptr db, ContextIO::ptr context) {
 
 	std::cout << "Enter typeid." << std::endl;
 	int typeId = context->getInt();
-	
+
 	ObjectFactory factory;
 	AddOperationFactory addOperationFactory;
 
@@ -52,7 +52,7 @@ void DataBaseOperations::editEntity(DataBase::ptr db, ContextIO::ptr context) {
 
 	std::cout << "Enter typeid and objectid. Press -1 to exit." << std::endl;
 	int typeId = context->getInt();
-    uint64_t objectId = context->getUint64_t();
+	uint64_t objectId = context->getUint64_t();
 
 	OperationFactory opFactory;
 
@@ -75,7 +75,7 @@ void DataBaseOperations::editEntity(DataBase::ptr db, ContextIO::ptr context) {
 		}
 	}
 
-	if (mark) 
+	if (mark)
 	{
 		throw std::exception();
 	}
@@ -84,7 +84,6 @@ void DataBaseOperations::editEntity(DataBase::ptr db, ContextIO::ptr context) {
 void DataBaseOperations::listEntities(DataBase::ptr db) {
 
 	std::cout << "typeId" << " " << "objectId" << " " << "name" << std::endl;
-
 
 	std::vector<object::ptr> objects = db->getObjects();
 	for (int i = 0; i < objects.size(); i++) {
@@ -98,7 +97,7 @@ void DataBaseOperations::listEntities(DataBase::ptr db) {
 }
 
 void DataBaseOperations::drawObject(DataBase::ptr db, ContextIO::ptr context) {
-	
+
 	std::cout << "Enter file name" << std::endl;
 	std::string filename = context->getString();
 	Vectoriser vectoriser;

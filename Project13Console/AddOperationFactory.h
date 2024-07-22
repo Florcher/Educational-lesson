@@ -10,8 +10,8 @@ public:
 	AddOperationFactory();
 	~AddOperationFactory() = default;
 
-    ObjectBaseAddOperation::ptr createAddOperation(const int typeId, object::ptr obj);
-	
+	ObjectBaseAddOperation::ptr createAddOperation(const int typeId, object::ptr obj);
+
 private:
 
 	std::map<int, std::shared_ptr<OpCreator<ObjectBaseAddOperation>>> mOperation;

@@ -12,7 +12,7 @@ public:
 	virtual void outputDouble(const double value) = 0;
 	virtual void outputString(const std::string& str) = 0;
 	virtual void outputVector2D(const vector2D& vec) = 0;
-    virtual void outputUint64_t(const uint64_t value) = 0;
+	virtual void outputUint64_t(const uint64_t value) = 0;
 
 	using ptr = std::shared_ptr<OutputFiler>;
 };
@@ -26,7 +26,7 @@ public:
 	void outputDouble(const double value) override;
 	void outputString(const std::string& str) override;
 	void outputVector2D(const vector2D& vec) override;
-    void outputUint64_t(const uint64_t value) override;
+	void outputUint64_t(const uint64_t value) override;
 
 	using ptr = std::shared_ptr<OutTextFiler>;
 
@@ -43,8 +43,8 @@ public:
 	void outputDouble(const double value) override;
 	void outputString(const std::string& str) override;
 	void outputVector2D(const vector2D& vec) override;
-    void outputUint64_t(const uint64_t value) override;
-	
+	void outputUint64_t(const uint64_t value) override;
+
 	using ptr = std::shared_ptr<OutConsoleFiler>;
 
 private:
@@ -60,7 +60,7 @@ public:
 	void outputDouble(const double value) override;
 	void outputString(const std::string& str) override;
 	void outputVector2D(const vector2D& vec) override;
-    void outputUint64_t(const uint64_t value) override;
+	void outputUint64_t(const uint64_t value) override;
 
 	using ptr = std::shared_ptr<OutBinaryFiler>;
 

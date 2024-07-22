@@ -10,10 +10,10 @@ ObjectBaseOperations::ObjectBaseOperations(object::ptr obj) {
 }
 
 void ObjectBaseOperations::operation(ContextIO::ptr context) {
-    std::cout << "Press 1 to edit name." << std::endl;
+	std::cout << "Press 1 to edit name." << std::endl;
 }
 
- void ObjectBaseOperations::editName(const std::string& name) {
+void ObjectBaseOperations::editName(const std::string& name) {
 	mObj->setName(name);
 }
 
@@ -33,28 +33,28 @@ void LineOperations::operation(ContextIO::ptr context) {
 
 		ObjectBaseOperations::operation(context);
 
-        std::cout << "Press 2 to edit startpoint." << std::endl;
-        std::cout << "Press 3 to edit endpoint." << std::endl;
+		std::cout << "Press 2 to edit startpoint." << std::endl;
+		std::cout << "Press 3 to edit endpoint." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 		std::cin >> mark;
-		
+
 		std::string name;
 		vector2D startPoint, endPoint;
 		int id;
-	
+
 		switch (mark) {
 
-        case 1:
+		case 1:
 			name = context->getString();
 			editName(name);
 			break;
 
-        case 2:
+		case 2:
 			startPoint = context->getPoint();
 			editStartPoint(startPoint);
 			break;
 
-        case 3:
+		case 3:
 			endPoint = context->getPoint();
 			editEndPoint(endPoint);
 			break;
@@ -81,9 +81,9 @@ void RectangleOperations::operation(ContextIO::ptr context) {
 
 		ObjectBaseOperations::operation(context);
 
-        std::cout << "Press 2 to edit leftDownPoint." << std::endl;
-        std::cout << "Press 3 to edit lenth." << std::endl;
-        std::cout << "Press 4 to edit width." << std::endl;
+		std::cout << "Press 2 to edit leftDownPoint." << std::endl;
+		std::cout << "Press 3 to edit lenth." << std::endl;
+		std::cout << "Press 4 to edit width." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 		std::cin >> mark;
 
@@ -91,24 +91,24 @@ void RectangleOperations::operation(ContextIO::ptr context) {
 		vector2D leftDownPoint;
 		int id, lenth, width;
 
-        switch (mark) {
+		switch (mark) {
 
-        case 1:
+		case 1:
 			name = context->getString();
 			editName(name);
 			break;
 
-        case 2:
+		case 2:
 			leftDownPoint = context->getPoint();
 			editLeftDownPoint(leftDownPoint);
 			break;
 
-        case 3:
+		case 3:
 			lenth = context->getDouble();
 			editLenth(lenth);
 			break;
 
-        case 4:
+		case 4:
 			width = context->getDouble();
 			editWidth(width);
 			break;
@@ -140,8 +140,8 @@ void CircleOperations::operation(ContextIO::ptr context) {
 
 		ObjectBaseOperations::operation(context);
 
-        std::cout << "Press 2 to edit center." << std::endl;
-        std::cout << "Press 3 to edit radius." << std::endl;
+		std::cout << "Press 2 to edit center." << std::endl;
+		std::cout << "Press 3 to edit radius." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 		std::cin >> mark;
 
@@ -151,17 +151,17 @@ void CircleOperations::operation(ContextIO::ptr context) {
 
 		switch (mark) {
 
-        case 1:
+		case 1:
 			name = context->getString();
 			editName(name);
 			break;
 
-        case 2:
+		case 2:
 			center = context->getPoint();
 			editCenter(center);
 			break;
 
-        case 3:
+		case 3:
 			radius = context->getDouble();
 			editRadius(radius);
 			break;
@@ -189,7 +189,7 @@ void PolylineOperations::operation(ContextIO::ptr context) {
 
 		ObjectBaseOperations::operation(context);
 
-        std::cout << "Press 2 to edit point." << std::endl;
+		std::cout << "Press 2 to edit point." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 
 		std::string name;
@@ -202,7 +202,7 @@ void PolylineOperations::operation(ContextIO::ptr context) {
 			editName(name);
 			break;
 
-        case 2:
+		case 2:
 			std::cout << "Enter index to edit point: " << std::endl;
 
 			int index;

@@ -11,7 +11,7 @@ public:
 	virtual double readDouble() = 0;
 	virtual std::string readString() = 0;
 	virtual vector2D readVector2D() = 0;
-    virtual uint64_t readUint64_t() = 0;
+	virtual uint64_t readUint64_t() = 0;
 
 	using ptr = std::shared_ptr<InputFiler>;
 };
@@ -25,7 +25,7 @@ public:
 	double readDouble() override;
 	std::string readString() override;
 	vector2D readVector2D() override;
-    uint64_t readUint64_t() override;
+	uint64_t readUint64_t() override;
 
 	using ptr = std::shared_ptr<InTextFiler>;
 
@@ -42,7 +42,7 @@ public:
 	double readDouble() override;
 	std::string readString() override;
 	vector2D readVector2D() override;
-    uint64_t readUint64_t() override;
+	uint64_t readUint64_t() override;
 
 	using ptr = std::shared_ptr<InConsoleFiler>;
 
@@ -59,7 +59,7 @@ public:
 	double readDouble() override;
 	std::string readString() override;
 	vector2D readVector2D() override;
-    uint64_t readUint64_t() override;
+	uint64_t readUint64_t() override;
 
 	using ptr = std::shared_ptr<InBinaryFiler>;
 

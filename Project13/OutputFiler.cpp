@@ -31,7 +31,7 @@ void OutTextFiler::outputVector2D(const vector2D& vec) {
 }
 
 void OutTextFiler::outputUint64_t(const uint64_t value) {
-    mOutput <<value;
+	mOutput << value;
 }
 
 OutConsoleFiler::OutConsoleFiler() {
@@ -62,7 +62,7 @@ void OutConsoleFiler::outputVector2D(const vector2D& vec) {
 }
 
 void OutConsoleFiler::outputUint64_t(const uint64_t value) {
-    std::cout <<value << std::endl;
+	std::cout << value << std::endl;
 }
 
 OutBinaryFiler::OutBinaryFiler(const std::string& fileName) {
@@ -84,9 +84,9 @@ void OutBinaryFiler::outputDouble(const double value) {
 }
 
 void OutBinaryFiler::outputString(const std::string& str) {
- 
+
 	int size = str.size();
-	mOutput.write((char*)& size, 4);
+	mOutput.write((char*)&size, 4);
 	const char* tmpStr = str.data();
 	mOutput.write((char*)&tmpStr[0], str.size());
 
@@ -101,5 +101,5 @@ void OutBinaryFiler::outputVector2D(const vector2D& vec) {
 }
 
 void OutBinaryFiler::outputUint64_t(const uint64_t value) {
-    mOutput.write((char*)&value, 8);
+	mOutput.write((char*)&value, 8);
 }

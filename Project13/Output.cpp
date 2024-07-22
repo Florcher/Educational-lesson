@@ -26,5 +26,5 @@ void Output::output(DataBase::ptr db, const std::string fileName) {
 		throw std::exception();
 
 	auto filer = createFiler(f, fileName);
-    db->write(filer);
+	db->write(filer);
 }
