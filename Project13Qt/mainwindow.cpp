@@ -4,6 +4,7 @@
 #include "Vectoriser.h"
 #include "QFont"
 #include "QFileDialog"
+#include "linecreator.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -87,6 +88,11 @@ void MainWindow::addObjetToDb(object::ptr obj)
     appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
 
+void MainWindow::mousePresEvent(QGraphicsSceneMouseEvent *event1, QGraphicsSceneMouseEvent* event2)
+{
+    objectScene->addLine(event1->scenePos().x(),event1->scenePos().y(),event2->scenePos().x(),event2->scenePos().y(),QPen(Qt::red));
+}
+
 void MainWindow::on_btnCreateLine_clicked()
 {
     CreateLineDialog dialog;
@@ -127,14 +133,11 @@ void MainWindow::on_btnCreatePolyline_clicked()
     }
 }
 
-
-
-
-
-
-
-
-
-
-
+void MainWindow::on_btnCreateLineWithClik_clicked()
+{
+    QGraphicsSceneMouseEvent* event = new QGraphicsSceneMouseEvent();
+    objectScene->sendEvent()
+    LineCreator creator;
+    db->addObject(creator.getObject());
+}
 

@@ -12,6 +12,8 @@
 #include "createpolylinedialog.h"
 #include "errordialog.h"
 #include "QListWidget"
+#include "QMouseEvent"
+#include "QGraphicsSceneMouseEvent"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -36,10 +38,13 @@ private slots:
     void on_btnCreateRectangle_clicked();
     void on_btnCreateLine_clicked();
 
+    void on_btnCreateLineWithClik_clicked();
+
 private:
     void Draw(DrawData::ptr data);
     void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);
     void addObjetToDb(object::ptr obj);
+    void mousePresEvent(QGraphicsSceneMouseEvent* event1, QGraphicsSceneMouseEvent* event2);
 
     DataBase::ptr db;
 
