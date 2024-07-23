@@ -14,6 +14,7 @@
 #include "QListWidget"
 #include "QMouseEvent"
 #include "QGraphicsSceneMouseEvent"
+#include "drawclickscene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -39,16 +40,18 @@ private slots:
     void on_btnCreateLine_clicked();
 
     void on_btnCreateLineWithClik_clicked();
+    void on_btnCreateCircleWithClick_clicked();
+    void on_btnCreatePolylineWithClick_clicked();
 
 private:
     void Draw(DrawData::ptr data);
     void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);
     void addObjetToDb(object::ptr obj);
-    void mousePresEvent(QGraphicsSceneMouseEvent* event1, QGraphicsSceneMouseEvent* event2);
+    void vectorisationAndDraw();
 
     DataBase::ptr db;
 
     Ui::MainWindow *ui;
-    QGraphicsScene* objectScene;
+    DrawClickScene* objectScene;
 };
 #endif // MAINWINDOW_H

@@ -4,7 +4,8 @@
 #include "Vectoriser.h"
 #include "QFont"
 #include "QFileDialog"
-#include "linecreator.h"
+#include "QMouseEvent"
+#include "errordatadialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     db = std::make_shared<DataBase>();
 
-    objectScene = new QGraphicsScene;
+    objectScene = new DrawClickScene();
     ui->graphicsView->setScene(objectScene);
 
     appendInfoToListWindget("TypeID", "ObjectID", "Name");
@@ -44,13 +45,7 @@ void MainWindow::on_btnEnter_clicked()
 
 void MainWindow::on_btnDraw_clicked()
 {
-    Vectoriser vec;
-    vec.draw(db);
-
-    auto objects = db->getObjects();
-    for(auto obj : objects){
-        Draw(vec.getData(obj->getId()));
-    }
+    vectorisationAndDraw();
 }
 
 void MainWindow::Draw(DrawData::ptr data)
@@ -88,9 +83,15 @@ void MainWindow::addObjetToDb(object::ptr obj)
     appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
 
-void MainWindow::mousePresEvent(QGraphicsSceneMouseEvent *event1, QGraphicsSceneMouseEvent* event2)
+void MainWindow::vectorisationAndDraw()
 {
-    objectScene->addLine(event1->scenePos().x(),event1->scenePos().y(),event2->scenePos().x(),event2->scenePos().y(),QPen(Qt::red));
+    Vectoriser vec;
+    vec.draw(db);
+
+    auto objects = db->getObjects();
+    for(auto obj : objects){
+        Draw(vec.getData(obj->getId()));
+    }
 }
 
 void MainWindow::on_btnCreateLine_clicked()
@@ -135,9 +136,39 @@ void MainWindow::on_btnCreatePolyline_clicked()
 
 void MainWindow::on_btnCreateLineWithClik_clicked()
 {
-    QGraphicsSceneMouseEvent* event = new QGraphicsSceneMouseEvent();
-    objectScene->sendEvent()
-    LineCreator creator;
-    db->addObject(creator.getObject());
+    try{
+    addObjetToDb(objectScene->getObject(Line::Type()));
+    vectorisationAndDraw();
+    }
+    catch(...){
+        ErrorDataDialog dialog;
+        dialog.exec();
+    }
+}
+
+
+void MainWindow::on_btnCreateCircleWithClick_clicked()
+{
+    try{
+    addObjetToDb(objectScene->getObject(Circle::Type()));
+    vectorisationAndDraw();
+    }
+    catch(...){
+        ErrorDataDialog dialog;
+        dialog.exec();
+    }
+}
+
+
+void MainWindow::on_btnCreatePolylineWithClick_clicked()
+{
+    try{
+    addObjetToDb(objectScene->getObject(Polyline::Type()));
+    vectorisationAndDraw();
+    }
+    catch(...){
+        ErrorDataDialog dialog;
+        dialog.exec();
+    }
 }
 

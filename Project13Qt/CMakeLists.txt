@@ -38,6 +38,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         createpolylinedialog.h createpolylinedialog.cpp createpolylinedialog.ui
         linecreator.h linecreator.cpp
         drawclickscene.h drawclickscene.cpp
+        errordatadialog.h errordatadialog.cpp errordatadialog.ui
 
 
 
