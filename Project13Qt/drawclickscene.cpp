@@ -33,6 +33,7 @@ object::ptr DrawClickScene::getObject(int typeId)
         double dir = sqrt((end.x - start.x) *(end.x - start.x) + (end.y - start.y) *(end.y - start.y));
         return std::make_shared<Circle>("Circle", start, dir);
         }
+        throw std::exception();
     }
 
     if(typeId == Polyline::Type()){
@@ -42,6 +43,7 @@ object::ptr DrawClickScene::getObject(int typeId)
          points.clear();
          return std::make_shared<Polyline>("PolyLine", data);
         }
+        throw std::exception();
     }
 }
 

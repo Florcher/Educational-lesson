@@ -94,6 +94,18 @@ void MainWindow::vectorisationAndDraw()
     }
 }
 
+void MainWindow::addObjectToDbAndVectorisation(int typeId)
+{
+    try{
+        addObjetToDb(objectScene->getObject(typeId));
+        vectorisationAndDraw();
+    }
+    catch(...){
+        ErrorDataDialog dialog;
+        dialog.exec();
+    }
+}
+
 void MainWindow::on_btnCreateLine_clicked()
 {
     CreateLineDialog dialog;
@@ -136,39 +148,18 @@ void MainWindow::on_btnCreatePolyline_clicked()
 
 void MainWindow::on_btnCreateLineWithClik_clicked()
 {
-    try{
-    addObjetToDb(objectScene->getObject(Line::Type()));
-    vectorisationAndDraw();
-    }
-    catch(...){
-        ErrorDataDialog dialog;
-        dialog.exec();
-    }
+    addObjectToDbAndVectorisation(Line::Type());
 }
 
 
 void MainWindow::on_btnCreateCircleWithClick_clicked()
 {
-    try{
-    addObjetToDb(objectScene->getObject(Circle::Type()));
-    vectorisationAndDraw();
-    }
-    catch(...){
-        ErrorDataDialog dialog;
-        dialog.exec();
-    }
+    addObjectToDbAndVectorisation(Circle::Type());
 }
 
 
 void MainWindow::on_btnCreatePolylineWithClick_clicked()
 {
-    try{
-    addObjetToDb(objectScene->getObject(Polyline::Type()));
-    vectorisationAndDraw();
-    }
-    catch(...){
-        ErrorDataDialog dialog;
-        dialog.exec();
-    }
+    addObjectToDbAndVectorisation(Polyline::Type());
 }
 

@@ -48,6 +48,7 @@ private:
     void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);
     void addObjetToDb(object::ptr obj);
     void vectorisationAndDraw();
+    void addObjectToDbAndVectorisation(int typeId);
 
     DataBase::ptr db;
 
