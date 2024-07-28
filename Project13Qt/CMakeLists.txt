@@ -36,9 +36,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         createcircledialog.h createcircledialog.cpp createcircledialog.ui
         createrectangledialog.h createrectangledialog.cpp createrectangledialog.ui
         createpolylinedialog.h createpolylinedialog.cpp createpolylinedialog.ui
-        linecreator.h linecreator.cpp
-        drawclickscene.h drawclickscene.cpp
+
+
         errordatadialog.h errordatadialog.cpp errordatadialog.ui
+        databaseview.h databaseview.cpp
+        InputStatus.h
 
 
 

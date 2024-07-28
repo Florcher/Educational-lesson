@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Vector2D.h"
 #include "Comparison.h"
+#include <math.h>
 
 std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
 
@@ -31,4 +32,8 @@ vector2D vector2D::operator+(const vector2D& rhs) {
 vector2D vector2D::operator-(const vector2D& rhs) {
 
 	return { x - rhs.x, y - rhs.y };
+}
+
+double vector2D::lenth() {
+	return sqrt(x * x + y * y);
 }

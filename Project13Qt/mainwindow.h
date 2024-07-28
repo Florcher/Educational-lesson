@@ -14,7 +14,7 @@
 #include "QListWidget"
 #include "QMouseEvent"
 #include "QGraphicsSceneMouseEvent"
-#include "drawclickscene.h"
+#include "databaseview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -43,16 +43,20 @@ private slots:
     void on_btnCreateCircleWithClick_clicked();
     void on_btnCreatePolylineWithClick_clicked();
 
+    void on_btnClearScene_clicked();
+
+    void on_btnCreateRectangleWithClick_clicked();
+
 private:
     void Draw(DrawData::ptr data);
     void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);
-    void addObjetToDb(object::ptr obj);
+    void addObjectToDb(object::ptr obj);
     void vectorisationAndDraw();
-    void addObjectToDbAndVectorisation(int typeId);
+    void addObjectToDbAndVectorisation(std::shared_ptr<object> obj);
 
     DataBase::ptr db;
 
     Ui::MainWindow *ui;
-    DrawClickScene* objectScene;
+    DataBaseView* dbview;
 };
 #endif // MAINWINDOW_H

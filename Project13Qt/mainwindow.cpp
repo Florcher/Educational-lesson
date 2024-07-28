@@ -6,6 +6,7 @@
 #include "QFileDialog"
 #include "QMouseEvent"
 #include "errordatadialog.h"
+#include "QMessageBox"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     db = std::make_shared<DataBase>();
 
-    objectScene = new DrawClickScene();
-    ui->graphicsView->setScene(objectScene);
+    dbview = new DataBaseView();
+    ui->graphicsView->setScene(dbview);
 
     appendInfoToListWindget("TypeID", "ObjectID", "Name");
 }
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete objectScene;
+    delete dbview;
 }
 
 void MainWindow::on_btnEnter_clicked()
@@ -59,7 +60,7 @@ void MainWindow::Draw(DrawData::ptr data)
         qreal x2 = line.end.x;
         qreal y2 = line.end.y;
 
-        objectScene->addLine(x1,y1,x2,y2, QPen(Qt::red));
+        dbview->addLine(x1,y1,x2,y2, QPen(Qt::red));
     }
 }
 
@@ -77,7 +78,7 @@ void MainWindow::appendInfoToListWindget(QString typeID, QString ObjectID, QStri
     ui->listWidget->addItem(info);
 }
 
-void MainWindow::addObjetToDb(object::ptr obj)
+void MainWindow::addObjectToDb(object::ptr obj)
 {
     db->addObject(obj);
     appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
@@ -94,16 +95,10 @@ void MainWindow::vectorisationAndDraw()
     }
 }
 
-void MainWindow::addObjectToDbAndVectorisation(int typeId)
+void MainWindow::addObjectToDbAndVectorisation(std::shared_ptr<object> obj)
 {
-    try{
-        addObjetToDb(objectScene->getObject(typeId));
-        vectorisationAndDraw();
-    }
-    catch(...){
-        ErrorDataDialog dialog;
-        dialog.exec();
-    }
+    addObjectToDb(obj);
+    vectorisationAndDraw();
 }
 
 void MainWindow::on_btnCreateLine_clicked()
@@ -112,7 +107,7 @@ void MainWindow::on_btnCreateLine_clicked()
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
         auto line = std::make_shared<Line>("Line", dialog.getStartPoint(),dialog.getEndPoint());
-        addObjetToDb(line);
+        addObjectToDb(line);
     }
 }
 
@@ -122,7 +117,7 @@ void MainWindow::on_btnCreateRectangle_clicked()
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
         auto rec = std::make_shared<Rectangle>("Rectangle", dialog.getLeftDownPoint(), dialog.getLenth(), dialog.getWidth());
-        addObjetToDb(rec);
+        addObjectToDb(rec);
     }
 }
 
@@ -132,7 +127,7 @@ void MainWindow::on_btnCreateCircle_clicked()
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
         auto circle = std::make_shared<Circle>("Circle", dialog.getCenter(), dialog.getRadius());
-        addObjetToDb(circle);
+        addObjectToDb(circle);
     }
 }
 
@@ -142,24 +137,77 @@ void MainWindow::on_btnCreatePolyline_clicked()
     auto res = dialog.exec();
     if(res == QDialog::Accepted){
         auto polyline = std::make_shared<Polyline>("Polyline", dialog.getPoints());
-        addObjetToDb(polyline);
+        addObjectToDb(polyline);
     }
 }
 
 void MainWindow::on_btnCreateLineWithClik_clicked()
 {
-    addObjectToDbAndVectorisation(Line::Type());
+    try{
+        auto start = dbview->getPoint();
+        auto end = dbview->getPoint();
+        auto line = std::make_shared<Line>("Line", start, end);
+        addObjectToDbAndVectorisation(line);
+    }
+    catch(...){
+
+    }
 }
 
+void MainWindow::on_btnCreateRectangleWithClick_clicked()
+{
+    try{
+    auto ldp = dbview->getPoint();
+    auto rdp = dbview->getPoint();
+    auto ulp = dbview->getPoint();
+
+    auto lenth = (rdp - ldp).lenth();
+    auto width = (ulp - ldp).lenth();
+
+    auto rec = std::make_shared<Rectangle>("REctangle",ldp,lenth, width);
+    addObjectToDbAndVectorisation(rec);
+    }
+    catch(...){
+
+    }
+}
 
 void MainWindow::on_btnCreateCircleWithClick_clicked()
 {
-    addObjectToDbAndVectorisation(Circle::Type());
+    try{
+        auto center = dbview->getPoint();
+        auto oncurve = dbview->getPoint();
+        auto radius = (oncurve - center).lenth();
+        auto circle = std::make_shared<Circle>("Circle", center, radius);
+        addObjectToDbAndVectorisation(circle);
+    }
+    catch(...){
+
+    }
 }
 
 
 void MainWindow::on_btnCreatePolylineWithClick_clicked()
 {
-    addObjectToDbAndVectorisation(Polyline::Type());
+    std::vector<vector2D> pts;
+    try{
+        while(true)
+            pts.push_back(dbview->getPoint());
+    }
+    catch(...){
+        if(pts.size() > 1){
+            auto pline = std::make_shared<Polyline>("Polyline", pts);
+            addObjectToDbAndVectorisation(pline);
+        } else{
+
+        }
+    }
 }
+
+
+void MainWindow::on_btnClearScene_clicked()
+{
+    dbview->clear();
+}
+
 
