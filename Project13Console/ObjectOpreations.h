@@ -39,7 +39,7 @@ struct RectangleOperations : ObjectBaseOperations {
 	void operation(ContextIO::ptr context) override;
 
 	void editLeftDownPoint(const vector2D& leftDownPoint);
-	void editLenth(const double lenth);
+	void editLength(const double length);
 	void editWidth(const double width);
 
 	using ptr = std::shared_ptr<RectangleOperations>;

@@ -14,7 +14,7 @@ struct KERNEL_EXPORT vector2D {
 	vector2D operator+(const vector2D&);
 	vector2D operator-(const vector2D&);
 
-	double lenth();
+	double length() const;
 
 	double x = 0;
 	double y = 0;

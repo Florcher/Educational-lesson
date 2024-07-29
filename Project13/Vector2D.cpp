@@ -34,6 +34,6 @@ vector2D vector2D::operator-(const vector2D& rhs) {
 	return { x - rhs.x, y - rhs.y };
 }
 
-double vector2D::lenth() {
+double vector2D::length() const {
 	return sqrt(x * x + y * y);
 }

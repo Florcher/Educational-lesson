@@ -47,13 +47,13 @@ void RectagleAddOperation::addObject(ContextIO::ptr context) {
 	vector2D leftDownPoint = context->getPoint();
 
 	std::cout << "Enter lenth: " << std::endl;
-	double lenth = context->getDouble();
+	double length = context->getDouble();
 
 	std::cout << "Enter width: " << std::endl;
 	double width = context->getDouble();
 
 	mRec->setLeftDownPoint(leftDownPoint);
-	mRec->setLenth(lenth);
+	mRec->setLength(length);
 	mRec->setWidth(width);
 }
 

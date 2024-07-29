@@ -58,7 +58,7 @@ public:
 
 	vector2D getStart() const;
 	vector2D getEnd() const;
-	double getLenth();
+	double getLength();
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
@@ -84,12 +84,12 @@ public:
 	~Rectangle() {};
 
 	void setLeftDownPoint(const vector2D& vector2D);
-	void setLenth(const double lenth_);
+	void setLength(const double length_);
 	void setWidth(const double width_);
 
 	vector2D getLeftDownPoint();
-	double getLenth();
-	double getWidth();
+	double getLength() const;
+	double getWidth() const;
 
 	double getArea() const;
 	double getPerimetr() const;
@@ -107,7 +107,7 @@ private:
 
 	vector2D mLeftDownPoint;
 
-	double mLenth, mWidth;
+	double mLength, mWidth;
 };
 
 

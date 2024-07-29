@@ -161,8 +161,8 @@ void MainWindow::on_btnCreateRectangleWithClick_clicked()
     auto rdp = dbview->getPoint();
     auto ulp = dbview->getPoint();
 
-    auto lenth = (rdp - ldp).lenth();
-    auto width = (ulp - ldp).lenth();
+    auto lenth = (rdp - ldp).length();
+    auto width = (ulp - ldp).length();
 
     auto rec = std::make_shared<Rectangle>("REctangle",ldp,lenth, width);
     addObjectToDbAndVectorisation(rec);
@@ -177,7 +177,7 @@ void MainWindow::on_btnCreateCircleWithClick_clicked()
     try{
         auto center = dbview->getPoint();
         auto oncurve = dbview->getPoint();
-        auto radius = (oncurve - center).lenth();
+        auto radius = (oncurve - center).length();
         auto circle = std::make_shared<Circle>("Circle", center, radius);
         addObjectToDbAndVectorisation(circle);
     }

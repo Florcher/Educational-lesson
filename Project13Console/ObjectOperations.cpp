@@ -82,14 +82,14 @@ void RectangleOperations::operation(ContextIO::ptr context) {
 		ObjectBaseOperations::operation(context);
 
 		std::cout << "Press 2 to edit leftDownPoint." << std::endl;
-		std::cout << "Press 3 to edit lenth." << std::endl;
+		std::cout << "Press 3 to edit length." << std::endl;
 		std::cout << "Press 4 to edit width." << std::endl;
 		std::cout << "Press -1 to exit." << std::endl;
 		std::cin >> mark;
 
 		std::string name;
 		vector2D leftDownPoint;
-		int id, lenth, width;
+		int id, length, width;
 
 		switch (mark) {
 
@@ -104,8 +104,8 @@ void RectangleOperations::operation(ContextIO::ptr context) {
 			break;
 
 		case 3:
-			lenth = context->getDouble();
-			editLenth(lenth);
+			length = context->getDouble();
+			editLength(length);
 			break;
 
 		case 4:
@@ -120,8 +120,8 @@ void RectangleOperations::editLeftDownPoint(const vector2D& leftDownPoint) {
 	mRec->setLeftDownPoint(leftDownPoint);
 }
 
-void RectangleOperations::editLenth(const double lenth) {
-	mRec->setLenth(lenth);
+void RectangleOperations::editLength(const double length) {
+	mRec->setLength(length);
 }
 
 void RectangleOperations::editWidth(const double width) {

@@ -69,11 +69,8 @@ Line::Line(const std::string& name_, const vector2D& start_, const vector2D& end
 	line.end = end_;
 }
 
-double Line::getLenth() {
-
-	vector2D dir = line.end - line.start;
-
-	return sqrt(dir.x * dir.x + dir.y * dir.y);
+double Line::getLength() {
+	return (line.end - line.start).length();
 }
 
 void Line::setStart(const vector2D& start) {
@@ -125,8 +122,8 @@ int Line::getType() const {
 	return Type();
 }
 
-Rectangle::Rectangle(const std::string& name_, const vector2D& vector2D, const double lenth_, const double width_)
-	: object(name_), mLeftDownPoint(vector2D), mLenth(lenth_), mWidth(width_)
+Rectangle::Rectangle(const std::string& name_, const vector2D& vector2D, const double length_, const double width_)
+	: object(name_), mLeftDownPoint(vector2D), mLength(length_), mWidth(width_)
 {
 
 }
@@ -137,11 +134,11 @@ void Rectangle::setLeftDownPoint(const vector2D& vector2D) {
 	object::invalidate();
 };
 
-void Rectangle::setLenth(const double lenth) {
-	if (lenth <= 0.)
+void Rectangle::setLength(const double length) {
+	if (length <= 0.)
 		throw std::exception();
 
-	mLenth = lenth;
+	mLength = length;
 	object::invalidate();
 };
 
@@ -159,31 +156,31 @@ vector2D Rectangle::getLeftDownPoint() {
 	return mLeftDownPoint;
 };
 
-double Rectangle::getLenth() {
+double Rectangle::getLength() const {
 
-	return mLenth;
+	return mLength;
 };
 
-double Rectangle::getWidth() {
+double Rectangle::getWidth() const {
 
 	return mWidth;
 };
 
 double Rectangle::getArea() const {
 
-	return mLenth * mWidth;
+	return mLength * mWidth;
 };
 
 double Rectangle::getPerimetr() const {
 
-	return 2 * mLenth + 2 * mWidth;
+	return 2 * mLength + 2 * mWidth;
 };
 
 void Rectangle::input(std::shared_ptr<InputFiler> file) {
 
 	object::input(file);
 	mLeftDownPoint = file->readVector2D();
-	mLenth = file->readDouble();
+	mLength = file->readDouble();
 	mWidth = file->readDouble();
 }
 
@@ -191,7 +188,7 @@ void Rectangle::output(std::shared_ptr<OutputFiler> file) {
 
 	object::output(file);
 	file->outputVector2D(mLeftDownPoint);
-	file->outputDouble(mLenth);
+	file->outputDouble(mLength);
 	file->outputDouble(mWidth);
 }
 
@@ -200,10 +197,10 @@ void Rectangle::draw(std::shared_ptr<Drawer> drawer) {
 	vector2D leftUpPoint = { mLeftDownPoint.x, mLeftDownPoint.y + mWidth };
 	Line ab{ "vector AB", mLeftDownPoint, leftUpPoint };
 
-	vector2D rightUpPoint = { mLeftDownPoint.x + mLenth, mLeftDownPoint.y + mWidth };
+	vector2D rightUpPoint = { mLeftDownPoint.x + mLength, mLeftDownPoint.y + mWidth };
 	Line bc{ "vector BC", leftUpPoint, rightUpPoint };
 
-	vector2D rightDownPoint = { mLeftDownPoint.x + mLenth, mLeftDownPoint.y };
+	vector2D rightDownPoint = { mLeftDownPoint.x + mLength, mLeftDownPoint.y };
 	Line cd{ "vector CD", rightUpPoint, rightDownPoint };
 
 	Line da{ "vector DA", rightDownPoint, mLeftDownPoint };
