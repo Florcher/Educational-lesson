@@ -5,5 +5,6 @@
  const int RectangleType = 2;
  const int CircleType = 3;
  const int PolylineType = 4;
+ const int PolygonType = 5;
 
 #endif __TYPENAMESPACE_H_

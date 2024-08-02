@@ -266,25 +266,23 @@ std::vector<Line> Circle::createLines() {
 
 	std::vector<vector2D> points;
 
-	int pointsCount = 360;
+	int pointsCount = 10;
 	const double Pi = 3.141592653589793;
 	double increment = 2 * Pi / pointsCount;
 
-	for (double i = 0; i < 2 * Pi; i += increment) {
-
+    for (double i = 0; i < 2 * Pi; i += increment) {
 		vector2D point = { mCenter.x + mRadius * cos(i), mCenter.y + mRadius * sin(i) };
 		points.push_back(point);
 	}
 
 	std::vector<Line> lines;
-	for (int i = 0; i < pointsCount - 1; i++) {
+    for (int i = 0; i < pointsCount - 1; i++) {
+        Line line("vector", points[i], points[i + 1]);
+        lines.push_back(line);
+    }
 
-		Line line("vector", points[i], points[i + 1]);
-		lines.push_back(line);
-	}
-
-	Line line("vector", points[pointsCount - 1], points[0]);
-	lines.push_back(line);
+    Line line("vector", points[pointsCount - 1], points[0]);
+    lines.push_back(line);
 
 	return lines;
 }
@@ -299,7 +297,7 @@ void Circle::output(std::shared_ptr<OutputFiler> file) {
 void Circle::draw(std::shared_ptr<Drawer> drawer) {
 
 	std::vector<Line> lines = createLines();
-	for (int i = 0; i < lines.size() - 1; i++) {
+    for (int i = 0; i < lines.size(); i++) {
 		lines[i].draw(drawer);
 	}
 }
@@ -319,13 +317,11 @@ Polyline::Polyline(const std::string& name, const std::vector<vector2D>& points)
 }
 
 void Polyline::setPoint(const vector2D& point) {
-
 	mPoints.push_back(point);
 	object::invalidate();
 }
 
 void Polyline::editPoint(const int index, const vector2D& point) {
-
 	mPoints[index] = point;
 	object::invalidate();
 }
@@ -393,4 +389,190 @@ int Polyline::Type() {
 
 int Polyline::getType() const {
 	return Type();
+}
+
+Polygon::Polygon(const std::string& name, const std::vector<vector2D>& points) 
+: object(name), mPoints(points) 
+{
+
+}
+
+void Polygon::setPoint(const vector2D& point) {
+	mPoints.push_back(point);
+	object::invalidate();
+}
+
+void Polygon::editPoint(const int index, const vector2D& point) {
+	mPoints[index] = point;
+	object::invalidate();
+}
+
+vector2D Polygon::getPoint(const int index) const {
+	if ((index < 0) or (index > (mPoints.size() - 1)))
+		throw std::exception();
+
+	return mPoints[index];
+}
+int Polygon::getPointsCount() const {
+	return mPoints.size();
+}
+
+void Polygon::input(std::shared_ptr<InputFiler> file) {
+
+	object::input(file);
+
+	int countOfPoints = file->readInt();
+	int maxvalue = std::numeric_limits<int32_t>::max();
+
+	if ((countOfPoints > maxvalue) or (countOfPoints <= 0))
+		throw std::exception();
+
+	for (int i = 0; i < countOfPoints; i++) {
+		mPoints.push_back(file->readVector2D());
+	}
+}
+
+void Polygon::output(std::shared_ptr<OutputFiler> file) {
+
+	object::output(file);
+
+	file->outputInt(mPoints.size());
+
+	for (int i = 0; i < mPoints.size(); i++) {
+		file->outputVector2D(mPoints[i]);
+	}
+}
+
+void Polygon::draw(std::shared_ptr<Drawer> drawer) {
+
+	auto lines = triangulation();
+	for (int i = 0; i < lines.size(); i++) {
+		lines[i].draw(drawer);
+	}
+}
+
+int Polygon::Type() {
+	return PolygonType;
+}
+
+int Polygon::getType() const {
+	return Type();
+}
+
+int Polygon::difiningCrawlPolygon() {
+
+	double sum = 0;
+
+	for (int i = 0; i < mPoints.size(); i++) {
+		if (i == (mPoints.size() - 1)) {
+			sum += (mPoints[i].x * mPoints[0].y) - (mPoints[0].x * mPoints[i].y);
+		}
+		else {
+			sum += (mPoints[i].x * mPoints[i + 1].y) - (mPoints[i + 1].x * mPoints[i].y);
+		}
+	}
+
+	return (sum / 2 > 0) ? 1 : -1;
+}
+
+int Polygon::crawlDifiningTriangle(std::vector<vector2D>& triangle) {
+	double sum = 0;
+
+	sum = (triangle[0].x * triangle[1].y + triangle[1].x * triangle[2].y + triangle[2].x * triangle[0].y
+		- triangle[1].x * triangle[0].y - triangle[2].x * triangle[1].y - triangle[0].x * triangle[2].y) / 2;
+
+	return (sum > 0) ? 1 : -1;
+}
+
+int Polygon::belongingPointTriangle(std::vector<vector2D>& triangle, const vector2D& point) {
+
+	double first = (triangle[0].x - point.x) * (triangle[1].y - triangle[0].y) - (triangle[1].x - triangle[0].x) * (triangle[0].y - point.y);
+	double second = (triangle[1].x - point.x) * (triangle[2].y - triangle[1].y) - (triangle[2].x - triangle[1].x) * (triangle[1].y - point.y);
+	double third = (triangle[2].x - point.x) * (triangle[0].y - triangle[2].y) - (triangle[0].x - triangle[2].x) * (triangle[2].y - point.y);
+
+	if ((first >= 0 && second >= 0 && third >= 0) || (first <= 0 && second <= 0 && third <= 0))
+		return 1;
+	else
+		return 0;
+}
+
+void Polygon::createLines(std::vector<Line>& drawLines, std::vector<vector2D>& pts) {
+
+	for (int i = 0; i < pts.size() - 1; i++) {
+		Line line{ "Line", pts[i], pts[i + 1] };
+		drawLines.push_back(line);
+	}
+
+	Line line{ "Line", pts[pts.size() - 1], pts[0]};
+	drawLines.push_back(line);
+
+	/*Line line1{"Line", triangle[0], triangle[1]};
+	Line line2{ "Line", triangle[1], triangle[2] };
+	Line line3{ "Line", triangle[2], triangle[0] };
+
+	drawLines.push_back(line1);
+	drawLines.push_back(line2);
+	drawLines.push_back(line3);
+	*/
+}
+std::vector<Line> Polygon::triangulation() {
+
+	std::vector<vector2D> testPts = mPoints;
+	std::vector<vector2D> pts = mPoints;
+	std::vector<Line> drawLines;
+
+	while (testPts.size() > 3) {
+
+		for (int i = 0; i < testPts.size(); i++) {
+
+			std::vector<vector2D> triangle;
+
+			if (i == 0) {
+				triangle.push_back(testPts[testPts.size() - 1]);
+				triangle.push_back(testPts[i]);
+				triangle.push_back(testPts[i + 1]);
+			}
+
+			if (i == testPts.size() - 1) {
+				triangle.push_back(testPts[i - 1]);
+				triangle.push_back(testPts[i]);
+				triangle.push_back(testPts[0]);
+			}
+
+			if (i > 0 && i < testPts.size() - 1)
+			{
+				triangle.push_back(testPts[i - 1]);
+				triangle.push_back(testPts[i]);
+				triangle.push_back(testPts[i + 1]);
+			}
+
+			int ptsCount = 0;
+			if (difiningCrawlPolygon() == crawlDifiningTriangle(triangle)) {
+		     	for (const auto point : testPts) {
+					if (belongingPointTriangle(triangle, point)) {
+						if (((point == triangle[0]) || (point == triangle[1]) || (point == triangle[2]))) {
+
+						}
+						else {
+							ptsCount++;
+						}
+
+					}
+				}
+				if (ptsCount == 0) {
+					Line line{ "Line", triangle[0], triangle[2] };
+					drawLines.push_back(line);
+					if (i == 0) {
+						testPts.erase(std::next(testPts.begin(), testPts.size() - 1));
+					}
+					else {
+						testPts.erase(std::next(testPts.begin(), i - 1));
+					}
+				}
+			}
+		}
+	}
+
+	createLines(drawLines, mPoints);
+	return drawLines;
 }

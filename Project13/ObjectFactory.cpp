@@ -13,6 +13,7 @@ ObjectFactory::ObjectFactory() {
 	addType(Rectangle::Type(), std::make_shared<ObjectCreator<object, Rectangle>>());
 	addType(Circle::Type(), std::make_shared<ObjectCreator<object, Circle>>());
 	addType(Polyline::Type(), std::make_shared<ObjectCreator<object, Polyline>>());
+	addType(Polygon::Type(), std::make_shared<ObjectCreator<object, Polygon>>());
 }
 
 void ObjectFactory::addType(const int typeId, std::shared_ptr<Creator<object>> object) {
