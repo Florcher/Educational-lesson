@@ -7,6 +7,7 @@
 #include "Vector2D.h"
 #include "Drawer.h"
 #include "TypeNamespace.h"
+#include "LineSegment2D.h"
 
 object::object(const std::string& name) : mName(name), mId(0), mIsDitry(false) {
 
@@ -447,7 +448,7 @@ void Polygon::draw(std::shared_ptr<Drawer> drawer) {
 
 	auto lines = triangulation();
 	for (int i = 0; i < lines.size(); i++) {
-		lines[i].draw(drawer);
+		drawer->drawLine(lines[i]);
 	}
 }
 
@@ -459,36 +460,33 @@ int Polygon::getType() const {
 	return Type();
 }
 
-int Polygon::difiningCrawlPolygon() {
+bool Polygon::isCCWPolygon() {
 
 	double sum = 0;
 
-	for (int i = 0; i < mPoints.size(); i++) {
-		if (i == (mPoints.size() - 1)) {
-			sum += (mPoints[i].x * mPoints[0].y) - (mPoints[0].x * mPoints[i].y);
-		}
-		else {
-			sum += (mPoints[i].x * mPoints[i + 1].y) - (mPoints[i + 1].x * mPoints[i].y);
-		}
+	for (int i = 0; i < mPoints.size() - 1; i++) {
+		sum += mPoints[i].cross(mPoints[i + 1]);
 	}
 
-	return (sum / 2 > 0) ? 1 : -1;
+	sum += mPoints[mPoints.size() - 1].cross(mPoints[0]);
+
+	return sum / 2 > 0;
 }
 
-int Polygon::crawlDifiningTriangle(std::vector<vector2D>& triangle) {
+bool Polygon::isCCWTriangle(const vector2D& point1, const vector2D& point2, const vector2D& point3) {
+
 	double sum = 0;
 
-	sum = (triangle[0].x * triangle[1].y + triangle[1].x * triangle[2].y + triangle[2].x * triangle[0].y
-		- triangle[1].x * triangle[0].y - triangle[2].x * triangle[1].y - triangle[0].x * triangle[2].y) / 2;
+	sum = (point1.cross(point2) + point2.cross(point3) + point3.cross(point1)) / 2;
 
-	return (sum > 0) ? 1 : -1;
+	return sum > 0 ;
 }
 
-int Polygon::belongingPointTriangle(std::vector<vector2D>& triangle, const vector2D& point) {
+bool Polygon::belongingPointTriangle(vector2D& point1, vector2D& point2, vector2D& point3, const vector2D& checkpoint) {
 
-	double first = (triangle[0].x - point.x) * (triangle[1].y - triangle[0].y) - (triangle[1].x - triangle[0].x) * (triangle[0].y - point.y);
-	double second = (triangle[1].x - point.x) * (triangle[2].y - triangle[1].y) - (triangle[2].x - triangle[1].x) * (triangle[1].y - point.y);
-	double third = (triangle[2].x - point.x) * (triangle[0].y - triangle[2].y) - (triangle[0].x - triangle[2].x) * (triangle[2].y - point.y);
+	double first = (point1 - checkpoint).cross(point2 - checkpoint);
+	double second = (point2 - checkpoint).cross(point3 - checkpoint);
+	double third = (point3 - checkpoint).cross(point1 - checkpoint);
 
 	if ((first >= 0 && second >= 0 && third >= 0) || (first <= 0 && second <= 0 && third <= 0))
 		return 1;
@@ -496,83 +494,52 @@ int Polygon::belongingPointTriangle(std::vector<vector2D>& triangle, const vecto
 		return 0;
 }
 
-void Polygon::createLines(std::vector<Line>& drawLines, std::vector<vector2D>& pts) {
+bool Polygon::isEar(const std::vector<vector2D> pts, vector2D& point1, vector2D& point2, vector2D& point3) {
 
-	for (int i = 0; i < pts.size() - 1; i++) {
-		Line line{ "Line", pts[i], pts[i + 1] };
-		drawLines.push_back(line);
+	for (const auto point : pts) {
+		if (point == point1 || point == point2 || point == point3)
+			continue;
+		if (belongingPointTriangle(point1, point2, point3, point))
+			return 0;
 	}
-
-	Line line{ "Line", pts[pts.size() - 1], pts[0]};
-	drawLines.push_back(line);
-
-	/*Line line1{"Line", triangle[0], triangle[1]};
-	Line line2{ "Line", triangle[1], triangle[2] };
-	Line line3{ "Line", triangle[2], triangle[0] };
-
-	drawLines.push_back(line1);
-	drawLines.push_back(line2);
-	drawLines.push_back(line3);
-	*/
+	return 1;
 }
-std::vector<Line> Polygon::triangulation() {
 
-	std::vector<vector2D> testPts = mPoints;
-	std::vector<vector2D> pts = mPoints;
-	std::vector<Line> drawLines;
+std::vector<Math::LineSegment2D> Polygon::triangulation() {
 
-	while (testPts.size() > 3) {
+	const auto crawl = isCCWPolygon();
 
-		for (int i = 0; i < testPts.size(); i++) {
+	std::vector<int> indices(mPoints.size());
+	for (int i = 0; i < mPoints.size(); i++)
+		indices[i] = i;
 
-			std::vector<vector2D> triangle;
+	std::vector<Math::LineSegment2D> lines;
+	
+	while (indices.size() > 3) {
 
-			if (i == 0) {
-				triangle.push_back(testPts[testPts.size() - 1]);
-				triangle.push_back(testPts[i]);
-				triangle.push_back(testPts[i + 1]);
-			}
+		for (int i = 1; i < indices.size() - 1; i++) {
 
-			if (i == testPts.size() - 1) {
-				triangle.push_back(testPts[i - 1]);
-				triangle.push_back(testPts[i]);
-				triangle.push_back(testPts[0]);
-			}
+		int index1 = indices[i - 1];
+		int index2 = indices[i];
+		int index3 = indices[i + 1];
 
-			if (i > 0 && i < testPts.size() - 1)
-			{
-				triangle.push_back(testPts[i - 1]);
-				triangle.push_back(testPts[i]);
-				triangle.push_back(testPts[i + 1]);
-			}
+		if (crawl == isCCWTriangle(mPoints[index1], mPoints[index2], mPoints[index3]) && isEar(mPoints, mPoints[index1], mPoints[index2], mPoints[index3])) {
 
-			int ptsCount = 0;
-			if (difiningCrawlPolygon() == crawlDifiningTriangle(triangle)) {
-		     	for (const auto point : testPts) {
-					if (belongingPointTriangle(triangle, point)) {
-						if (((point == triangle[0]) || (point == triangle[1]) || (point == triangle[2]))) {
+			lines.emplace_back(mPoints[index1], mPoints[index2]);
+			lines.emplace_back(mPoints[index2], mPoints[index3]);
+			lines.emplace_back(mPoints[index3], mPoints[index1]);
 
-						}
-						else {
-							ptsCount++;
-						}
+			auto iter = std::next(indices.begin(), i);
+			indices.erase(iter);
 
-					}
-				}
-				if (ptsCount == 0) {
-					Line line{ "Line", triangle[0], triangle[2] };
-					drawLines.push_back(line);
-					if (i == 0) {
-						testPts.erase(std::next(testPts.begin(), testPts.size() - 1));
-					}
-					else {
-						testPts.erase(std::next(testPts.begin(), i - 1));
-					}
-				}
+			continue;
 			}
 		}
 	}
 
-	createLines(drawLines, mPoints);
-	return drawLines;
+	lines.emplace_back(mPoints[indices[0]], mPoints[indices[1]]);
+	lines.emplace_back(mPoints[indices[1]], mPoints[indices[2]]);
+	lines.emplace_back(mPoints[indices[2]], mPoints[indices[0]]);
+	
+	return lines;
 }

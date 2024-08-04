@@ -195,10 +195,11 @@ public:
 private:
 	std::vector<vector2D> mPoints;
 
-	std::vector<Line> triangulation();
-	int difiningCrawlPolygon();
-	int crawlDifiningTriangle(std::vector<vector2D>& triangle);
-	int belongingPointTriangle(std::vector<vector2D>& triangle, const vector2D& point);
+	std::vector<Math::LineSegment2D> triangulation();
+	bool isCCWPolygon();
+	bool isCCWTriangle(const vector2D& point1, const vector2D& point2, const vector2D& point3);
+	bool belongingPointTriangle(vector2D& point1, vector2D& point2, vector2D& point3, const vector2D& checkpoint);
+	bool isEar(const std::vector<vector2D> pts, vector2D& point1, vector2D& point2, vector2D& point3);
 	void createLines(std::vector<Line>& drawLines, std::vector<vector2D>& triangle);
 };
 

@@ -7,6 +7,9 @@ namespace Math {
 
 	struct KERNEL_EXPORT LineSegment2D {
 
+		LineSegment2D() = default;
+		LineSegment2D(const vector2D& start_, const vector2D& end_) : start(start_), end(end_) {};
+
 		vector2D start = { 0,0 };
 		vector2D end = { 0,0 };
 

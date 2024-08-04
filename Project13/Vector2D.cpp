@@ -37,3 +37,7 @@ vector2D vector2D::operator-(const vector2D& rhs) {
 double vector2D::length() const {
 	return sqrt(x * x + y * y);
 }
+
+double vector2D::cross(const vector2D& leftVec) const {
+	return (x * leftVec.y - y * leftVec.x);
+}
