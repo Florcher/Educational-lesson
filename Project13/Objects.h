@@ -59,6 +59,8 @@ public:
 	vector2D getStart() const;
 	vector2D getEnd() const;
 	double getLength();
+	double cross(const Line& rhtLine);
+	double scalarProduct(const Line& rhtLine);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;

@@ -7,6 +7,7 @@
 #include "QMouseEvent"
 #include "errordatadialog.h"
 #include "QMessageBox"
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -204,13 +205,10 @@ void MainWindow::on_btnCreatePolylineWithClick_clicked()
     }
 }
 
-
 void MainWindow::on_btnClearScene_clicked()
 {
     dbview->clear();
 }
-
-
 
 void MainWindow::on_btnCreatePolygonWithClick_clicked()
 {
@@ -226,6 +224,33 @@ void MainWindow::on_btnCreatePolygonWithClick_clicked()
         } else{
 
         }
+    }
+}
+
+void MainWindow::on_btnStitching_clicked()
+{
+    std::vector<vector2D> pts;
+    std::vector<Line::ptr> lines;
+
+    std::vector<object::ptr> obj = db->getObjects();
+    for(int i = 0; i < obj.size(); i++){
+        if(obj[i]->getType() == 1)
+            lines.push_back(std::dynamic_pointer_cast<Line>(obj[i]));
+    }
+
+    pts.push_back(lines[0]->getStart());
+    pts.push_back(lines[0]->getEnd());
+    for(int i = 0; i < lines.size() - 1; i++){   
+        vector2D coordinate = lines[i + 1]->getEnd() - lines[i + 1]->getStart();
+        vector2D point{lines[i]->getEnd().x + coordinate.x,lines[i]->getEnd().y +coordinate.y};
+        pts.push_back(point);
+    }
+
+    auto pline = std::make_shared<Polyline>("Polyline", pts);
+    addObjectToDb(pline);
+
+    for(int i =0; i < lines.size(); i++){
+        db->removeObject(lines[i]->getId());
     }
 }
 

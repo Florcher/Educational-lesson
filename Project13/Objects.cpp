@@ -74,6 +74,22 @@ double Line::getLength() {
 	return (line.end - line.start).length();
 }
 
+double Line::cross(const Line& rhtLine) {
+	vector2D left, right;
+	left = line.end - line.start;
+	right = rhtLine.getEnd() - rhtLine.getStart();
+
+	return left.cross(right);
+}
+
+double Line::scalarProduct(const Line& rhtLine) {
+	vector2D left, right;
+	left = line.end - line.start;
+	right = rhtLine.getEnd() - rhtLine.getStart();
+
+	return (left.x * right.x + left.y * right.y);
+}
+
 void Line::setStart(const vector2D& start) {
 
 	line.start = start;
