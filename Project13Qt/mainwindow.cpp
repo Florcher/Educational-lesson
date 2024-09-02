@@ -234,23 +234,43 @@ void MainWindow::on_btnStitching_clicked()
 
     std::vector<object::ptr> obj = db->getObjects();
     for(int i = 0; i < obj.size(); i++){
-        if(obj[i]->getType() == 1)
+        if(obj[i]->getType() == Line::Type())
             lines.push_back(std::dynamic_pointer_cast<Line>(obj[i]));
     }
 
+
     pts.push_back(lines[0]->getStart());
     pts.push_back(lines[0]->getEnd());
-    for(int i = 0; i < lines.size() - 1; i++){   
-        vector2D coordinate = lines[i + 1]->getEnd() - lines[i + 1]->getStart();
-        vector2D point{lines[i]->getEnd().x + coordinate.x,lines[i]->getEnd().y +coordinate.y};
-        pts.push_back(point);
-    }
+    lines.erase(lines.begin());
 
+    for(int i = 0; i < lines.size(); i++){
+
+        for (auto it = lines.begin(); it != lines.end(); it++) {
+            if ((*it)->getStart() == pts[pts.size() - 1]) {
+                pts.push_back((*it)->getEnd());
+                continue;
+            }
+
+            if ((*it)->getStart() == pts[0]) {
+                pts.insert(pts.begin(), (*it)->getEnd());
+                continue;
+            }
+
+            if ((*it)->getEnd() == pts[0]) {
+                pts.insert(pts.begin(), (*it)->getStart());
+                continue;
+            }
+
+            if ((*it)->getEnd() == pts[pts.size() - 1]) {
+                pts.push_back((*it)->getStart());
+                continue;
+            }
+        }
+    }
     auto pline = std::make_shared<Polyline>("Polyline", pts);
     addObjectToDb(pline);
 
-    for(int i =0; i < lines.size(); i++){
+    for(int i = 0; i < lines.size(); i++)
         db->removeObject(lines[i]->getId());
-    }
 }
 
