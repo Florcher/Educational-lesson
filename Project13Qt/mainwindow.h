@@ -49,6 +49,9 @@ private slots:
 
     void on_btnStitching_clicked();
 
+
+    void on_btnCreateMCH_clicked();
+
 private:
     void Draw(DrawData::ptr data);
     void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);

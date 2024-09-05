@@ -243,6 +243,19 @@
      <string>Stitching</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnCreateMCH">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>500</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MCH</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

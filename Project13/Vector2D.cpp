@@ -2,6 +2,7 @@
 #include "Vector2D.h"
 #include "Comparison.h"
 #include <math.h>
+#include <Objects.h>
 
 std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
 
@@ -44,4 +45,11 @@ double vector2D::cross(const vector2D& leftVec) const {
 
 double vector2D::scalarProduct(const vector2D& rhtvec) {
 	return (x * rhtvec.x + y * rhtvec.y);
+}
+
+double vector2D::crosTrio(const vector2D& point1, const vector2D& point2) const {
+	vector2D u = { x - point1.x, y - point1.y };
+	vector2D v = { point2.x - x, point2.y - y };
+
+	return (u.x * v.y - u.y* v.x);
 }

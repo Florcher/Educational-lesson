@@ -8,6 +8,8 @@
 #include "errordatadialog.h"
 #include "QMessageBox"
 #include <math.h>
+#include <algorithm>
+#include <stack>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -219,7 +221,7 @@ void MainWindow::on_btnCreatePolygonWithClick_clicked()
     }
     catch(...){
         if(pts.size() > 1){
-            auto polygon = std::make_shared<Polygon>("Polyline", pts);
+            auto polygon = std::make_shared<Polygon>("Polyпщт", pts);
             addObjectToDbAndVectorisation(polygon);
         } else{
 
@@ -272,5 +274,107 @@ void MainWindow::on_btnStitching_clicked()
 
     for(int i = 0; i < lines.size(); i++)
         db->removeObject(lines[i]->getId());
+}
+
+int findIndex(std::vector<vector2D>& pts) {
+
+    vector2D min = pts[0];
+    int index = 0;
+    for (int i = 1; i < pts.size(); i++) {
+        if (pts[i].y < min.y) {
+            min = pts[i];
+            index = i;
+        }
+        if (pts[i].y == min.y) {
+            if (pts[i].x < min.x) {
+                min = pts[i];
+                index = i;
+            }
+        }
+    }
+    return index;
+}
+
+void sort(std::vector<vector2D>& pts, const vector2D& startPt) {
+
+    for (int j = 1; j < pts.size(); j++) {
+        for (int i = 0; i < pts.size() - j; i++) {
+            if (atan(pts[i].y / pts[i].x) > atan(pts[i + 1].y / pts[i + 1].x)) {
+                vector2D tmp = pts[i];
+                pts[i] = pts[i + 1];
+                pts[i + 1] = tmp;
+            }
+            else {
+                if (atan(pts[i].y / pts[i].x) == atan(pts[i + 1].y / pts[i + 1].x)) {
+                    double lenth1 = sqrt((pts[i].x - startPt.x) * (pts[i].x - startPt.x) + (pts[i].y - startPt.y) * (pts[i].y - startPt.y));
+                    double lenth2 = sqrt((pts[i + 1].x - startPt.x) * (pts[i + 1].x - startPt.x) + (pts[i + 1].y - startPt.y) * (pts[i + 1].y - startPt.y));
+                    if (lenth1 > lenth2) {
+                        vector2D tmp = pts[i];
+                        pts[i] = pts[i + 1];
+                        pts[i + 1] = tmp;
+                    }
+                }
+            }
+        }
+    }
+}
+
+vector2D NexToTop(std::stack<vector2D> pts) {
+    pts.pop();
+    return pts.top();
+}
+
+std::vector<vector2D> createMCH(std::vector<vector2D> pts){
+
+    std::vector<int> indeces1(pts.size());
+    std::vector<vector2D> indeces2;
+    std::vector<double> corners;
+    for (int i = 0; i < pts.size(); i++) {
+        indeces1[i] = i;
+    }
+    
+    int index = findIndex(pts);
+    vector2D p0 = pts[index];
+    auto iter = pts.begin() + index;
+    pts.erase(iter);
+    sort(pts, p0);
+
+    std::stack<vector2D> testPoints;
+    testPoints.push(p0);
+    testPoints.push(pts[0]);
+
+    for (int i = 1; i < pts.size(); i++) {
+        while (testPoints.top().crosTrio(NexToTop(testPoints), pts[i]) < 0) {
+            testPoints.pop();
+        }
+        testPoints.push(pts[i]);
+    }
+
+    std::vector<vector2D> points;
+    while (!testPoints.empty())
+    {
+        points.push_back(testPoints.top());
+        testPoints.pop();
+    }
+
+   return points;
+}
+
+void MainWindow::on_btnCreateMCH_clicked()
+{
+    std::vector<vector2D> pts;
+    try{
+        while(true)
+            pts.push_back(dbview->getPoint());
+    }
+    catch(...){
+        if(pts.size() > 1){
+            auto points = createMCH(pts);
+            auto pline = std::make_shared<Polyline>("Polyline", points);
+            addObjectToDbAndVectorisation(pline);
+        } else{
+
+        }
+    }
 }
 
