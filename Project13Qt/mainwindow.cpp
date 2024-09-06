@@ -276,6 +276,7 @@ void MainWindow::on_btnStitching_clicked()
         db->removeObject(lines[i]->getId());
 }
 
+
 int findIndex(std::vector<vector2D>& pts) {
 
     vector2D min = pts[0];
@@ -299,15 +300,20 @@ void sort(std::vector<vector2D>& pts, const vector2D& startPt) {
 
     for (int j = 1; j < pts.size(); j++) {
         for (int i = 0; i < pts.size() - j; i++) {
-            if (atan(pts[i].y / pts[i].x) > atan(pts[i + 1].y / pts[i + 1].x)) {
+            double polarCorner1 = atan((pts[i].y - startPt.y) / (pts[i].x - startPt.y));
+            double polarCorner2 = atan((pts[i + 1].y - startPt.y) / (pts[i + 1].x - startPt.x));
+            if (polarCorner1 > polarCorner2) {
                 vector2D tmp = pts[i];
                 pts[i] = pts[i + 1];
                 pts[i + 1] = tmp;
             }
             else {
-                if (atan(pts[i].y / pts[i].x) == atan(pts[i + 1].y / pts[i + 1].x)) {
-                    double lenth1 = sqrt((pts[i].x - startPt.x) * (pts[i].x - startPt.x) + (pts[i].y - startPt.y) * (pts[i].y - startPt.y));
-                    double lenth2 = sqrt((pts[i + 1].x - startPt.x) * (pts[i + 1].x - startPt.x) + (pts[i + 1].y - startPt.y) * (pts[i + 1].y - startPt.y));
+                if (polarCorner1 == polarCorner2) {
+                    Line line1{ "line1", startPt, pts[i] };
+                    Line line2{ "line2", startPt, pts[i + 1] };
+
+                    double lenth1 = line1.getLength();
+                    double lenth2 = line2.getLength();
                     if (lenth1 > lenth2) {
                         vector2D tmp = pts[i];
                         pts[i] = pts[i + 1];
@@ -325,14 +331,8 @@ vector2D NexToTop(std::stack<vector2D> pts) {
 }
 
 std::vector<vector2D> createMCH(std::vector<vector2D> pts){
+ 
 
-    std::vector<int> indeces1(pts.size());
-    std::vector<vector2D> indeces2;
-    std::vector<double> corners;
-    for (int i = 0; i < pts.size(); i++) {
-        indeces1[i] = i;
-    }
-    
     int index = findIndex(pts);
     vector2D p0 = pts[index];
     auto iter = pts.begin() + index;
@@ -346,8 +346,8 @@ std::vector<vector2D> createMCH(std::vector<vector2D> pts){
     for (int i = 1; i < pts.size(); i++) {
         while (testPoints.top().crosTrio(NexToTop(testPoints), pts[i]) < 0) {
             testPoints.pop();
+            testPoints.push(pts[i]);
         }
-        testPoints.push(pts[i]);
     }
 
     std::vector<vector2D> points;
@@ -370,7 +370,7 @@ void MainWindow::on_btnCreateMCH_clicked()
     catch(...){
         if(pts.size() > 1){
             auto points = createMCH(pts);
-            auto pline = std::make_shared<Polyline>("Polyline", points);
+            auto pline = std::make_shared<Polygon>("Polyline", points);
             addObjectToDbAndVectorisation(pline);
         } else{
 
