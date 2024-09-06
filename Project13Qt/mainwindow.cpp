@@ -282,12 +282,12 @@ int findIndex(std::vector<vector2D>& pts) {
     vector2D min = pts[0];
     int index = 0;
     for (int i = 1; i < pts.size(); i++) {
-        if (pts[i].y < min.y) {
+        if (pts[i].x < min.x) {
             min = pts[i];
             index = i;
         }
-        if (pts[i].y == min.y) {
-            if (pts[i].x < min.x) {
+        if (pts[i].x == min.x) {
+            if (pts[i].y < min.y) {
                 min = pts[i];
                 index = i;
             }
@@ -344,10 +344,10 @@ std::vector<vector2D> createMCH(std::vector<vector2D> pts){
     testPoints.push(pts[0]);
 
     for (int i = 1; i < pts.size(); i++) {
-        while (testPoints.top().crosTrio(NexToTop(testPoints), pts[i]) < 0) {
+        while ((testPoints.size() > 2) && testPoints.top().crosTrio(NexToTop(testPoints), pts[i]) < 0) {
             testPoints.pop();
-            testPoints.push(pts[i]);
         }
+        testPoints.push(pts[i]);
     }
 
     std::vector<vector2D> points;
@@ -370,8 +370,8 @@ void MainWindow::on_btnCreateMCH_clicked()
     catch(...){
         if(pts.size() > 1){
             auto points = createMCH(pts);
-            auto pline = std::make_shared<Polygon>("Polyline", points);
-            addObjectToDbAndVectorisation(pline);
+            auto polygon = std::make_shared<Polygon>("Polygon", points);
+            addObjectToDbAndVectorisation(polygon);
         } else{
 
         }

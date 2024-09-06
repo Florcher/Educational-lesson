@@ -48,7 +48,7 @@ double vector2D::scalarProduct(const vector2D& rhtvec) {
 }
 
 double vector2D::crosTrio(const vector2D& point1, const vector2D& point2) const {
-	Line line1{ "line1",{x,y}, point1 };
+	Line line1{ "line1", point1, {x,y} };
 	Line line2{ "line1",{x,y}, point2 };
 
 	return line1.tanget().cross(line2.tanget());
