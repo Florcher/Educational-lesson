@@ -301,28 +301,12 @@ void sort(std::vector<vector2D>& pts, const vector2D& startPt) {
     for (int j = 1; j < pts.size(); j++) {
         for (int i = 0; i < pts.size() - j; i++) {
 
-            //double polarCorner1 = atan((pts[i].y - startPt.y) / (pts[i].x - startPt.y));
-            //double polarCorner2 = atan((pts[i + 1].y - startPt.y) / (pts[i + 1].x - startPt.x));
             double cross = (pts[i] - startPt).cross(pts[i + 1] - startPt);
             if (cross < 0) {
                 vector2D tmp = pts[i];
                 pts[i] = pts[i + 1];
                 pts[i + 1] = tmp;
             }
-            /*else {
-                if (polarCorner1 == polarCorner2) {
-                    Line line1{ "line1", startPt, pts[i] };
-                    Line line2{ "line2", startPt, pts[i + 1] };
-
-                    double lenth1 = line1.getLength();
-                    double lenth2 = line2.getLength();
-                    if (lenth1 > lenth2) {
-                        vector2D tmp = pts[i];
-                        pts[i] = pts[i + 1];
-                        pts[i + 1] = tmp;
-                    }
-                }
-            }*/
         }
     }
 }
@@ -332,17 +316,13 @@ vector2D NexToTop(std::stack<vector2D> pts) {
     return pts.top();
 }
 
-double CCW(const vector2D& point1, const vector2D& center, const vector2D& point2) {
+bool CCW(const vector2D& point1, const vector2D& center, const vector2D& point2) {
 
     vector2D u{ center.x - point1.x, center.y - point1.y };
     vector2D v{ point2.x - center.x, point2.y - center.y };
 
     return (u.x * v.y - u.y * v.x) < 0;
 }
-   // Line line1{ "line1", point1, center };
-   // Line line2{ "line1", center, point2 };
-
-   // return line1.tanget().cross(line2.tanget())
 
 std::vector<vector2D> createMCH(std::vector<vector2D> pts){
  
