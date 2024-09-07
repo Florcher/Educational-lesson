@@ -43,13 +43,6 @@ double vector2D::cross(const vector2D& leftVec) const {
 	return (x * leftVec.y - y * leftVec.x);
 }
 
-double vector2D::scalarProduct(const vector2D& rhtvec) {
+double vector2D::dot(const vector2D& rhtvec) {
 	return (x * rhtvec.x + y * rhtvec.y);
-}
-
-double vector2D::crosTrio(const vector2D& point1, const vector2D& point2) const {
-	Line line1{ "line1", point1, {x,y} };
-	Line line2{ "line1",{x,y}, point2 };
-
-	return line1.tanget().cross(line2.tanget());
 }

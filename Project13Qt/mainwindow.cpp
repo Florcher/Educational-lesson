@@ -300,14 +300,16 @@ void sort(std::vector<vector2D>& pts, const vector2D& startPt) {
 
     for (int j = 1; j < pts.size(); j++) {
         for (int i = 0; i < pts.size() - j; i++) {
-            double polarCorner1 = atan((pts[i].y - startPt.y) / (pts[i].x - startPt.y));
-            double polarCorner2 = atan((pts[i + 1].y - startPt.y) / (pts[i + 1].x - startPt.x));
-            if (polarCorner1 > polarCorner2) {
+
+            //double polarCorner1 = atan((pts[i].y - startPt.y) / (pts[i].x - startPt.y));
+            //double polarCorner2 = atan((pts[i + 1].y - startPt.y) / (pts[i + 1].x - startPt.x));
+            double cross = (pts[i] - startPt).cross(pts[i + 1] - startPt);
+            if (cross < 0) {
                 vector2D tmp = pts[i];
                 pts[i] = pts[i + 1];
                 pts[i + 1] = tmp;
             }
-            else {
+            /*else {
                 if (polarCorner1 == polarCorner2) {
                     Line line1{ "line1", startPt, pts[i] };
                     Line line2{ "line2", startPt, pts[i + 1] };
@@ -320,7 +322,7 @@ void sort(std::vector<vector2D>& pts, const vector2D& startPt) {
                         pts[i + 1] = tmp;
                     }
                 }
-            }
+            }*/
         }
     }
 }
@@ -329,6 +331,18 @@ vector2D NexToTop(std::stack<vector2D> pts) {
     pts.pop();
     return pts.top();
 }
+
+double CCW(const vector2D& point1, const vector2D& center, const vector2D& point2) {
+
+    vector2D u{ center.x - point1.x, center.y - point1.y };
+    vector2D v{ point2.x - center.x, point2.y - center.y };
+
+    return (u.x * v.y - u.y * v.x) < 0;
+}
+   // Line line1{ "line1", point1, center };
+   // Line line2{ "line1", center, point2 };
+
+   // return line1.tanget().cross(line2.tanget())
 
 std::vector<vector2D> createMCH(std::vector<vector2D> pts){
  
@@ -344,7 +358,7 @@ std::vector<vector2D> createMCH(std::vector<vector2D> pts){
     testPoints.push(pts[0]);
 
     for (int i = 1; i < pts.size(); i++) {
-        while ((testPoints.size() > 2) && testPoints.top().crosTrio(NexToTop(testPoints), pts[i]) < 0) {
+        while ((testPoints.size() > 2) && CCW(NexToTop(testPoints), testPoints.top(), pts[i])) {
             testPoints.pop();
         }
         testPoints.push(pts[i]);
