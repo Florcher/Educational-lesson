@@ -247,24 +247,24 @@ void MainWindow::on_btnStitching_clicked()
 
     for(int i = 0; i < lines.size(); i++){
 
-        for (auto it = lines.begin(); it != lines.end(); it++) {
-            if ((*it)->getStart() == pts[pts.size() - 1]) {
-                pts.push_back((*it)->getEnd());
+        for (auto line : lines) {
+            if (line->getStart() == pts[pts.size() - 1]) {
+                pts.push_back(line->getEnd());
                 continue;
             }
 
-            if ((*it)->getStart() == pts[0]) {
-                pts.insert(pts.begin(), (*it)->getEnd());
+            if (line->getStart() == pts[0]) {
+                pts.insert(pts.begin(), line->getEnd());
                 continue;
             }
 
-            if ((*it)->getEnd() == pts[0]) {
-                pts.insert(pts.begin(), (*it)->getStart());
+            if (line->getEnd() == pts[0]) {
+                pts.insert(pts.begin(), line->getStart());
                 continue;
             }
 
-            if ((*it)->getEnd() == pts[pts.size() - 1]) {
-                pts.push_back((*it)->getStart());
+            if (line->getEnd() == pts[pts.size() - 1]) {
+                pts.push_back(line->getStart());
                 continue;
             }
         }
@@ -277,38 +277,15 @@ void MainWindow::on_btnStitching_clicked()
 }
 
 
-int findIndex(std::vector<vector2D>& pts) {
+auto findStart(std::vector<vector2D>& pts) {
 
-    vector2D min = pts[0];
-    int index = 0;
-    for (int i = 1; i < pts.size(); i++) {
-        if (pts[i].x < min.x) {
-            min = pts[i];
-            index = i;
-        }
-        if (pts[i].x == min.x) {
-            if (pts[i].y < min.y) {
-                min = pts[i];
-                index = i;
-            }
+    auto itMin = pts.begin();
+    for (auto it = pts.begin(); it != pts.end(); it++) {
+        if (it->x < itMin->x) {
+            itMin = it;
         }
     }
-    return index;
-}
-
-void sort(std::vector<vector2D>& pts, const vector2D& startPt) {
-
-    for (int j = 1; j < pts.size(); j++) {
-        for (int i = 0; i < pts.size() - j; i++) {
-
-            double cross = (pts[i] - startPt).cross(pts[i + 1] - startPt);
-            if (cross < 0) {
-                vector2D tmp = pts[i];
-                pts[i] = pts[i + 1];
-                pts[i + 1] = tmp;
-            }
-        }
-    }
+    return itMin;
 }
 
 vector2D NexToTop(std::stack<vector2D> pts) {
@@ -316,29 +293,34 @@ vector2D NexToTop(std::stack<vector2D> pts) {
     return pts.top();
 }
 
-bool CCW(const vector2D& point1, const vector2D& center, const vector2D& point2) {
+bool isCCW(const vector2D& point1, vector2D& center, vector2D& point2) {
 
-    vector2D u{ center.x - point1.x, center.y - point1.y };
-    vector2D v{ point2.x - center.x, point2.y - center.y };
+    vector2D u = center - point1;
+    vector2D v = point2 - center;
 
-    return (u.x * v.y - u.y * v.x) < 0;
+    return u.cross(v) < 0;
 }
 
-std::vector<vector2D> createMCH(std::vector<vector2D> pts){
- 
+std::vector<vector2D> createMCH(std::vector<vector2D> pts) {
 
-    int index = findIndex(pts);
-    vector2D p0 = pts[index];
-    auto iter = pts.begin() + index;
-    pts.erase(iter);
-    sort(pts, p0);
+
+    auto itStart = findStart(pts);
+    auto p0 = *itStart;
+
+    pts.erase(itStart);
+
+    std::sort(pts.begin(), pts.end(), [&p0](auto& lhs, auto& rhs) 
+        {
+        double cross = (lhs - p0).cross(rhs - p0);
+        return cross > 0;
+        });
 
     std::stack<vector2D> testPoints;
     testPoints.push(p0);
     testPoints.push(pts[0]);
 
     for (int i = 1; i < pts.size(); i++) {
-        while ((testPoints.size() > 2) && CCW(NexToTop(testPoints), testPoints.top(), pts[i])) {
+        while ((testPoints.size() > 2) && isCCW(NexToTop(testPoints), testPoints.top(), pts[i])) {
             testPoints.pop();
         }
         testPoints.push(pts[i]);
