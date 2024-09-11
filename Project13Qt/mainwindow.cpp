@@ -240,7 +240,6 @@ void MainWindow::on_btnStitching_clicked()
             lines.push_back(std::dynamic_pointer_cast<Line>(obj[i]));
     }
 
-
     pts.push_back(lines[0]->getStart());
     pts.push_back(lines[0]->getEnd());
     lines.erase(lines.begin());
@@ -302,7 +301,6 @@ bool isCCW(const vector2D& point1, vector2D& center, vector2D& point2) {
 }
 
 std::vector<vector2D> createMCH(std::vector<vector2D> pts) {
-
 
     auto itStart = findStart(pts);
     auto p0 = *itStart;
