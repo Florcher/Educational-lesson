@@ -17,8 +17,8 @@ ${SOURCE}
 ${HEADER}
 )
 
-add_executable(consoleProject ${SOURCE_FILES})
+add_executable(consoleApp ${SOURCE_FILES})
 
-target_link_libraries(consoleProject kernel)
+target_link_libraries(consoleApp kernel)
 
 
