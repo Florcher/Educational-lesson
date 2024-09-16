@@ -19,17 +19,38 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(dbview);
 
     appendInfoToListWindget("TypeID", "ObjectID", "Name");
+    db = std::make_shared<DataBase>();
+
+    lineForm = new CreateLineForm();
+    connect(lineForm, &CreateLineForm::signal,this,&MainWindow::Lineslot);
+    connect(lineForm, &CreateLineForm::signalExit,this,&MainWindow::LineExitSlot);
+
+    rectangleForm = new CreateRectangleForm();
+    connect(rectangleForm, &CreateRectangleForm::signal,this,&MainWindow::Rectangleslot);
+    connect(rectangleForm, &CreateRectangleForm::signalExit,this, &MainWindow::RectangleExitSlot);
+
+    circleForm = new CreateCircleForm();
+    connect(circleForm, &CreateCircleForm::signal,this,&MainWindow::Circleslot);
+    connect(circleForm, &CreateCircleForm::signalExit,this,&MainWindow::CircleExitSlot);
+
+    polylineForm = new CreatePolylineForm();
+    connect(polylineForm, &CreatePolylineForm::signal,this,&MainWindow::Polylineslot);
+    connect(polylineForm, &CreatePolylineForm::signalExit,this,&MainWindow::PolylineExitSlot);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete dbview;
+    delete lineForm;
+    delete rectangleForm;
+    delete circleForm;
+    delete polylineForm;
 }
 
 void MainWindow::on_btnEnter_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»"), QDir::currentPath(), tr("*.txt"));
+    QString filename = QFileDialog::getOpenFileName(this, tr("îòêðûòü ôàéë"), QDir::currentPath(), tr("*.txt"));
     try{
         Input in;
         db = in.input(filename.toStdString());
@@ -46,7 +67,21 @@ void MainWindow::on_btnEnter_clicked()
 
 void MainWindow::on_btnDraw_clicked()
 {
+<<<<<<< .mine
     vectorisationAndDraw();
+
+
+
+
+
+=======
+    Vectoriser vec;
+    vec.draw(db);
+
+    auto objects = db->getObjects();
+    for(auto obj : objects)
+        Draw(vec.getData(obj->getId()));
+>>>>>>> .theirs
 }
 
 void MainWindow::Draw(DrawData::ptr data)
@@ -64,42 +99,95 @@ void MainWindow::Draw(DrawData::ptr data)
     }
 }
 
+<<<<<<< .mine
 void MainWindow::appendInfoToListWindget(QString typeID, QString ObjectID, QString name)
 {
     QString info;
 
+=======
+void MainWindow::Lineslot(object::ptr obj)
+{
+    if(db->getObjectsCount() == 0)
+        obj->setId(1);
+>>>>>>> .theirs
+
+<<<<<<< .mine
     info.append(typeID);
     info.append(" ");
     info.append(ObjectID);
     info.append(" ");
     info.append(name);
     info.append("\n");
+=======
+    obj->setId(db->getObjectsCount()+1);
+    db->addObject(obj);
+    lineForm->hide();
 
+
+
+>>>>>>> .theirs
+
+<<<<<<< .mine
     ui->listWidget->addItem(info);
 }
+=======
+}
 
+>>>>>>> .theirs
+
+<<<<<<< .mine
 void MainWindow::addObjectToDb(object::ptr obj)
 {
     db->addObject(obj);
     appendInfoToListWindget(QString::number(obj->getType()), QString::number(obj->getId()), QString::fromStdString(obj->getName()));
 }
+=======
+void MainWindow::Rectangleslot(object::ptr obj)
+{
+    if(db->getObjectsCount() == 0)
+        obj->setId(1);
 
+>>>>>>> .theirs
+
+<<<<<<< .mine
 void MainWindow::vectorisationAndDraw()
 {
     Vectoriser vec;
     vec.draw(db);
+=======
+    obj->setId(db->getObjectsCount()+1);
+    db->addObject(obj);
+    rectangleForm->hide();
+}
+>>>>>>> .theirs
 
+<<<<<<< .mine
     auto objects = db->getObjects();
     for(auto obj : objects){
         Draw(vec.getData(obj->getId()));
     }
 }
+=======
+void MainWindow::Circleslot(object::ptr obj)
+{
+    if(db->getObjectsCount() == 0)
+        obj->setId(1);
 
+>>>>>>> .theirs
+
+<<<<<<< .mine
 void MainWindow::addObjectToDbAndVectorisation(std::shared_ptr<object> obj)
 {
     addObjectToDb(obj);
     vectorisationAndDraw();
 }
+=======
+    obj->setId(db->getObjectsCount()+1);
+    db->addObject(obj);
+    circleForm->hide();
+}
+
+>>>>>>> .theirs
 
 void MainWindow::on_btnCreateLine_clicked()
 {
