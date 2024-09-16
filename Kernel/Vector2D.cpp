@@ -2,6 +2,7 @@
 #include "Vector2D.h"
 #include "Comparison.h"
 #include <math.h>
+#include <Objects.h>
 
 std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
 
@@ -40,4 +41,8 @@ double vector2D::length() const {
 
 double vector2D::cross(const vector2D& leftVec) const {
 	return (x * leftVec.y - y * leftVec.x);
+}
+
+double vector2D::dot(const vector2D& rhtvec) {
+	return (x * rhtvec.x + y * rhtvec.y);
 }

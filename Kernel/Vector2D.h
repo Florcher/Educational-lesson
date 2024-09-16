@@ -15,6 +15,7 @@ struct KERNEL_EXPORT vector2D {
 	vector2D operator-(const vector2D&);
 
 	double cross(const vector2D& leftVec) const;
+	double dot(const vector2D& rhtLine);
 
 	double length() const;
 

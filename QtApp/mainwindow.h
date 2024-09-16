@@ -42,12 +42,15 @@ private slots:
     void on_btnCreateLineWithClik_clicked();
     void on_btnCreateCircleWithClick_clicked();
     void on_btnCreatePolylineWithClick_clicked();
+    void on_btnCreateRectangleWithClick_clicked();
+    void on_btnCreatePolygonWithClick_clicked();
 
     void on_btnClearScene_clicked();
 
-    void on_btnCreateRectangleWithClick_clicked();
+    void on_btnStitching_clicked();
 
-    void on_btnCreatePolygonWithClick_clicked();
+
+    void on_btnCreateMCH_clicked();
 
 private:
     void Draw(DrawData::ptr data);

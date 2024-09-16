@@ -74,6 +74,10 @@ double Line::getLength() {
 	return (line.end - line.start).length();
 }
 
+vector2D Line::tanget() {
+	return { line.end - line.start };
+}
+
 void Line::setStart(const vector2D& start) {
 
 	line.start = start;
