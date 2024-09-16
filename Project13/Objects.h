@@ -116,6 +116,7 @@ public:
 
 	Circle() = default;
 	Circle(const std::string& name, const vector2D& center, const double radius);
+	~Circle() {};
 
 	void setCenter(const vector2D& center_);
 	void setRadius(const double radius_);
@@ -146,6 +147,7 @@ public:
 
 	Polyline() = default;
 	Polyline(const std::string& name, const std::vector<vector2D>& points);
+	~Polyline() {};
 
 	void setPoint(const vector2D& point);
 	void editPoint(const int index, const vector2D& point);
@@ -166,6 +168,39 @@ private:
 
 	std::vector<vector2D> mPoints;
 	void createLines(std::vector<Line>& lines);
+};
+
+class KERNEL_EXPORT Polygon : public object{
+public:
+
+	Polygon() = default;
+	Polygon(const std::string& name, const std::vector<vector2D>& points);
+	~Polygon() {};
+
+	void setPoint(const vector2D& point);
+	void editPoint(const int index, const vector2D& point);
+
+	vector2D getPoint(const int index) const;
+	int getPointsCount() const;
+
+	void input(std::shared_ptr<InputFiler> file) override;
+	void output(std::shared_ptr<OutputFiler> file) override;
+	void draw(std::shared_ptr<Drawer> drawer) override;
+
+	inline static int Type();
+	int getType() const override;
+
+	using ptr = std::shared_ptr<Polygon>;
+
+private:
+	std::vector<vector2D> mPoints;
+
+	std::vector<Math::LineSegment2D> triangulation();
+	bool isCCWPolygon();
+	bool isCCWTriangle(const vector2D& point1, const vector2D& point2, const vector2D& point3);
+	bool belongingPointTriangle(vector2D& point1, vector2D& point2, vector2D& point3, const vector2D& checkpoint);
+	bool isEar(const std::vector<vector2D> pts, vector2D& point1, vector2D& point2, vector2D& point3);
+	void createLines(std::vector<Line>& drawLines, std::vector<vector2D>& triangle);
 };
 
 #endif __OBJECTS_H_

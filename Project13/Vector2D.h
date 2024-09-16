@@ -9,10 +9,12 @@ struct KERNEL_EXPORT vector2D {
 	friend std::ostream& operator<< (std::ostream&, const vector2D&);
 	friend std::istream& operator>> (std::istream&, vector2D&);
 
-	int operator==(const vector2D&);
+	bool operator==(const vector2D&);
 
 	vector2D operator+(const vector2D&);
 	vector2D operator-(const vector2D&);
+
+	double cross(const vector2D& leftVec) const;
 
 	double length() const;
 
