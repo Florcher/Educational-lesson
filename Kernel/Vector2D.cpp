@@ -2,6 +2,7 @@
 #include "Vector2D.h"
 #include "Comparison.h"
 #include <math.h>
+#include <Objects.h>
 
 std::ostream& operator<< (std::ostream& output, const vector2D& vector2D) {
 
@@ -19,7 +20,7 @@ std::istream& operator>> (std::istream& input, vector2D& vector2D) {
 	return input;
 }
 
-int vector2D::operator==(const vector2D& rhs) {
+bool vector2D::operator==(const vector2D& rhs) {
 
 	return IsEqual(x, rhs.x) && IsEqual(y, rhs.y);
 }
@@ -36,4 +37,12 @@ vector2D vector2D::operator-(const vector2D& rhs) {
 
 double vector2D::length() const {
 	return sqrt(x * x + y * y);
+}
+
+double vector2D::cross(const vector2D& leftVec) const {
+	return (x * leftVec.y - y * leftVec.x);
+}
+
+double vector2D::dot(const vector2D& rhtvec) {
+	return (x * rhtvec.x + y * rhtvec.y);
 }
