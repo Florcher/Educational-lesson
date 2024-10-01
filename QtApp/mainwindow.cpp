@@ -354,3 +354,21 @@ void MainWindow::on_btnCreateMCH_clicked()
     }
 }
 
+
+void MainWindow::on_btnCreatePolygonWithClick_clicked()
+{
+    std::vector<vector2D> pts;
+    try{
+        while(true)
+            pts.push_back(dbview->getPoint());
+    }
+    catch(...){
+        if(pts.size() > 1){
+            auto polygon = std::make_shared<Polygon>("Polyline", pts);
+            addObjectToDbAndVectorisation(polygon);
+        } else{
+
+        }
+    }
+}
+

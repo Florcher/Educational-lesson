@@ -52,6 +52,8 @@ private slots:
 
     void on_btnCreateMCH_clicked();
 
+    void on_btnCreatePolygonWithClick_clicked();
+
 private:
     void Draw(DrawData::ptr data);
     void appendInfoToListWindget(QString typeID, QString ObjectID, QString name);
