@@ -32,7 +32,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnEnter_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»"), QDir::currentPath(), tr("*.txt"));
+    QString filename = QFileDialog::getOpenFileName(this, tr("îòêðûòü ôàéë"), QDir::currentPath(), tr("*.txt"));
     try{
         Input in;
         db = in.input(filename.toStdString());
@@ -221,7 +221,7 @@ void MainWindow::on_btnCreatePolygonWithClick_clicked()
     }
     catch(...){
         if(pts.size() > 1){
-            auto polygon = std::make_shared<Polygon>("Polygonâ€š", pts);
+            auto polygon = std::make_shared<Polygon>("Polygon‚", pts);
             addObjectToDbAndVectorisation(polygon);
         } else{
 
