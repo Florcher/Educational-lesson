@@ -247,8 +247,8 @@ void MainWindow::on_btnStitching_clicked()
     for(int i = 0; i < lines.size(); i++){
 
         for (auto line : lines) {
-            const vector2D start = line->getStart();
-            const vector2D end = line->getEnd();
+            vector2D start = line->getStart();
+            vector2D end = line->getEnd();
             if (start == pts[pts.size() - 1]) {
                 pts.push_back(line->getEnd());
                 continue;
