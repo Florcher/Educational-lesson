@@ -2,7 +2,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_PREFIX_PATH "C:/Qt/6.7.1/msvc2019_64")
@@ -21,10 +21,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QtProject
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        createlineform.h createlineform.cpp createlineform.ui
-        createrectangleform.h createrectangleform.cpp createrectangleform.ui
-        createcircleform.h createcircleform.cpp createcircleform.ui
-        createpolylineform.h createpolylineform.cpp createpolylineform.ui
+        createlinedialog.h createlinedialog.cpp createlinedialog.ui
+        createrectangledialog.h createrectangledialog.cpp createrectangledialog.ui
+        createcircledialog.h createcircledialog.cpp createcircledialog.ui
+        createpolylinedialog.h createpolylinedialog.cpp createpolylinedialog.ui
+	errordialog.h errordialog.cpp errordialog.ui
+	databaseview.h databaseview.cpp 
+	InputStatus.h
 
 
 

@@ -5,9 +5,7 @@
 #include "QFont"
 #include "QFileDialog"
 #include "QMouseEvent"
-#include "errordatadialog.h"
 #include "QMessageBox"
-#include <math.h>
 #include <algorithm>
 #include <stack>
 
@@ -223,7 +221,7 @@ void MainWindow::on_btnCreatePolygonWithClick_clicked()
     }
     catch(...){
         if(pts.size() > 1){
-            auto polygon = std::make_shared<Polygon>("PolyРїС‰С‚", pts);
+            auto polygon = std::make_shared<Polygon>("Polygon‚", pts);
             addObjectToDbAndVectorisation(polygon);
         } else{
 
@@ -249,22 +247,24 @@ void MainWindow::on_btnStitching_clicked()
     for(int i = 0; i < lines.size(); i++){
 
         for (auto line : lines) {
-            if (line->getStart() == pts[pts.size() - 1]) {
+            const vector2D start = line->getStart();
+            const vector2D end = line->getEnd();
+            if (start == pts[pts.size() - 1]) {
                 pts.push_back(line->getEnd());
                 continue;
             }
 
-            if (line->getStart() == pts[0]) {
+            if (start == pts[0]) {
                 pts.insert(pts.begin(), line->getEnd());
                 continue;
             }
 
-            if (line->getEnd() == pts[0]) {
+            if (end == pts[0]) {
                 pts.insert(pts.begin(), line->getStart());
                 continue;
             }
 
-            if (line->getEnd() == pts[pts.size() - 1]) {
+            if (end == pts[pts.size() - 1]) {
                 pts.push_back(line->getStart());
                 continue;
             }
@@ -347,24 +347,6 @@ void MainWindow::on_btnCreateMCH_clicked()
         if(pts.size() > 1){
             auto points = createMCH(pts);
             auto polygon = std::make_shared<Polygon>("Polygon", points);
-            addObjectToDbAndVectorisation(polygon);
-        } else{
-
-        }
-    }
-}
-
-
-void MainWindow::on_btnCreatePolygonWithClick_clicked()
-{
-    std::vector<vector2D> pts;
-    try{
-        while(true)
-            pts.push_back(dbview->getPoint());
-    }
-    catch(...){
-        if(pts.size() > 1){
-            auto polygon = std::make_shared<Polygon>("Polyline", pts);
             addObjectToDbAndVectorisation(polygon);
         } else{
 

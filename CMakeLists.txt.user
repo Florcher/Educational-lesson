@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 13.0.2, 2024-10-01T15:27:45. -->
+<!-- Written by QtCreator 13.0.2, 2024-10-02T17:32:46. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -112,7 +112,7 @@
 -DCMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}
 -DCMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}
 -DCMAKE_CXX_FLAGS_INIT:STRING=%{Qt:QML_DEBUG_FLAG}</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:\Users\Florch\source\repos\Project10\build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:\Users\Florch\source\repos\Educational-lesson\build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug\.cmake</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.BuildPreset"></value>
@@ -404,7 +404,7 @@
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory">C:/Users/Florch/source/repos/Project10/Assets/QtProject</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Florch/source/repos/Project10/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/bin</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Florch/source/repos/Educational-lesson/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/.cmake/bin</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.1">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -423,7 +423,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Florch/source/repos/Project10/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/bin</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Florch/source/repos/Educational-lesson/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/.cmake/bin</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.2">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -442,7 +442,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Florch/source/repos/Project10/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/bin</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Florch/source/repos/Educational-lesson/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/.cmake/bin</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">3</value>
   </valuemap>
