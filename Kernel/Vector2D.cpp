@@ -20,7 +20,7 @@ std::istream& operator>> (std::istream& input, vector2D& vector2D) {
 	return input;
 }
 
-bool vector2D::operator==(const vector2D& rhs) {
+bool vector2D::operator==(const vector2D& rhs) const{
 
 	return IsEqual(x, rhs.x) && IsEqual(y, rhs.y);
 }

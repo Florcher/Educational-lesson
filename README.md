@@ -18,7 +18,8 @@
 В процессе разработки применялись различные паттерны проектирования в том числе фабрика и шаблонный метод.
 
 Чтобы запустить приложение в Visual Studio необходимо:
- 1. Запустить cmake в корне проекта.
+ 1. Запустить cmake в корне проекта командой: 
+.\cmake\bin\cmake.exe -S ./ -B ./MSVC-win64/ -A x64 -DCMAKE_PREFIX_PATH="Your/Path/To/Qt/6.5.1/msvc2019_64" -DBUILD_SHARED_LIBS=ON.
  2. Открыть в проект в Visual Studio 2022  с C++ standart 20;
  3. Выполнить build.
 

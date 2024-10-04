@@ -1,1 +1,1 @@
-.\CMake\bin\cmake.exe -S ./ -B ./MSVC-win64/ -A x64 -DBUILD_SHARED_LIBS=ON
+.\CMake\bin\cmake.exe -S ./ -B ./MSVC-win64/ -A x64 -DCMAKE_PREFIX_PATH=C:/Qt/6.7.1/msvc2019_64 -DBUILD_SHARED_LIBS=ON
