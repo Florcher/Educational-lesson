@@ -22,6 +22,7 @@
 .\cmake\bin\cmake.exe -S ./ -B ./MSVC-win64/ -A x64 -DCMAKE_PREFIX_PATH="Your/Path/To/Qt/6.5.1/msvc2019_64" -DBUILD_SHARED_LIBS=ON.
  2. Открыть в проект в Visual Studio 2022  с C++ standart 20;
  3. Выполнить build.
+ 4. Для запуска qt приложения через Visual Studio 2022 необходимо: поместить папку plugins и dll файлы рядом с исполняемым .exe файлом.
 
 Чтобы реализовать приложения в Qt необходимо:
  1. Установить Qt creator 13.0.2.
