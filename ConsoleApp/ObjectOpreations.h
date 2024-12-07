@@ -74,4 +74,17 @@ struct PolylineOperations : ObjectBaseOperations {
 	Polyline::ptr mPolyline;
 };
 
+struct PolygonOperations : ObjectBaseOperations {
+
+	PolygonOperations(object::ptr obj);
+
+	void operation(ContextIO::ptr context) override;
+
+	void editPoint(const int index, const vector2D& point);
+
+	using ptr = std::shared_ptr<PolygonOperations>;
+
+	Polygon::ptr mPolygon;
+};
+
 #endif __OPERATIONWITHOBJECT_H_

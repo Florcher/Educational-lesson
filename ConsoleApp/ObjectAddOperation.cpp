@@ -9,8 +9,6 @@ ObjectBaseAddOperation::ObjectBaseAddOperation(object::ptr obj) {
 
 void ObjectBaseAddOperation::addObject(ContextIO::ptr context) {
 
-    std::cout << "Enter objecId: " << std::endl;
-
 	std::cout << "Enter name: " << std::endl;
 	std::string name = context->getString();
 
@@ -90,5 +88,23 @@ void PolylineAddOperation::addObject(ContextIO::ptr context) {
 		std::cout << "Enter point: " << std::endl;
 		vector2D point = context->getPoint();
 		mPolyline->setPoint(point);
+	}
+}
+
+PolygonAddOperation::PolygonAddOperation(object::ptr obj) : ObjectBaseAddOperation(obj) {
+	mPolygon = std::dynamic_pointer_cast<Polygon>(obj);
+}
+
+void PolygonAddOperation::addObject(ContextIO::ptr context) {
+
+	ObjectBaseAddOperation::addObject(context);
+
+	std::cout << "Enter count of points: " << std::endl;
+	int pointsCount = context->getInt();
+
+	for (int i = 0; i != pointsCount; i++) {
+		std::cout << "Enter point: " << std::endl;
+		vector2D point = context->getPoint();
+		mPolygon->setPoint(point);
 	}
 }

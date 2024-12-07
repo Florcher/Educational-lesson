@@ -10,6 +10,7 @@ OperationFactory::OperationFactory() {
 	mOperation.emplace(Rectangle::Type(), std::make_shared<OperationCreator<ObjectBaseOperations, RectangleOperations>>());
 	mOperation.emplace(Circle::Type(), std::make_shared<OperationCreator<ObjectBaseOperations, CircleOperations>>());
 	mOperation.emplace(Polyline::Type(), std::make_shared<OperationCreator<ObjectBaseOperations, PolylineOperations>>());
+	mOperation.emplace(Polygon::Type(), std::make_shared<OperationCreator<ObjectBaseOperations, PolygonOperations>>());
 }
 
 ObjectBaseOperations::ptr OperationFactory::createOperation(const int typeId, object::ptr obj) {

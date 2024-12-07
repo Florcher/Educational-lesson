@@ -59,4 +59,15 @@ struct PolylineAddOperation : ObjectBaseAddOperation {
 	Polyline::ptr mPolyline;
 };
 
+struct PolygonAddOperation : ObjectBaseAddOperation {
+
+	PolygonAddOperation(object::ptr obj);
+
+	void addObject(ContextIO::ptr context) override;
+
+	using ptr = std::shared_ptr<PolygonAddOperation>;
+
+	Polygon::ptr mPolygon;
+};
+
 #endif __ADDOPERATIONWITHOBJECT_H_

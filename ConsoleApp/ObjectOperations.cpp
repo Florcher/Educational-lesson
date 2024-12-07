@@ -222,3 +222,50 @@ void PolylineOperations::operation(ContextIO::ptr context) {
 void PolylineOperations::editPoint(const int index, const vector2D& point) {
 	mPolyline->editPoint(index, point);
 }
+
+PolygonOperations::PolygonOperations(object::ptr obj) : ObjectBaseOperations(obj) {
+	mPolygon = std::dynamic_pointer_cast<Polygon>(obj);
+}
+
+void PolygonOperations::operation(ContextIO::ptr context) {
+
+	int mark = 0;
+
+	while (mark != -1) {
+
+		ObjectBaseOperations::operation(context);
+
+		std::cout << "Press 2 to edit point." << std::endl;
+		std::cout << "Press -1 to exit." << std::endl;
+
+		std::string name;
+		int id;
+
+		switch (mark) {
+
+		case 1:
+			name = context->getString();
+			editName(name);
+			break;
+
+		case 2:
+			std::cout << "Enter index to edit point: " << std::endl;
+
+			int index;
+			index = context->getInt();
+
+			std::cout << "Enter point: " << std::endl;
+
+			vector2D point;
+			point = context->getPoint();
+
+			editPoint(index, point);
+			break;
+		}
+	}
+}
+
+void PolygonOperations::editPoint(const int index, const vector2D& point) {
+	mPolygon->editPoint(index, point);
+}
+
