@@ -8,9 +8,6 @@ void ObjectsTests::testObject() {
 
 	object obj;
 
-	obj.setId(3);
-	myassert(obj.getId() == 3);
-
 	obj.setName("object");
 	myassert((obj.getName() == "object"));
 
@@ -20,9 +17,6 @@ void ObjectsTests::testObject() {
 void ObjectsTests::testLine() {
 
 	Line line;
-
-	line.setId(1);
-	myassert(line.getId() == 1);
 
 	line.setName("myline");
 	myassert((line.getName() == "myline"));
@@ -37,30 +31,27 @@ void ObjectsTests::testLine() {
 	myassert((line.getStart() == start));
 	myassert((line.getEnd() == end));
 	
-	myassert(IsEqual(line.getLenth(), 24.351591323771842));
+	myassert(IsEqual(line.getLength(), 24.351591323771842));
 }
 
 void ObjectsTests::testRectangle() {
 
 	Rectangle rec;
 
-	rec.setId(-3);
-	myassert(rec.getId() == -3);
-
 	rec.setName("myrectangle");
 	myassert((rec.getName() == "myrectangle"));
 
 	was_exception(rec.setName(""));
 
-	rec.setLenth(10.);
+	rec.setLength(10.);
 	rec.setWidth(10.);
-	myassert(IsEqual(rec.getLenth(), 10));
+	myassert(IsEqual(rec.getLength(), 10));
 	myassert(IsEqual(rec.getWidth(), 10));
 
 	myassert(IsEqual(rec.getArea(), 100));
 	myassert(IsEqual(rec.getPerimetr(), 40));
 
-	was_exception(rec.setLenth(-5));
+	was_exception(rec.setLength(-5));
 	was_exception(rec.setWidth(-10));
 
 	vector2D ldp{ -1, 3 };
@@ -73,9 +64,6 @@ void ObjectsTests::testRectangle() {
 void ObjectsTests::testCircle() {
 
 	Circle circle;
-
-	circle.setId(19);
-	myassert(circle.getId() == 19);
 
 	circle.setName("mycircle");
 	myassert((circle.getName() == "mycircle"));
@@ -100,14 +88,10 @@ void ObjectsTests::testPolyline() {
 	
 	Polyline polyline;
 
-	polyline.setId(90);
-	myassert(polyline.getId() == 90);
-
 	polyline.setName("mypolyline");
 	myassert(polyline.getName() == "mypolyline");
 
 	was_exception(polyline.setName(""));
-
 
 	vector2D point1{ 0, 0 };
 	vector2D point2{ 1, 1 };
@@ -133,4 +117,49 @@ void ObjectsTests::testPolyline() {
 
 	was_exception(polyline.getPoint(-1));
 	was_exception(polyline.getPoint(10));
+
+	vector2D point9 = { -10,15 };
+	polyline.editPoint(3, point9);
+	myassert((polyline.getPoint(3) == point9));
+	myassert(polyline.getPointsCount() == 4);
+}
+
+void ObjectsTests::testPolygon() {
+
+	Polygon polygon;
+
+	polygon.setName("mypolygon");
+	myassert(polygon.getName() == "mypolygone");
+
+	was_exception(polygon.setName(""));
+
+	vector2D point1{ 0, 0 };
+	vector2D point2{ 1, 1 };
+	vector2D point3{ 2, 2 };
+	vector2D point4{ 3, 3 };
+
+	polygon.setPoint(point1);
+	polygon.setPoint(point2);
+	polygon.setPoint(point3);
+	polygon.setPoint(point4);
+
+	vector2D poin5 = polygon.getPoint(0);
+	vector2D poin6 = polygon.getPoint(1);
+	vector2D poin7 = polygon.getPoint(2);
+	vector2D poin8 = polygon.getPoint(3);
+
+	myassert((polygon.getPoint(0) == point1));
+	myassert((polygon.getPoint(1) == point2));
+	myassert((polygon.getPoint(2) == point3));
+	myassert((polygon.getPoint(3) == point4));
+
+	myassert(polygon.getPointsCount() == 4);
+
+	was_exception(polygon.getPoint(-1));
+	was_exception(polygon.getPoint(10));
+
+	vector2D point9 = { -10,15 };
+	polygon.editPoint(3, point9);
+	myassert((polygon.getPoint(3) == point9));
+	myassert(polygon.getPointsCount() == 4);
 }

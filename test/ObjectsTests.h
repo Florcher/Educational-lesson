@@ -8,6 +8,7 @@ struct ObjectsTests {
 	void testRectangle();
 	void testCircle();
 	void testPolyline();
+	void testPolygon();
 };
 
 

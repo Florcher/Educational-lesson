@@ -17,7 +17,6 @@ void DataBaseTests::testAddObject(std::shared_ptr<DataBase> db) {
 
 	std::shared_ptr<Circle> circle = std::make_shared<Circle>();
 
-	circle->setId(3);
 	circle->setName("Mycircle");
 	circle->setCenter(center);
 	circle->setRadius(1.4);
@@ -53,7 +52,7 @@ void DataBaseTests::testObjectsUntilAdd(std::shared_ptr<DataBase> db) {
 	myassert(rec->getName() == "Myrectangle");
 	myassert(rec->getId() == 2);
 	myassert(rec->getLeftDownPoint() == ldp);
-	myassert(rec->getLenth() == 10);
+	myassert(rec->getLength() == 10);
 	myassert(rec->getWidth() == 10);
 }
 

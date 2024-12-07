@@ -11,6 +11,7 @@ void InputTests::test(std::shared_ptr<DataBase> db) {
 	vector2D ldp{ 0, 0 };
 
 	myassert(db->getObjectsCount() == 2);
+	myassert(db->getNextId() == 3);
 
 	auto objects = db->getObjects();
 
@@ -31,7 +32,7 @@ void InputTests::test(std::shared_ptr<DataBase> db) {
 	myassert(rec1->getId() == 2);
 	myassert((rec1->getName() == rectangleName));
 	myassert((rec1->getLeftDownPoint() == ldp));
-	myassert(IsEqual(rec1->getLenth(), 10));
+	myassert(IsEqual(rec1->getLength(), 10));
 	myassert(IsEqual(rec1->getWidth(), 10));
 }
 
@@ -42,6 +43,7 @@ void InputTests::binaryTest(std::shared_ptr<DataBase> db) {
 	vector2D ldp{ 0, 0 };
 
 	myassert(db->getObjectsCount() == 2);
+	myassert(db->getNextId() == 4);
 
 	auto objects = db->getObjects();
 
@@ -62,7 +64,7 @@ void InputTests::binaryTest(std::shared_ptr<DataBase> db) {
 	myassert(rec1->getId() == 2);
 	myassert((rec1->getName() == rectangleName));
 	myassert((rec1->getLeftDownPoint() == ldp));
-	myassert(IsEqual(rec1->getLenth(), 10));
+	myassert(IsEqual(rec1->getLength(), 10));
 	myassert(IsEqual(rec1->getWidth(), 10));
 }
 
