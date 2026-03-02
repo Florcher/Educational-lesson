@@ -13,6 +13,7 @@ public:
 	virtual void outputString(const std::string& str) = 0;
 	virtual void outputVector2D(const vector2D& vec) = 0;
 	virtual void outputUint64_t(const uint64_t value) = 0;
+	
 
 	using ptr = std::shared_ptr<OutputFiler>;
 };

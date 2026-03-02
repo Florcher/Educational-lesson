@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Objects.h"
 #include "kernel_export.h"
-#include "LineSegment2D.h"
+#include "Math.h"
 
 class KERNEL_EXPORT DrawData {
 public:

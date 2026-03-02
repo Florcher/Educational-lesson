@@ -5,7 +5,7 @@
 #include <vector>
 #include "kernel_export.h"
 #include "Vector2D.h"
-#include "LineSegment2D.h"
+#include "Math.h"
 
 class InputFiler;
 class OutputFiler;
@@ -61,6 +61,9 @@ public:
 	double getLength();
 	vector2D tanget();
 	
+	void transformByScalingMAtrix(const Math::Matrix2D& mt);
+	void transformByRotationMatrix(const Math::Matrix2D& mt);
+	void transformByTransferMatrix(const Math::Matrix2D& mt);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
@@ -96,6 +99,10 @@ public:
 	double getArea() const;
 	double getPerimetr() const;
 
+	void transformByScalingMAtrix(const Math::Matrix2D& mt);
+	void transformByRotationMatrix(const Math::Matrix2D& mt);
+	void transformByTransferMatrix(const Math::Matrix2D& mt);
+
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;
@@ -128,6 +135,10 @@ public:
 
 	double getArea() const;
 
+	void transformByScalingMAtrix(const Math::Matrix2D& mt);
+	void transformByRotationMatrix(const Math::Matrix2D& mt);
+	void transformByTransferMatrix(const Math::Matrix2D& mt);
+
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;
@@ -157,6 +168,10 @@ public:
 	vector2D getPoint(const int index) const;
 	int getPointsCount() const;
 
+	void transformByScalingMAtrix(const Math::Matrix2D& mt);
+	void transformByRotationMatrix(const Math::Matrix2D& mt);
+	void transformByTransferMatrix(const Math::Matrix2D& mt);
+
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
 	void draw(std::shared_ptr<Drawer> drawer) override;
@@ -184,6 +199,10 @@ public:
 
 	vector2D getPoint(const int index) const;
 	int getPointsCount() const;
+
+	void transformByScalingMAtrix(const Math::Matrix2D& mt);
+	void transformByRotationMatrix(const Math::Matrix2D& mt);
+	void transformByTransferMatrix(const Math::Matrix2D& mt);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;

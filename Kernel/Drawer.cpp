@@ -1,6 +1,6 @@
 #include "Drawer.h"
 #include "DrawData.h"
-#include "LineSegment2D.h"
+#include "Math.h"
 
 Drawer::Drawer() {
 	data = std::make_shared<DrawData>();

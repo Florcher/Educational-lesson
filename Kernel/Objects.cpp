@@ -7,7 +7,7 @@
 #include "Vector2D.h"
 #include "Drawer.h"
 #include "TypeNamespace.h"
-#include "LineSegment2D.h"
+#include "Math.h"
 
 object::object(const std::string& name) : mName(name), mId(0), mIsDitry(false) {
 
@@ -100,6 +100,19 @@ vector2D Line::getEnd() const {
 	return line.end;
 };
 
+void Line::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+	line.start.editByScalingMatrix(mt);
+	line.end.editByScalingMatrix(mt);
+}
+void Line::transformByRotationMatrix(const Math::Matrix2D& mt) {
+	line.start.editByRotationMatrix(mt);
+	line.end.editByRotationMatrix(mt);
+}
+void Line::transformByTransferMatrix(const Math::Matrix2D& mt) {
+	line.start.editByTransferMatrix(mt);
+	line.end.editByTransferMatrix(mt);
+}
+
 void Line::input(std::shared_ptr<InputFiler> file) {
 
 	object::input(file);
@@ -181,6 +194,18 @@ double Rectangle::getPerimetr() const {
 	return 2 * mLength + 2 * mWidth;
 };
 
+void Rectangle::transformByScalingMAtrix(const Math::Matrix2D & mt) {
+	mLeftDownPoint.editByScalingMatrix(mt);
+}
+
+void Rectangle::transformByRotationMatrix(const Math::Matrix2D& mt) {
+	mLeftDownPoint.editByRotationMatrix(mt);
+}
+
+void Rectangle::transformByTransferMatrix(const Math::Matrix2D& mt){
+	mLeftDownPoint.editByTransferMatrix(mt);
+}
+
 void Rectangle::input(std::shared_ptr<InputFiler> file) {
 
 	object::input(file);
@@ -259,6 +284,16 @@ double Circle::getArea() const {
 	const double Pi = 3.141592653589793;
 	return Pi * mRadius * mRadius;
 };
+
+void Circle::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+	mCenter.editByScalingMatrix(mt);
+}
+void Circle::transformByRotationMatrix(const Math::Matrix2D & mt) {
+	mCenter.editByRotationMatrix(mt);
+}
+void Circle::transformByTransferMatrix(const Math::Matrix2D& mt) {
+	mCenter.editByTransferMatrix(mt);
+}
 
 void Circle::input(std::shared_ptr<InputFiler> file) {
 
@@ -342,6 +377,22 @@ int Polyline::getPointsCount() const {
 	return mPoints.size();
 }
 
+void Polyline::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+	for (int i = 0; i < mPoints.size(); i++) {
+		mPoints[i].editByScalingMatrix(mt);
+	}
+}
+void Polyline::transformByRotationMatrix(const Math::Matrix2D& mt) {
+	for (int i = 0; i < mPoints.size(); i++) {
+		mPoints[i].editByRotationMatrix(mt);
+	}
+}
+void Polyline::transformByTransferMatrix(const Math::Matrix2D& mt) {
+	for (int i = 0; i < mPoints.size(); i++) {
+		mPoints[i].editByTransferMatrix(mt);
+	}
+}
+
 void Polyline::input(std::shared_ptr<InputFiler> file) {
 
 	object::input(file);
@@ -420,6 +471,21 @@ vector2D Polygon::getPoint(const int index) const {
 }
 int Polygon::getPointsCount() const {
 	return mPoints.size();
+}
+void Polygon::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+	for (int i = 0; i < mPoints.size(); i++) {
+		mPoints[i].editByScalingMatrix(mt);
+	}
+}
+void Polygon::transformByRotationMatrix(const Math::Matrix2D& mt) {
+	for (int i = 0; i < mPoints.size(); i++) {
+		mPoints[i].editByRotationMatrix(mt);
+	}
+}
+void Polygon::transformByTransferMatrix(const Math::Matrix2D& mt) {
+	for (int i = 0; i < mPoints.size(); i++) {
+		mPoints[i].editByTransferMatrix(mt);
+	}
 }
 
 void Polygon::input(std::shared_ptr<InputFiler> file) {
