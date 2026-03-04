@@ -1,11 +1,8 @@
-#ifndef __Math_H_
-#define __Math_H_
+#ifndef __MyMath_H_
+#define __MyMath_H_
 #include "Vector2D.h"
 #include "kernel_export.h"
 #include <vector>
-#include <iostream>
-
-namespace Math {
 
 	struct KERNEL_EXPORT LineSegment2D {
 
@@ -18,19 +15,19 @@ namespace Math {
 		using ptr = std::shared_ptr<LineSegment2D>;
 	};
 
-	struct scalingParam {
+	struct KERNEL_EXPORT scalingParam {
 		double scX;
 		double scY;
 		double scZ;
 	};
 
-	struct transferParam {
+	struct KERNEL_EXPORT transferParam {
 		double Tx;
 		double Ty;
 		double Tz;
 	};
 
-	struct axisOfRotation {
+	struct KERNEL_EXPORT axisOfRotation {
 		double x;
 		double y;
 		double z;
@@ -118,7 +115,4 @@ namespace Math {
 		static Matrix4D createIdentityMatix();
 	};
 	
-
-}
-
-#endif __Math_H_
+#endif __MyMath_H_

@@ -1,6 +1,8 @@
 #ifndef __COMPARISON_H_
 #define __COMPARISON_H_
+#include "kernel_export.h"
 #include <iostream>
+
 
 bool inline IsEqual(double x, double y, double epsilon = std::numeric_limits<double>::epsilon()) {
 	return std::fabs(x - y) < epsilon;

@@ -8,7 +8,7 @@
 
 class KERNEL_EXPORT AbstractDrawer {
 public:
-	virtual void drawLine(const Math::LineSegment2D& line) = 0;
+	virtual void drawLine(const LineSegment2D& line) = 0;
 	using ptr = std::shared_ptr<AbstractDrawer>;
 };
 
@@ -17,7 +17,7 @@ public:
 
 	Drawer();
 
-	void drawLine(const Math::LineSegment2D& line) override;
+	void drawLine(const LineSegment2D& line) override;
 
 	DrawData::ptr getData();
 

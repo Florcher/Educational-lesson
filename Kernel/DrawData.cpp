@@ -8,10 +8,10 @@ DrawData::DrawData() {
 DrawData::DrawData(std::shared_ptr<DrawData> dt) {
 	data = dt->getData();
 }
-void DrawData::addData(const Math::LineSegment2D& line) {
+void DrawData::addData(const LineSegment2D& line) {
 	data.push_back(line);
 }
 
-std::vector<Math::LineSegment2D> DrawData::getData() const {
+std::vector<LineSegment2D> DrawData::getData() const {
 	return data;
 }

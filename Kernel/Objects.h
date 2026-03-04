@@ -5,7 +5,7 @@
 #include <vector>
 #include "kernel_export.h"
 #include "Vector2D.h"
-#include "Math.h"
+#include "My_Math.h"
 
 class InputFiler;
 class OutputFiler;
@@ -61,9 +61,9 @@ public:
 	double getLength();
 	vector2D tanget();
 	
-	void transformByScalingMAtrix(const Math::Matrix2D& mt);
-	void transformByRotationMatrix(const Math::Matrix2D& mt);
-	void transformByTransferMatrix(const Math::Matrix2D& mt);
+	void transformByScalingMAtrix(const Matrix2D& mt);
+	void transformByRotationMatrix(const Matrix2D& mt);
+	void transformByTransferMatrix(const Matrix2D& mt);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
@@ -76,7 +76,7 @@ public:
 
 private:
 
-	Math::LineSegment2D line;
+	LineSegment2D line;
 };
 
 
@@ -99,9 +99,9 @@ public:
 	double getArea() const;
 	double getPerimetr() const;
 
-	void transformByScalingMAtrix(const Math::Matrix2D& mt);
-	void transformByRotationMatrix(const Math::Matrix2D& mt);
-	void transformByTransferMatrix(const Math::Matrix2D& mt);
+	void transformByScalingMAtrix(const Matrix2D& mt);
+	void transformByRotationMatrix(const Matrix2D& mt);
+	void transformByTransferMatrix(const Matrix2D& mt);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
@@ -135,9 +135,9 @@ public:
 
 	double getArea() const;
 
-	void transformByScalingMAtrix(const Math::Matrix2D& mt);
-	void transformByRotationMatrix(const Math::Matrix2D& mt);
-	void transformByTransferMatrix(const Math::Matrix2D& mt);
+	void transformByScalingMAtrix(const Matrix2D& mt);
+	void transformByRotationMatrix(const Matrix2D& mt);
+	void transformByTransferMatrix(const Matrix2D& mt);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
@@ -168,9 +168,9 @@ public:
 	vector2D getPoint(const int index) const;
 	int getPointsCount() const;
 
-	void transformByScalingMAtrix(const Math::Matrix2D& mt);
-	void transformByRotationMatrix(const Math::Matrix2D& mt);
-	void transformByTransferMatrix(const Math::Matrix2D& mt);
+	void transformByScalingMAtrix(const Matrix2D& mt);
+	void transformByRotationMatrix(const Matrix2D& mt);
+	void transformByTransferMatrix(const Matrix2D& mt);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
@@ -200,9 +200,9 @@ public:
 	vector2D getPoint(const int index) const;
 	int getPointsCount() const;
 
-	void transformByScalingMAtrix(const Math::Matrix2D& mt);
-	void transformByRotationMatrix(const Math::Matrix2D& mt);
-	void transformByTransferMatrix(const Math::Matrix2D& mt);
+	void transformByScalingMAtrix(const Matrix2D& mt);
+	void transformByRotationMatrix(const Matrix2D& mt);
+	void transformByTransferMatrix(const Matrix2D& mt);
 
 	void input(std::shared_ptr<InputFiler> file) override;
 	void output(std::shared_ptr<OutputFiler> file) override;
@@ -216,7 +216,7 @@ public:
 private:
 	std::vector<vector2D> mPoints;
 
-	std::vector<Math::LineSegment2D> triangulation();
+	std::vector<LineSegment2D> triangulation();
 	bool isCCWPolygon();
 	bool isCCWTriangle(const vector2D& point1, const vector2D& point2, const vector2D& point3);
 	bool belongingPointTriangle(vector2D& point1, vector2D& point2, vector2D& point3, const vector2D& checkpoint);

@@ -7,7 +7,7 @@
 #include "Vector2D.h"
 #include "Drawer.h"
 #include "TypeNamespace.h"
-#include "Math.h"
+
 
 object::object(const std::string& name) : mName(name), mId(0), mIsDitry(false) {
 
@@ -100,15 +100,15 @@ vector2D Line::getEnd() const {
 	return line.end;
 };
 
-void Line::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+void Line::transformByScalingMAtrix(const Matrix2D& mt) {
 	line.start.editByScalingMatrix(mt);
 	line.end.editByScalingMatrix(mt);
 }
-void Line::transformByRotationMatrix(const Math::Matrix2D& mt) {
+void Line::transformByRotationMatrix(const Matrix2D& mt) {
 	line.start.editByRotationMatrix(mt);
 	line.end.editByRotationMatrix(mt);
 }
-void Line::transformByTransferMatrix(const Math::Matrix2D& mt) {
+void Line::transformByTransferMatrix(const Matrix2D& mt) {
 	line.start.editByTransferMatrix(mt);
 	line.end.editByTransferMatrix(mt);
 }
@@ -194,15 +194,15 @@ double Rectangle::getPerimetr() const {
 	return 2 * mLength + 2 * mWidth;
 };
 
-void Rectangle::transformByScalingMAtrix(const Math::Matrix2D & mt) {
+void Rectangle::transformByScalingMAtrix(const Matrix2D & mt) {
 	mLeftDownPoint.editByScalingMatrix(mt);
 }
 
-void Rectangle::transformByRotationMatrix(const Math::Matrix2D& mt) {
+void Rectangle::transformByRotationMatrix(const Matrix2D& mt) {
 	mLeftDownPoint.editByRotationMatrix(mt);
 }
 
-void Rectangle::transformByTransferMatrix(const Math::Matrix2D& mt){
+void Rectangle::transformByTransferMatrix(const Matrix2D& mt){
 	mLeftDownPoint.editByTransferMatrix(mt);
 }
 
@@ -285,13 +285,13 @@ double Circle::getArea() const {
 	return Pi * mRadius * mRadius;
 };
 
-void Circle::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+void Circle::transformByScalingMAtrix(const Matrix2D& mt) {
 	mCenter.editByScalingMatrix(mt);
 }
-void Circle::transformByRotationMatrix(const Math::Matrix2D & mt) {
+void Circle::transformByRotationMatrix(const Matrix2D & mt) {
 	mCenter.editByRotationMatrix(mt);
 }
-void Circle::transformByTransferMatrix(const Math::Matrix2D& mt) {
+void Circle::transformByTransferMatrix(const Matrix2D& mt) {
 	mCenter.editByTransferMatrix(mt);
 }
 
@@ -377,17 +377,17 @@ int Polyline::getPointsCount() const {
 	return mPoints.size();
 }
 
-void Polyline::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+void Polyline::transformByScalingMAtrix(const Matrix2D& mt) {
 	for (int i = 0; i < mPoints.size(); i++) {
 		mPoints[i].editByScalingMatrix(mt);
 	}
 }
-void Polyline::transformByRotationMatrix(const Math::Matrix2D& mt) {
+void Polyline::transformByRotationMatrix(const Matrix2D& mt) {
 	for (int i = 0; i < mPoints.size(); i++) {
 		mPoints[i].editByRotationMatrix(mt);
 	}
 }
-void Polyline::transformByTransferMatrix(const Math::Matrix2D& mt) {
+void Polyline::transformByTransferMatrix(const Matrix2D& mt) {
 	for (int i = 0; i < mPoints.size(); i++) {
 		mPoints[i].editByTransferMatrix(mt);
 	}
@@ -472,17 +472,17 @@ vector2D Polygon::getPoint(const int index) const {
 int Polygon::getPointsCount() const {
 	return mPoints.size();
 }
-void Polygon::transformByScalingMAtrix(const Math::Matrix2D& mt) {
+void Polygon::transformByScalingMAtrix(const Matrix2D& mt) {
 	for (int i = 0; i < mPoints.size(); i++) {
 		mPoints[i].editByScalingMatrix(mt);
 	}
 }
-void Polygon::transformByRotationMatrix(const Math::Matrix2D& mt) {
+void Polygon::transformByRotationMatrix(const Matrix2D& mt) {
 	for (int i = 0; i < mPoints.size(); i++) {
 		mPoints[i].editByRotationMatrix(mt);
 	}
 }
-void Polygon::transformByTransferMatrix(const Math::Matrix2D& mt) {
+void Polygon::transformByTransferMatrix(const Matrix2D& mt) {
 	for (int i = 0; i < mPoints.size(); i++) {
 		mPoints[i].editByTransferMatrix(mt);
 	}
@@ -575,7 +575,7 @@ bool Polygon::isEar(const std::vector<vector2D> pts, vector2D& point1, vector2D&
 	return 1;
 }
 
-std::vector<Math::LineSegment2D> Polygon::triangulation() {
+std::vector<LineSegment2D> Polygon::triangulation() {
 
 	const auto crawl = isCCWPolygon();
 
@@ -583,7 +583,7 @@ std::vector<Math::LineSegment2D> Polygon::triangulation() {
 	for (int i = 0; i < mPoints.size(); i++)
 		indices[i] = i;
 
-	std::vector<Math::LineSegment2D> lines;
+	std::vector<LineSegment2D> lines;
 	
 	while (indices.size() > 3) {
 

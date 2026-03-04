@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Objects.h"
 #include "kernel_export.h"
-#include "Math.h"
+#include "My_Math.h"
 
 class KERNEL_EXPORT DrawData {
 public:
@@ -11,14 +11,14 @@ public:
 	DrawData();
 	DrawData(std::shared_ptr<DrawData> dt);
 
-	void addData(const Math::LineSegment2D& dt);
+	void addData(const LineSegment2D& dt);
 
-	std::vector<Math::LineSegment2D> getData() const;
+	std::vector<LineSegment2D> getData() const;
 
 	using ptr = std::shared_ptr<DrawData>;
 
 private:
-	std::vector<Math::LineSegment2D> data;
+	std::vector<LineSegment2D> data;
 };
 
 

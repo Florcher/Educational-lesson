@@ -35,15 +35,15 @@ vector2D vector2D::operator-(const vector2D& rhs) {
 	return { x - rhs.x, y - rhs.y };
 }
 
-void vector2D::editByScalingMatrix(const Math::Matrix2D& mt) {
+void vector2D::editByScalingMatrix(const Matrix2D& mt) {
 	x = mt.getElement(0, 0) * x + mt.getElement(0, 1) * y;
 	y = mt.getElement(1, 0) * x + mt.getElement(1, 1) * y;
 }
-void vector2D::editByRotationMatrix(const Math::Matrix2D& mt) {
+void vector2D::editByRotationMatrix(const Matrix2D& mt) {
 	x = mt.getElement(0, 0) * x + mt.getElement(0, 1) * y;
 	y = mt.getElement(1, 0) * x + mt.getElement(1, 1) * y;
 }
-void vector2D::editByTransferMatrix(const Math::Matrix2D& mt) {
+void vector2D::editByTransferMatrix(const Matrix2D& mt) {
 	x = x + mt.getElement(0, 2);
 	y = y + mt.getElement(1, 2);
 }

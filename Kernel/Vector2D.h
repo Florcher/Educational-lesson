@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include "kernel_export.h"
-#include "Math.h"
+
+class Matrix2D;
+
 struct KERNEL_EXPORT vector2D {
 
 	friend std::ostream& operator<< (std::ostream&, const vector2D&);
@@ -17,9 +19,9 @@ struct KERNEL_EXPORT vector2D {
 	double cross(const vector2D& leftVec) const;
 	double dot(const vector2D& rhtLine);
 
-	void editByScalingMatrix(const Math::Matrix2D& nt);
-	void editByRotationMatrix(const Math::Matrix2D& nt);
-	void editByTransferMatrix(const Math::Matrix2D& nt);
+	void editByScalingMatrix(const Matrix2D& nt);
+	void editByRotationMatrix(const Matrix2D& nt);
+	void editByTransferMatrix(const Matrix2D& nt);
 
 	double length() const;
 

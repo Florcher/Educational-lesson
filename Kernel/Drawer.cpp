@@ -1,12 +1,12 @@
 #include "Drawer.h"
 #include "DrawData.h"
-#include "Math.h"
+#include "My_Math.h"
 
 Drawer::Drawer() {
 	data = std::make_shared<DrawData>();
 }
 
-void Drawer::drawLine(const Math::LineSegment2D& line) {
+void Drawer::drawLine(const LineSegment2D& line) {
 	data->addData(line);
 }
 
